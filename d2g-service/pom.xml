@@ -13,5 +13,18 @@
     <artifactId>d2g-service</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <dependencies>
+        <!-- Own dependencies -->
+        <dependency>
+            <groupId>com.logicify</groupId>
+            <artifactId>d2g-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.logicify</groupId>
+            <artifactId>d2g-repository</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>

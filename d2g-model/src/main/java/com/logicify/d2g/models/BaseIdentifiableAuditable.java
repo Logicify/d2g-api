@@ -11,13 +11,13 @@ import java.time.ZonedDateTime;
 @MappedSuperclass
 public class BaseIdentifiableAuditable extends BaseIdentifiable {
 
-    User createdBy;
+    private User createdBy;
 
-    User updatedBy;
+    private User updatedBy;
 
-    ZonedDateTime createdOn;
+    private ZonedDateTime createdOn;
 
-    ZonedDateTime updatedOn;
+    private ZonedDateTime updatedOn;
 
     public User getCreatedBy() {
         return createdBy;

@@ -12,7 +12,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "users")
-public class UserImpl extends BaseIdentifiable implements User {
+public class UserImpl extends BaseIdentifiableAuditable implements User {
 
     private String firstName;
 

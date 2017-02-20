@@ -38,6 +38,7 @@
         <testng.version>6.10</testng.version>
         <spring-boot.version>1.5.1.RELEASE</spring-boot.version>
         <hibernate-annotations.version>3.5.6-Final</hibernate-annotations.version>
+        <modelmapper.version>0.7.7</modelmapper.version>
     </properties>
 
 
@@ -72,6 +73,13 @@
                 <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+            <dependency>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper</artifactId>
+                <version>${modelmapper.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

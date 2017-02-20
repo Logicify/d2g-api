@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @author knorr
  */
+
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan

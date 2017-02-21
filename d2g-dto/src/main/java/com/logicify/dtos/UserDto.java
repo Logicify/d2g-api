@@ -1,3 +1,5 @@
+package com.logicify.dtos;
+
 import com.logicify.d2g.domain.UserStatus;
 
 import java.time.ZonedDateTime;
@@ -7,6 +9,8 @@ import java.util.UUID;
  * @author knorr
  */
 public class UserDto {
+
+    private String password;
 
     private UUID id;
 
@@ -116,5 +120,13 @@ public class UserDto {
 
     public void setStatus(UserStatus status) {
         this.status = status;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

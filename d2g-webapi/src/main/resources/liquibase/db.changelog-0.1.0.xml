@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="19082014-25464" author="serg">
+        <createTable tableName="user">
+            <column name="firstName" type="text"/>
+            <column name="lastName" type="text"/>
+            <column name="email" type="text"/>
+            <column name="passwordHash" type="boolean"/>
+            <column name="avatarUrl" type="text"/>
+            <column name="status" type="text"/>
+            <column name="createdDate" type="timestamp [ (p) ] with time zone"/>
+            <column name="updatedDate" type="timestamp [ (p) ] with time zone"/>
+            <column name="createdBy" type="uuid"/>
+            <column name="updatedBy" type="uuid"/>
+            <column name="id" type="uuid"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

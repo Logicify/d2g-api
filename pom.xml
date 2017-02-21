@@ -64,6 +64,11 @@
                 <version>${dbunit.version}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>3.5.3</version>
+            </dependency>
 
             <!-- Import dependency management from Spring Boot -->
             <dependency>
@@ -73,13 +78,20 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>9.4.1212.jre7</version>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 
     <build>
         <resources>
             <resource>
-                <directory>src/main/resources</directory>
+                <directory>d2g-webapi/src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
@@ -108,8 +120,39 @@
                         </execution>
                     </executions>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.liquibase</groupId>
+                    <artifactId>liquibase-maven-plugin</artifactId>
+                    <version>3.0.7</version>
+                    <configuration>
+                        <changeLogFile>d2g-webapi/src/main/resources/liquibase/db.changelog-master.xml</changeLogFile>
+                        <driver>org.postgresql.Driver</driver>
+                        <url>jdbc:postgresql://localhost:5432/d2g</url>
+                        <username>d2g-api</username>
+                        <password>roseweasel99</password>
+                        <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>update</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.postgresql</groupId>
+                            <artifactId>postgresql</artifactId>
+                            <version>9.4.1212.jre7</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
             </plugins>
         </pluginManagement>
+
 
     </build>
 

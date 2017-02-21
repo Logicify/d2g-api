@@ -14,7 +14,7 @@ public class UserDto {
 
     private ZonedDateTime createdOn;
 
-    private ZonedDateTime updatedOn          ;
+    private ZonedDateTime updatedOn;
 
     private UUID createdBy;
 

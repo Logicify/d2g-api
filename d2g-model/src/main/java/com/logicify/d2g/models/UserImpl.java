@@ -24,6 +24,8 @@ public class UserImpl extends BaseIdentifiableAuditable implements User {
 
     private UserStatus status;
 
+    private String avatarUrl;
+
     @Column(name = "first_name", length = MAX_NAME_LENGTH, nullable = false)
     @Override
     public String getFirstName() {
@@ -39,6 +41,17 @@ public class UserImpl extends BaseIdentifiableAuditable implements User {
     @Override
     public String getLastName() {
         return lastName;
+    }
+
+    @Override
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    @Column(name = "avatar_url", length = MAX_URL_LENGTH)
+    @Override
+    public String getAvatarUrl() {
+        return this.avatarUrl;
     }
 
     @Override

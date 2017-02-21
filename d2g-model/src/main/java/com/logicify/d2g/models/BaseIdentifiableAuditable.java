@@ -43,7 +43,7 @@ public abstract class BaseIdentifiableAuditable extends BaseIdentifiable {
         this.updatedBy = updatedBy;
     }
 
-    @Column(name = "created_on", nullable = false)
+    @Column(name = "created_on", updatable = false, nullable = false)
     public ZonedDateTime getCreatedOn() {
         return createdOn;
     }

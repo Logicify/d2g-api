@@ -11,7 +11,7 @@
             <column name="firstName" type="text"/>
             <column name="lastName" type="text"/>
             <column name="email" type="text"/>
-            <column name="passwordHash" type="boolean"/>
+            <column name="passwordHash" type="text"/>
             <column name="avatarUrl" type="text"/>
             <column name="status" type="text"/>
             <column name="createdDate" type="timestamp [ (p) ] with time zone"/>

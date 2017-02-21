@@ -126,7 +126,7 @@
                     <artifactId>liquibase-maven-plugin</artifactId>
                     <version>3.0.7</version>
                     <configuration>
-                        <changeLogFile>d2g-webapi/src/main/resources/liquibase/db.changelog-master.xml</changeLogFile>
+                        <changeLogFile>d2g-webapi/src/main/resources/d2g_database/db.changelog-master.xml</changeLogFile>
                         <driver>org.postgresql.Driver</driver>
                         <url>jdbc:postgresql://localhost:5432/d2g</url>
                         <username>d2g-api</username>

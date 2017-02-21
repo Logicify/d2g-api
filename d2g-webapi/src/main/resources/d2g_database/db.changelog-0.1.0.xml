@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="19082014-25464" author="serg">
+    <changeSet id="0" author="serhei udovyk">
         <createTable tableName="user">
             <column name="firstName" type="text"/>
             <column name="lastName" type="text"/>

@@ -37,6 +37,16 @@
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.modelmapper.extensions</groupId>
+            <artifactId>modelmapper-spring</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.jmnarloch</groupId>
+            <artifactId>modelmapper-spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

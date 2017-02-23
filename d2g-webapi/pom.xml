@@ -16,11 +16,6 @@
 
     <dependencies>
 
-        <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
-        </dependency>
-
         <!-- WEB facade with Jetty instead of Tomcat -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -6,7 +6,7 @@
     <dependencies>
         <dependency>
             <groupId>com.logicify</groupId>
-            <artifactId>d2g-model</artifactId>
+            <artifactId>d2g-dto</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

@@ -39,11 +39,29 @@
         <spring-boot.version>1.5.1.RELEASE</spring-boot.version>
         <hibernate-annotations.version>3.5.6-Final</hibernate-annotations.version>
         <modelmapper.version>0.7.7</modelmapper.version>
+        <hibernate-core.version>5.2.6.Final</hibernate-core.version>
+        <modelmapper-spring>0.7.7</modelmapper-spring>
+        <modelmapper-spring-boot-starter>1.1.0</modelmapper-spring-boot-starter>
     </properties>
 
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- https://mvnrepository.com/artifact/org.modelmapper.extensions/modelmapper-spring -->
+            <dependency>
+                <groupId>org.modelmapper.extensions</groupId>
+                <artifactId>modelmapper-spring</artifactId>
+                <version>${modelmapper-spring.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.github.jmnarloch/modelmapper-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.jmnarloch</groupId>
+                <artifactId>modelmapper-spring-boot-starter</artifactId>
+                <version>${modelmapper-spring-boot-starter}</version>
+            </dependency>
+
 
             <!-- Dependencies not listed in Spring Boot manifest -->
             <dependency>
@@ -80,6 +98,13 @@
                 <groupId>org.modelmapper</groupId>
                 <artifactId>modelmapper</artifactId>
                 <version>${modelmapper.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate-core.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

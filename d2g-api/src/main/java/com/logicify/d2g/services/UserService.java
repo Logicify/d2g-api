@@ -1,15 +1,17 @@
 package com.logicify.d2g.services;
 
 import com.logicify.d2g.domain.User;
-import com.logicify.d2g.models.UserImpl;
-
-import java.util.List;
-import java.util.UUID;
+import com.logicify.d2g.dtos.incomingdtos.UserCreateIncomingDto;
+import com.logicify.d2g.utils.PasswordStorage;
 
 /**
  * @author knorr
  */
 public interface UserService {
+
+    String createPasswordHash(String password) throws PasswordStorage.CannotPerformOperationException;
+
+    void createUser(UserCreateIncomingDto userCreateIncomingDto) throws PasswordStorage.CannotPerformOperationException;
 
     /**
      * Returns user by it's UUID
@@ -17,13 +19,7 @@ public interface UserService {
      * @param id user uuif
      * @return requested {@link User}
      */
-    UserImpl findById(UUID id);
+     //TODO: Implement finding user by its uuid
 
-    List<UserImpl> getAllUser();
 
-    void deleteUserByID(UUID id);
-
-    void createUser(UserImpl user);
-
-    void saveUser(UserImpl user);
 }

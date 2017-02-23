@@ -10,8 +10,5 @@ import java.util.UUID;
  */
 public interface UserRepository extends CrudRepository<UserImpl, UUID> {
 
-    UserImpl findById(UUID id);
-
-    void deleteById(UUID id);
 
 }

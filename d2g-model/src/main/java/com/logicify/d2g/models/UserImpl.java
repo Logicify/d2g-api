@@ -11,7 +11,7 @@ import javax.persistence.Table;
  * @author knorr
  */
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "public")
 public class UserImpl extends BaseIdentifiableAuditable implements User {
 
     private String firstName;
@@ -44,17 +44,6 @@ public class UserImpl extends BaseIdentifiableAuditable implements User {
     }
 
     @Override
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
-
-    @Column(name = "avatar_url", length = MAX_URL_LENGTH)
-    @Override
-    public String getAvatarUrl() {
-        return this.avatarUrl;
-    }
-
-    @Override
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -81,11 +70,24 @@ public class UserImpl extends BaseIdentifiableAuditable implements User {
         this.passwordHash = passwordHash;
     }
 
+    @Column(name = "status", nullable = false)
+    @Override
     public UserStatus getStatus() {
         return status;
     }
 
+    @Override
     public void setStatus(UserStatus status) {
         this.status = status;
+    }
+
+    @Column(name = "avatar_url", length = AVATAR_URL_LENGTH, nullable = false)
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    @Override
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }

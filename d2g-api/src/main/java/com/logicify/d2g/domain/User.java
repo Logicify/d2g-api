@@ -3,13 +3,13 @@ package com.logicify.d2g.domain;
 /**
  * @author knorr
  */
-public interface User extends Identifiable {
+public interface User extends Auditable {
 
     int MAX_NAME_LENGTH = 128;
 
     int MAX_EMAIL_LENGTH = 512;
 
-    int MAX_URL_LENGTH = 65535; //max length of var-char, 2^16-1//
+    int AVATAR_URL_LENGTH = 1000;
 
     String getFirstName();
 
@@ -34,5 +34,4 @@ public interface User extends Identifiable {
     UserStatus getStatus();
 
     void setStatus(UserStatus status);
-
 }

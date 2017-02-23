@@ -1,18 +1,16 @@
 package com.logicify.d2g.models;
 
+import com.logicify.d2g.domain.Auditable;
 import com.logicify.d2g.domain.User;
 
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.ZonedDateTime;
 
 /**
  * @author knorr
  */
 @MappedSuperclass
-public abstract class BaseIdentifiableAuditable extends BaseIdentifiable {
+public abstract class BaseIdentifiableAuditable extends BaseIdentifiable implements Auditable {
 
     private User createdBy;
 
@@ -22,41 +20,48 @@ public abstract class BaseIdentifiableAuditable extends BaseIdentifiable {
 
     private ZonedDateTime updatedOn;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
-    @Column(name = "created_by", updatable = false, nullable = false)
+    @ManyToOne(targetEntity = UserImpl.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by", updatable = false, nullable = false)
+    @Override
     public User getCreatedBy() {
         return createdBy;
     }
 
-
+    @Override
     public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
-    @Column(name = "updated_by")
+    @ManyToOne(targetEntity = UserImpl.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "updated_by")
+    @Override
     public User getUpdatedBy() {
         return updatedBy;
     }
 
+    @Override
     public void setUpdatedBy(User updatedBy) {
         this.updatedBy = updatedBy;
     }
 
-    @Column(name = "created_on", updatable = false, nullable = false)
+    @Column(name = "created_on", updatable = false, nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Override
     public ZonedDateTime getCreatedOn() {
         return createdOn;
     }
 
+    @Override
     public void setCreatedOn(ZonedDateTime createdOn) {
         this.createdOn = createdOn;
     }
 
-    @Column(name = "updated_on")
+    @Column(name = "updated_on", columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Override
     public ZonedDateTime getUpdatedOn() {
         return updatedOn;
     }
 
+    @Override
     public void setUpdatedOn(ZonedDateTime updatedOn) {
         this.updatedOn = updatedOn;
     }

@@ -9,7 +9,7 @@ public class OutgoingDto {
 
     protected String errorMessage;
 
-    protected OutgoingDto (){
+    public OutgoingDto(){
         hasError=false;
         errorMessage=null;
     }

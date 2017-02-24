@@ -43,7 +43,7 @@ public class UserController {
         return new ArrayList<>();
     }
 
-    @RequestMapping(path = "/user", method = RequestMethod.GET)
+    @RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
     @ResponseBody
     private OutgoingDto FindUserById(@PathVariable("id") UUID id){
         return new OutgoingDto();

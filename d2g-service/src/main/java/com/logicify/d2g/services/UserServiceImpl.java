@@ -9,7 +9,6 @@ import com.logicify.d2g.utils.PasswordStorage;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -38,7 +37,7 @@ public class UserServiceImpl implements UserService {
         user.setCreatedBy(user);
         user.setCreatedOn(ZonedDateTime.now(ZoneOffset.UTC));
         user.setStatus(UserStatus.NEW);
-        //userRepository.save(user); TODO: need to solve problem between interfaces and entities
+        userRepository.save((UserImpl) user); //TODO: need to solve problem between interfaces and entities
     }
 }
 

@@ -32,9 +32,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public void createUser(UserCreateIncomingDto userCreateIncomingDto) throws PasswordStorage.CannotPerformOperationException {
-        User user = modelMapper.map(userCreateIncomingDto,UserImpl.class);
+        User user = modelMapper.map(userCreateIncomingDto,User.class);
         user.setPasswordHash(createPasswordHash(userCreateIncomingDto.getPassword()));
         user.setCreatedBy(user);
         user.setCreatedOn(ZonedDateTime.now(ZoneOffset.UTC));

@@ -10,5 +10,4 @@ import java.util.UUID;
  */
 public interface UserRepository extends CrudRepository<UserImpl, UUID> {
 
-
 }

@@ -1,9 +1,11 @@
 package com.logicify.d2g.dtos.incomingdtos;
 
+import com.logicify.d2g.dtos.DtosDomains.IncomingDto;
+
 /**
  * @author knorr
  */
-public class UserCreateIncomingDto {
+public class UserCreateIncomingDto implements IncomingDto {
 
     private String firstName;
 

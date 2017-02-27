@@ -3,9 +3,7 @@ package com.logicify.d2g.models;
 import com.logicify.d2g.domain.User;
 import com.logicify.d2g.domain.UserStatus;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author knorr
@@ -71,6 +69,7 @@ public class UserImpl extends BaseIdentifiableAuditable implements User {
     }
 
     @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
     @Override
     public UserStatus getStatus() {
         return status;

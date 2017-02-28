@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UsersListOutgoingDto findAll() {
         UsersListOutgoingDto usersListOutgoingDto = new UsersListOutgoingDto();
-        usersListOutgoingDto.setUserOutgoingDtoList(getAllUsersFromRepository());
+        usersListOutgoingDto.setUserOutgoingDtoList(getListUserFromRepository(userRepository.findAll()));
         return usersListOutgoingDto;
     }
 
@@ -92,8 +92,9 @@ public class UserServiceImpl implements UserService {
     }
 
     //This method only for UserServiceImpl. It can not use anywhere else.
-    private List<UserOutgoingDto> getAllUsersFromRepository() {
-        List<UserImpl> users = (List<UserImpl>) userRepository.findAll();
+    private List<UserOutgoingDto> getListUserFromRepository(Iterable<UserImpl> userIterable) {
+        List<UserImpl> users = new ArrayList<>();
+        userIterable.forEach(users::add);
         List<UserOutgoingDto> outgoingDtos = new ArrayList<>();
         for (UserImpl user : users) {
             outgoingDtos.add(modelMapper.map(user, UserOutgoingDto.class));

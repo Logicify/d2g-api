@@ -40,8 +40,8 @@
         <hibernate-annotations.version>3.5.6-Final</hibernate-annotations.version>
         <modelmapper.version>0.7.7</modelmapper.version>
         <hibernate-core.version>5.2.6.Final</hibernate-core.version>
-        <modelmapper-spring>0.7.7</modelmapper-spring>
-        <modelmapper-spring-boot-starter>1.1.0</modelmapper-spring-boot-starter>
+        <modelmapper-spring.version>0.7.7</modelmapper-spring.version>
+        <modelmapper-spring-boot-starter.version>1.1.0</modelmapper-spring-boot-starter.version>
     </properties>
 
 
@@ -59,7 +59,7 @@
             <dependency>
                 <groupId>com.github.jmnarloch</groupId>
                 <artifactId>modelmapper-spring-boot-starter</artifactId>
-                <version>${modelmapper-spring-boot-starter}</version>
+                <version>${modelmapper-spring-boot-starter.version}</version>
             </dependency>
 
 

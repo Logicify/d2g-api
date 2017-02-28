@@ -6,9 +6,9 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="1000001" author="serhei udovyk">
-        <createTable tableName="_user">
-            <column name="first_name" type="text"/>
+    <changeSet id="10000012" author="serhei udovyk">
+        <createTable tableName="_user2">
+            <column name="firstName" type="text"/>
             <column name="lastName" type="text"/>
             <column name="email" type="text"/>
             <column name="passwordHash" type="text"/>
@@ -21,4 +21,5 @@
             <column name="id" type="uuid"/>
         </createTable>
     </changeSet>
+
 </databaseChangeLog>

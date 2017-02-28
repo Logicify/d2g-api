@@ -37,7 +37,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUser(UserCreateIncomingDto userCreateIncomingDto) throws PasswordStorage.CannotPerformOperationException {
+    public void createUser(UserCreateIncomingDto userCreateIncomingDto)
+            throws PasswordStorage.CannotPerformOperationException {
         UserImpl user = modelMapper.map(userCreateIncomingDto, UserImpl.class);
         user.setPasswordHash(createPasswordHash(userCreateIncomingDto.getPassword()));
         user.setCreatedBy(user); //TODO: Realise getting creator from current session
@@ -66,7 +67,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(UUID id, UserUpdateIncomingDto userUpdateIncomingDto) throws PasswordStorage.CannotPerformOperationException {
+    public void updateUser(UUID id, UserUpdateIncomingDto userUpdateIncomingDto)
+            throws PasswordStorage.CannotPerformOperationException {
         UserImpl user = userRepository.findOne(id);
         if (userUpdateIncomingDto.getFirstName() != null)
             user.setFirstName(userUpdateIncomingDto.getFirstName());
@@ -91,7 +93,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    //This method only for UserServiceImpl. It can not use anywhere else.
+    //This method only for UserServiceImpl. It can not be used anywhere else.
     private List<UserOutgoingDto> getListUserFromRepository(Iterable<UserImpl> userIterable) {
         List<UserImpl> users = new ArrayList<>();
         userIterable.forEach(users::add);

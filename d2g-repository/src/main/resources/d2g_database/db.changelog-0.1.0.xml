@@ -6,8 +6,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="0" author="serhei udovyk">
-        <createTable tableName="user">
+    <changeSet id="1000001" author="serhei udovyk">
+        <createTable tableName="_user">
             <column name="firstName" type="text"/>
             <column name="lastName" type="text"/>
             <column name="email" type="text"/>

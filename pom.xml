@@ -89,12 +89,12 @@
     </dependencyManagement>
 
     <build>
-        <resources>
-            <resource>
-                <directory>d2g-webapi/src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
+        <!-- <resources>
+             <resource>
+                 <directory>${basedir}\d2g-repository\src\main\resources\d2g_database</directory>
+                 <filtering>true</filtering>
+             </resource>
+         </resources>-->
 
         <pluginManagement>
             <plugins>
@@ -122,11 +122,12 @@
                 </plugin>
 
                 <plugin>
+
                     <groupId>org.liquibase</groupId>
                     <artifactId>liquibase-maven-plugin</artifactId>
                     <version>3.0.7</version>
                     <configuration>
-                        <changeLogFile>d2g-webapi/src/main/resources/d2g_database/db.changelog-master.xml</changeLogFile>
+                        <changeLogFile>src/main/resources/d2g_database/db.changelog-master.xml</changeLogFile>
                         <driver>org.postgresql.Driver</driver>
                         <url>jdbc:postgresql://localhost:5432/d2g</url>
                         <username>d2g-api</username>

@@ -78,14 +78,27 @@
             <artifactId>d2g-model</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>d2g-repository/src/main/resources/d2g_database</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+
+            </plugin>
+
         </plugins>
     </build>
 

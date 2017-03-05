@@ -1,12 +1,12 @@
 package com.logicify.d2g.services;
 
 import com.logicify.d2g.domain.User;
+import com.logicify.d2g.dtos.domain.exceptions.ControllerException;
 import com.logicify.d2g.dtos.incomingdtos.UserCreateIncomingDto;
 import com.logicify.d2g.dtos.incomingdtos.UserUpdateIncomingDto;
 import com.logicify.d2g.dtos.incomingdtos.UserUpdateStatusIncomingDto;
 import com.logicify.d2g.dtos.outgoingdtos.UserOutgoingDto;
 import com.logicify.d2g.dtos.outgoingdtos.UsersListOutgoingDto;
-import com.logicify.d2g.utils.PasswordStorage;
 
 import java.util.UUID;
 
@@ -15,17 +15,17 @@ import java.util.UUID;
  */
 public interface UserService {
 
-    String createPasswordHash(String password) throws PasswordStorage.CannotPerformOperationException;
+    String createPasswordHash(String password) throws  ControllerException;
 
-    void createUser(UserCreateIncomingDto userCreateIncomingDto) throws PasswordStorage.CannotPerformOperationException;
+    void createUser(UserCreateIncomingDto userCreateIncomingDto) throws ControllerException;
 
     UsersListOutgoingDto findAll();
 
-    UserOutgoingDto findOne(UUID id);
+    UserOutgoingDto findOne(UUID id) throws ControllerException;
 
-    void delete(UUID id);
+    void delete(UUID id) throws ControllerException;
 
-    void updateUser(UUID id, UserUpdateIncomingDto userUpdateIncomingDto) throws PasswordStorage.CannotPerformOperationException;
+    void updateUser(UUID id, UserUpdateIncomingDto userUpdateIncomingDto) throws ControllerException;
 
     void updateStatus(UUID id, UserUpdateStatusIncomingDto userUpdateStatusIncomingDto);
 

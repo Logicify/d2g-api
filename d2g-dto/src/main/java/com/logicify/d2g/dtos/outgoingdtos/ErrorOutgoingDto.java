@@ -1,34 +1,21 @@
 package com.logicify.d2g.dtos.outgoingdtos;
 
-import com.logicify.d2g.dtos.DtosDomains.OutgoingDto;
+import com.logicify.d2g.dtos.domain.dtos.OutgoingDto;
+import com.logicify.d2g.dtos.domain.dtos.ServiceInformationDto;
 
 /**
  * Created by jadencorr on 23.02.17.
  */
 public class ErrorOutgoingDto implements OutgoingDto
 {
-    protected boolean hasError;
+    private ServiceInformationDto service;
 
-    protected String errorMessage;
 
-    public ErrorOutgoingDto(String errorMessage){
-        this.hasError = true;
-        this.errorMessage = errorMessage;
+    public ServiceInformationDto getService() {
+        return service;
     }
 
-    public boolean isHasError() {
-        return hasError;
-    }
-
-    public void setHasError(boolean hasError) {
-        this.hasError = hasError;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setService(ServiceInformationDto service) {
+        this.service = service;
     }
 }

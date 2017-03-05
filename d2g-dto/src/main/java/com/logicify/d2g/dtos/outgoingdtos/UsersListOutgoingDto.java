@@ -1,6 +1,8 @@
 package com.logicify.d2g.dtos.outgoingdtos;
 
-import com.logicify.d2g.dtos.DtosDomains.OutgoingDto;
+import com.logicify.d2g.dtos.domain.dtos.OutgoingDto;
+import com.logicify.d2g.dtos.domain.dtos.ServiceInformationDto;
+import com.logicify.d2g.dtos.domain.dtos.UserDto;
 
 import java.util.List;
 
@@ -9,13 +11,23 @@ import java.util.List;
  */
 public class UsersListOutgoingDto implements OutgoingDto {
 
-    List<UserOutgoingDto> userOutgoingDtoList;
+    private List<UserDto> userDtoList;
 
-    public List<UserOutgoingDto> getUserOutgoingDtoList() {
-        return userOutgoingDtoList;
+    private ServiceInformationDto service;
+
+    public List<UserDto> getUserDtoList() {
+        return userDtoList;
     }
 
-    public void setUserOutgoingDtoList(List<UserOutgoingDto> userOutgoingDtoList) {
-        this.userOutgoingDtoList = userOutgoingDtoList;
+    public void setUserDtoList(List<UserDto> userDtoList) {
+        this.userDtoList = userDtoList;
+    }
+
+    public ServiceInformationDto getService() {
+        return service;
+    }
+
+    public void setService(ServiceInformationDto service) {
+        this.service = service;
     }
 }

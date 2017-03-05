@@ -61,15 +61,14 @@ public class UserController {
     private OutgoingDto deleteUser(@PathVariable("id") UUID id) {
         try {
             userService.delete(id);
-            SuccessOutgoingDto successOutgoingDto = new SuccessOutgoingDto();
-            successOutgoingDto.setService(new ServiceInformationDto());
-            return successOutgoingDto;
         } catch (ControllerException e) {
             ErrorOutgoingDto errorOutgoingDto = new ErrorOutgoingDto();
             errorOutgoingDto.setService(new ServiceInformationDto(e));
             return errorOutgoingDto;
         }
-
+        SuccessOutgoingDto successOutgoingDto = new SuccessOutgoingDto();
+        successOutgoingDto.setService(new ServiceInformationDto());
+        return successOutgoingDto;
     }
 
     @RequestMapping(path = "/user/{id}", method = RequestMethod.PUT)
@@ -78,22 +77,29 @@ public class UserController {
                                    @RequestBody UserUpdateIncomingDto userUpdateIncomingDto) {
         try {
             userService.updateUser(id, userUpdateIncomingDto);
-            SuccessOutgoingDto successOutgoingDto = new SuccessOutgoingDto();
-            successOutgoingDto.setService(new ServiceInformationDto());
-            return successOutgoingDto;
         } catch (ControllerException e) {
             ErrorOutgoingDto errorOutgoingDto = new ErrorOutgoingDto();
             errorOutgoingDto.setService(new ServiceInformationDto(e));
             return errorOutgoingDto;
         }
+        SuccessOutgoingDto successOutgoingDto = new SuccessOutgoingDto();
+        successOutgoingDto.setService(new ServiceInformationDto());
+        return successOutgoingDto;
     }
 
     @RequestMapping(path = "/user/{id}/status", method = RequestMethod.PUT)
     @ResponseBody
     private OutgoingDto UpdateUsetStatus(@PathVariable("id") UUID id,
                                          @RequestBody UserUpdateStatusIncomingDto userUpdateStatusIncomingDto) {
-        userService.updateStatus(id,userUpdateStatusIncomingDto);
-        return new SuccessOutgoingDto();
+        try {
+            userService.updateStatus(id,userUpdateStatusIncomingDto);
+        } catch (ControllerException e) {
+            ErrorOutgoingDto outgoingDto = new ErrorOutgoingDto();
+            outgoingDto.setService(new ServiceInformationDto(e));
+        }
+        SuccessOutgoingDto outgoingDto = new SuccessOutgoingDto();
+        outgoingDto.setService(new ServiceInformationDto());
+        return outgoingDto;
     }
 
 

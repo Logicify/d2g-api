@@ -106,7 +106,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateStatus(UUID id, UserUpdateStatusIncomingDto userUpdateStatusIncomingDto) {
+    public void updateStatus(UUID id, UserUpdateStatusIncomingDto userUpdateStatusIncomingDto) throws ControllerException {
+        if (!userRepository.exists(id)) throw new ControllerException(ControllerExceptionCodes.USER_NOT_EXIST);
         UserImpl user = userRepository.findOne(id);
         UserStatus status = UserStatus.valueOf(userUpdateStatusIncomingDto.getStatus());
         user.setStatus(status);

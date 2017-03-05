@@ -9,9 +9,9 @@ import com.logicify.d2g.dtos.domain.dtos.UserDto;
  */
 public class UserOutgoingDto implements OutgoingDto {
 
-    private ServiceInformationDto service;
-
     private UserDto userDto;
+
+    private ServiceInformationDto service;
 
     public ServiceInformationDto getService() {
         return service;

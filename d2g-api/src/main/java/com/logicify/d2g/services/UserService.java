@@ -27,7 +27,7 @@ public interface UserService {
 
     void updateUser(UUID id, UserUpdateIncomingDto userUpdateIncomingDto) throws ControllerException;
 
-    void updateStatus(UUID id, UserUpdateStatusIncomingDto userUpdateStatusIncomingDto);
+    void updateStatus(UUID id, UserUpdateStatusIncomingDto userUpdateStatusIncomingDto) throws ControllerException;
 
     /**
      * Returns user by it's UUID

@@ -1,5 +1,6 @@
 package com.logicify.d2g.services;
 
+import com.logicify.d2g.domain.User;
 import com.logicify.d2g.domain.UserStatus;
 import com.logicify.d2g.dtos.domain.dtos.ServiceInformationDto;
 import com.logicify.d2g.dtos.domain.dtos.UserDto;
@@ -36,27 +37,31 @@ public class UserServiceImpl implements UserService {
     private ModelMapper modelMapper;
 
     @Override
-    public String createPasswordHash(String password) throws ControllerException {
-        try {
-            return PasswordStorage.createHash(password);
-        } catch (PasswordStorage.CannotPerformOperationException e) {
-            throw new ControllerException(ControllerExceptionCodes.UNCORRECTED_PASSWORD);
-        }
+    public String createPasswordHash(String password) throws PasswordStorage.CannotPerformOperationException {
+        return PasswordStorage.createHash(password);
     }
 
     @Override
     public void createUser(UserCreateIncomingDto userCreateIncomingDto)
             throws ControllerException {
+        UserImpl user = modelMapper.map(userCreateIncomingDto, UserImpl.class);
+        if (user.getEmail().length() > User.MAX_EMAIL_LENGTH)
+            throw new ControllerException(ControllerExceptionCodes.EMAIL_TO_LONG);
+        if (user.getAvatarUrl().length() > User.AVATAR_URL_LENGTH)
+            throw new ControllerException(ControllerExceptionCodes.AVATAR_URL_TO_LONG);
+        if (user.getFirstName().length() > User.MAX_NAME_LENGTH)
+            throw new ControllerException(ControllerExceptionCodes.FIRST_NAME_TO_LONG);
+        if (user.getLastName().length() > User.MAX_NAME_LENGTH)
+            throw new ControllerException(ControllerExceptionCodes.LAST_NAME_TO_LONG);
         try {
-            UserImpl user = modelMapper.map(userCreateIncomingDto, UserImpl.class);
             user.setPasswordHash(createPasswordHash(userCreateIncomingDto.getPassword()));
-            user.setCreatedBy(user); //TODO: Realise getting creator from current session
-            user.setCreatedOn(ZonedDateTime.now(ZoneOffset.UTC));
-            user.setStatus(UserStatus.NEW);
-            userRepository.save(user);
-        } catch (ControllerException e) {
+        } catch (PasswordStorage.CannotPerformOperationException e) {
             throw new ControllerException(ControllerExceptionCodes.UNCORRECTED_PASSWORD);
         }
+        user.setCreatedBy(user); //TODO: Realise getting creator from current session
+        user.setCreatedOn(ZonedDateTime.now(ZoneOffset.UTC));
+        user.setStatus(UserStatus.NEW);
+        userRepository.save(user);
     }
 
     @Override
@@ -80,37 +85,55 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(UUID id) throws ControllerException {
         if (!userRepository.exists(id)) throw new ControllerException(ControllerExceptionCodes.USER_NOT_EXIST);
-        userRepository.delete(id); //TODO: Throwing exception if user not exist
+        userRepository.delete(id);
     }
 
     @Override
     public void updateUser(UUID id, UserUpdateIncomingDto userUpdateIncomingDto) throws ControllerException {
-        try {
-            UserImpl user = userRepository.findOne(id);
-            if (userUpdateIncomingDto.getFirstName() != null)
-                user.setFirstName(userUpdateIncomingDto.getFirstName());
-            if (userUpdateIncomingDto.getLastName() != null)
-                user.setLastName(userUpdateIncomingDto.getLastName());
-            if (userUpdateIncomingDto.getAvatarUrl() != null)
-                user.setAvatarUrl(userUpdateIncomingDto.getAvatarUrl());
-            if (userUpdateIncomingDto.getEmail() != null)
-                user.setEmail(userUpdateIncomingDto.getEmail());
-            if (userUpdateIncomingDto.getPassword() != null)
-                user.setPasswordHash(createPasswordHash(userUpdateIncomingDto.getPassword()));
-            user.setUpdatedOn(ZonedDateTime.now(ZoneOffset.UTC));
-            user.setUpdatedBy(user); //TODO: Realise getting updater from current session
-            userRepository.save(user);
-        } catch (ControllerException e) {
-            throw new ControllerException(ControllerExceptionCodes.UNCORRECTED_PASSWORD);
+
+        UserImpl user = userRepository.findOne(id);
+        if (userUpdateIncomingDto.getFirstName() != null) {
+            if (userUpdateIncomingDto.getFirstName().length() > User.MAX_NAME_LENGTH)
+                throw new ControllerException(ControllerExceptionCodes.FIRST_NAME_TO_LONG);
+            user.setFirstName(userUpdateIncomingDto.getFirstName());
         }
+        if (userUpdateIncomingDto.getLastName() != null) {
+            if (userUpdateIncomingDto.getLastName().length() > User.MAX_NAME_LENGTH)
+                throw new ControllerException(ControllerExceptionCodes.LAST_NAME_TO_LONG);
+            user.setLastName(userUpdateIncomingDto.getLastName());
+        }
+        if (userUpdateIncomingDto.getAvatarUrl() != null) {
+            if (userUpdateIncomingDto.getAvatarUrl().length() > User.AVATAR_URL_LENGTH)
+                throw new ControllerException(ControllerExceptionCodes.AVATAR_URL_TO_LONG);
+            user.setAvatarUrl(userUpdateIncomingDto.getAvatarUrl());
+        }
+        if (userUpdateIncomingDto.getEmail() != null) {
+            if (userUpdateIncomingDto.getEmail().length() > User.MAX_EMAIL_LENGTH)
+                throw new ControllerException(ControllerExceptionCodes.EMAIL_TO_LONG);
+            user.setEmail(userUpdateIncomingDto.getEmail());
+        }
+        if (userUpdateIncomingDto.getPassword() != null)
+            try {
+                user.setPasswordHash(createPasswordHash(userUpdateIncomingDto.getPassword()));
+            } catch (PasswordStorage.CannotPerformOperationException e) {
+                throw new ControllerException(ControllerExceptionCodes.UNCORRECTED_PASSWORD);
+            }
+        user.setUpdatedOn(ZonedDateTime.now(ZoneOffset.UTC));
+        user.setUpdatedBy(user); //TODO: Realise getting updater from current session
+        userRepository.save(user);
     }
 
     @Override
-    public void updateStatus(UUID id, UserUpdateStatusIncomingDto userUpdateStatusIncomingDto) throws ControllerException {
+    public void updateStatus(UUID id, UserUpdateStatusIncomingDto incomingDto) throws ControllerException {
         if (!userRepository.exists(id)) throw new ControllerException(ControllerExceptionCodes.USER_NOT_EXIST);
-        UserImpl user = userRepository.findOne(id);
-        UserStatus status = UserStatus.valueOf(userUpdateStatusIncomingDto.getStatus());
-        user.setStatus(status);
+        UserImpl user =
+                userRepository.findOne(id);
+        try {
+            UserStatus status = UserStatus.valueOf(incomingDto.getStatus());
+            user.setStatus(status);
+        } catch (IllegalArgumentException e) {
+            throw new ControllerException(ControllerExceptionCodes.WRONG_STATUS);
+        }
         userRepository.save(user);
     }
 

@@ -96,6 +96,7 @@ public class UserController {
         } catch (ControllerException e) {
             ErrorOutgoingDto outgoingDto = new ErrorOutgoingDto();
             outgoingDto.setService(new ServiceInformationDto(e));
+            return outgoingDto;
         }
         SuccessOutgoingDto outgoingDto = new SuccessOutgoingDto();
         outgoingDto.setService(new ServiceInformationDto());

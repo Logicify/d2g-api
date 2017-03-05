@@ -7,6 +7,7 @@ import com.logicify.d2g.dtos.incomingdtos.UserUpdateIncomingDto;
 import com.logicify.d2g.dtos.incomingdtos.UserUpdateStatusIncomingDto;
 import com.logicify.d2g.dtos.outgoingdtos.UserOutgoingDto;
 import com.logicify.d2g.dtos.outgoingdtos.UsersListOutgoingDto;
+import com.logicify.d2g.utils.PasswordStorage;
 
 import java.util.UUID;
 
@@ -15,7 +16,7 @@ import java.util.UUID;
  */
 public interface UserService {
 
-    String createPasswordHash(String password) throws  ControllerException;
+    String createPasswordHash(String password) throws PasswordStorage.CannotPerformOperationException;
 
     void createUser(UserCreateIncomingDto userCreateIncomingDto) throws ControllerException;
 

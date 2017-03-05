@@ -9,7 +9,7 @@ import javax.persistence.*;
  * @author knorr
  */
 @Entity
-@Table(name = "users", schema = "public")
+@Table(name = "_users", schema = "public")
 public class UserImpl extends BaseIdentifiableAuditable implements User {
 
     private String firstName;

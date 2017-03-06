@@ -6,6 +6,8 @@ import com.logicify.d2g.dtos.domain.dtos.ServiceInformationDto;
 import com.logicify.d2g.dtos.userdto.domain.UserDto;
 import com.logicify.d2g.dtos.domain.exceptions.ControllerException;
 import com.logicify.d2g.dtos.domain.exceptions.ControllerExceptionCodes;
+import com.logicify.d2g.dtos.userdto.domain.UserDtoPayload;
+import com.logicify.d2g.dtos.userdto.domain.UserListDtoPayload;
 import com.logicify.d2g.dtos.userdto.incomingdto.UserCreateIncomingDto;
 import com.logicify.d2g.dtos.userdto.incomingdto.UserUpdateIncomingDto;
 import com.logicify.d2g.dtos.userdto.incomingdto.UserUpdateStatusIncomingDto;
@@ -77,7 +79,7 @@ public class UserServiceImpl implements UserService {
         UserImpl user = userRepository.findOne(id);
         UserDto userDto = modelMapper.map(user, UserDto.class);
         UserOutgoingDto userOutgoingDto = new UserOutgoingDto();
-        userOutgoingDto.setUser(userDto);
+        userOutgoingDto.setPayload(new UserDtoPayload(userDto));
         userOutgoingDto.setService(new ServiceInformationDto());
         return userOutgoingDto;
     }
@@ -145,7 +147,7 @@ public class UserServiceImpl implements UserService {
         List<UserDto> outgoingDtos = new ArrayList<>();
         users.forEach(user -> outgoingDtos.add(modelMapper.map(user, UserDto.class)));
         UsersListOutgoingDto usersListOutgoingDto = new UsersListOutgoingDto();
-        usersListOutgoingDto.setUserList(outgoingDtos);
+        usersListOutgoingDto.setPayload(new UserListDtoPayload(outgoingDtos));
         usersListOutgoingDto.setService(new ServiceInformationDto());
         return usersListOutgoingDto;
     }

@@ -2,26 +2,24 @@ package com.logicify.d2g.dtos.userdto.outcomingdto;
 
 import com.logicify.d2g.dtos.domain.dtos.OutgoingDto;
 import com.logicify.d2g.dtos.domain.dtos.ServiceInformationDto;
-import com.logicify.d2g.dtos.userdto.domain.UserDto;
-
-import java.util.List;
+import com.logicify.d2g.dtos.userdto.domain.UserListDtoPayload;
 
 /**
  * Created by jadencorr on 27.02.17.
  */
 public class UsersListOutgoingDto implements OutgoingDto {
 
-    private List<UserDto> userList;
-
     private ServiceInformationDto service;
 
-    public List<UserDto> getUserList() {
-        return userList;
+    public UserListDtoPayload getPayload() {
+        return payload;
     }
 
-    public void setUserList(List<UserDto> userList) {
-        this.userList = userList;
+    public void setPayload(UserListDtoPayload payload) {
+        this.payload = payload;
     }
+
+    private UserListDtoPayload payload;
 
     public ServiceInformationDto getService() {
         return service;

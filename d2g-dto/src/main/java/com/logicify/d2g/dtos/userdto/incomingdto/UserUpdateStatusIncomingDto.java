@@ -1,4 +1,4 @@
-package com.logicify.d2g.dtos.incomingdtos;
+package com.logicify.d2g.dtos.userdto.incomingdto;
 
 import com.logicify.d2g.dtos.domain.dtos.IncomingDto;
 

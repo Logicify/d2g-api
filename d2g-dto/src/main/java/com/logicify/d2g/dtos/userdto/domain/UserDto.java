@@ -1,4 +1,4 @@
-package com.logicify.d2g.dtos.domain.dtos;
+package com.logicify.d2g.dtos.userdto.domain;
 
 import java.util.UUID;
 

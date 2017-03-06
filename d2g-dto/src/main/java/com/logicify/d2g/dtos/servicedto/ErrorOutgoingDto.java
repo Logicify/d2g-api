@@ -1,4 +1,4 @@
-package com.logicify.d2g.dtos.outgoingdtos;
+package com.logicify.d2g.dtos.servicedto;
 
 import com.logicify.d2g.dtos.domain.dtos.OutgoingDto;
 import com.logicify.d2g.dtos.domain.dtos.ServiceInformationDto;

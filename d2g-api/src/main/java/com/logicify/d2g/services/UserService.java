@@ -2,11 +2,11 @@ package com.logicify.d2g.services;
 
 import com.logicify.d2g.domain.User;
 import com.logicify.d2g.dtos.domain.exceptions.ControllerException;
-import com.logicify.d2g.dtos.incomingdtos.UserCreateIncomingDto;
-import com.logicify.d2g.dtos.incomingdtos.UserUpdateIncomingDto;
-import com.logicify.d2g.dtos.incomingdtos.UserUpdateStatusIncomingDto;
-import com.logicify.d2g.dtos.outgoingdtos.UserOutgoingDto;
-import com.logicify.d2g.dtos.outgoingdtos.UsersListOutgoingDto;
+import com.logicify.d2g.dtos.userdto.incomingdto.UserCreateIncomingDto;
+import com.logicify.d2g.dtos.userdto.incomingdto.UserUpdateIncomingDto;
+import com.logicify.d2g.dtos.userdto.incomingdto.UserUpdateStatusIncomingDto;
+import com.logicify.d2g.dtos.userdto.outcomingdto.UserOutgoingDto;
+import com.logicify.d2g.dtos.userdto.outcomingdto.UsersListOutgoingDto;
 import com.logicify.d2g.utils.PasswordStorage;
 
 import java.util.UUID;

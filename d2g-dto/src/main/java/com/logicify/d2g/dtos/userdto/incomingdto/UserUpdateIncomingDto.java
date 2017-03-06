@@ -1,21 +1,21 @@
-package com.logicify.d2g.dtos.incomingdtos;
+package com.logicify.d2g.dtos.userdto.incomingdto;
 
 import com.logicify.d2g.dtos.domain.dtos.IncomingDto;
 
 /**
- * @author knorr
+ * Created by coi on 24.02.2017.
  */
-public class UserCreateIncomingDto implements IncomingDto {
+public class UserUpdateIncomingDto implements IncomingDto {
 
-    private String firstName;
+    String firstName;
 
-    private String lastName;
+    String lastName;
 
-    private String email;
+    String password;
 
-    private String password;
+    String avatarUrl;
 
-    private String avatarUrl;
+    String email;
 
     public String getFirstName() {
         return firstName;
@@ -33,14 +33,6 @@ public class UserCreateIncomingDto implements IncomingDto {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -55,5 +47,13 @@ public class UserCreateIncomingDto implements IncomingDto {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

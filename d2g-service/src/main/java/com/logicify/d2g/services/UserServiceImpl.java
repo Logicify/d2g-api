@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
         UserImpl user = userRepository.findOne(id);
         UserDto userDto = modelMapper.map(user, UserDto.class);
         UserOutgoingDto userOutgoingDto = new UserOutgoingDto();
-        userOutgoingDto.setUserDto(userDto);
+        userOutgoingDto.setUser(userDto);
         userOutgoingDto.setService(new ServiceInformationDto());
         return userOutgoingDto;
     }
@@ -145,7 +145,7 @@ public class UserServiceImpl implements UserService {
         List<UserDto> outgoingDtos = new ArrayList<>();
         users.forEach(user -> outgoingDtos.add(modelMapper.map(user, UserDto.class)));
         UsersListOutgoingDto usersListOutgoingDto = new UsersListOutgoingDto();
-        usersListOutgoingDto.setUserDtoList(outgoingDtos);
+        usersListOutgoingDto.setUserList(outgoingDtos);
         usersListOutgoingDto.setService(new ServiceInformationDto());
         return usersListOutgoingDto;
     }

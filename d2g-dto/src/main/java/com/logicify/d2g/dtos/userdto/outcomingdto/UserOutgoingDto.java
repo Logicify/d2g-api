@@ -9,7 +9,7 @@ import com.logicify.d2g.dtos.userdto.domain.UserDto;
  */
 public class UserOutgoingDto implements OutgoingDto {
 
-    private UserDto userDto;
+    private UserDto user;
 
     private ServiceInformationDto service;
 
@@ -21,11 +21,11 @@ public class UserOutgoingDto implements OutgoingDto {
         this.service = service;
     }
 
-    public UserDto getUserDto() {
-        return userDto;
+    public UserDto getUser() {
+        return user;
     }
 
-    public void setUserDto(UserDto userDto) {
-        this.userDto = userDto;
+    public void setUser(UserDto user) {
+        this.user = user;
     }
 }

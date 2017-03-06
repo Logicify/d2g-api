@@ -11,16 +11,16 @@ import java.util.List;
  */
 public class UsersListOutgoingDto implements OutgoingDto {
 
-    private List<UserDto> userDtoList;
+    private List<UserDto> userList;
 
     private ServiceInformationDto service;
 
-    public List<UserDto> getUserDtoList() {
-        return userDtoList;
+    public List<UserDto> getUserList() {
+        return userList;
     }
 
-    public void setUserDtoList(List<UserDto> userDtoList) {
-        this.userDtoList = userDtoList;
+    public void setUserList(List<UserDto> userList) {
+        this.userList = userList;
     }
 
     public ServiceInformationDto getService() {

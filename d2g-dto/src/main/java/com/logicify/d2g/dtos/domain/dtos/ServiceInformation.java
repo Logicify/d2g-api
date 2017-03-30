@@ -1,7 +1,7 @@
 package com.logicify.d2g.dtos.domain.dtos;
 
-import com.logicify.d2g.dtos.domain.exceptions.ControllerException;
-import com.logicify.d2g.dtos.domain.exceptions.ControllerExceptionCodes;
+import com.logicify.d2g.models.exceptions.D2GBaseException;
+import com.logicify.d2g.models.exceptions.ControllerExceptionCodes;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * Created by jadencorr on 03.03.17.
  */
-public class ServiceInformationDto {
+public class ServiceInformation {
 
     private Integer errorCode;
 
@@ -20,7 +20,7 @@ public class ServiceInformationDto {
 
     private String nodeId;
 
-    public ServiceInformationDto(){
+    public ServiceInformation(){
         this.errorCode= ControllerExceptionCodes.ALL_CORRECT.getId();
         this.errorMessage=ControllerExceptionCodes.ALL_CORRECT.getMessage();
         try {
@@ -31,7 +31,7 @@ public class ServiceInformationDto {
         this.timestamp=new Date().getTime()/1000;
     }
 
-    public ServiceInformationDto(ControllerException e){
+    public ServiceInformation(D2GBaseException e){
         this.errorCode=e.getErrorCode();
         this.errorMessage=e.getErrorMessage();
         try {

@@ -1,19 +1,14 @@
 package com.logicify.d2g.services;
 
-import com.logicify.d2g.domain.User;
-import com.logicify.d2g.domain.UserStatus;
-import com.logicify.d2g.dtos.domain.dtos.ServiceInformationDto;
-import com.logicify.d2g.dtos.userdto.domain.UserDto;
-import com.logicify.d2g.dtos.domain.exceptions.ControllerException;
-import com.logicify.d2g.dtos.domain.exceptions.ControllerExceptionCodes;
-import com.logicify.d2g.dtos.userdto.domain.UserDtoPayload;
-import com.logicify.d2g.dtos.userdto.domain.UserListDtoPayload;
-import com.logicify.d2g.dtos.userdto.incomingdto.UserCreateIncomingDto;
-import com.logicify.d2g.dtos.userdto.incomingdto.UserUpdateIncomingDto;
-import com.logicify.d2g.dtos.userdto.incomingdto.UserUpdateStatusIncomingDto;
-import com.logicify.d2g.dtos.userdto.outcomingdto.UserOutgoingDto;
-import com.logicify.d2g.dtos.userdto.outcomingdto.UsersListOutgoingDto;
-import com.logicify.d2g.models.UserImpl;
+import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserCreateIncomingDto;
+import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateIncomingDto;
+import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateStatusIncomingDto;
+import com.logicify.d2g.dtos.domain.outgoingdtos.userpayload.UserPayload;
+import com.logicify.d2g.dtos.domain.outgoingdtos.userpayload.UsersListPayload;
+import com.logicify.d2g.models.exceptions.ControllerExceptionCodes;
+import com.logicify.d2g.models.exceptions.D2GBaseException;
+import com.logicify.d2g.models.implementation.userimplementation.UserImpl;
+import com.logicify.d2g.models.interfaces.usermodel.UserStatus;
 import com.logicify.d2g.repositories.UserRepository;
 import com.logicify.d2g.utils.PasswordStorage;
 import org.modelmapper.ModelMapper;
@@ -45,20 +40,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(UserCreateIncomingDto userCreateIncomingDto)
-            throws ControllerException {
+            throws D2GBaseException {
         UserImpl user = modelMapper.map(userCreateIncomingDto, UserImpl.class);
-        if (user.getEmail().length() > User.MAX_EMAIL_LENGTH)
-            throw new ControllerException(ControllerExceptionCodes.EMAIL_TO_LONG);
-        if (user.getAvatarUrl().length() > User.AVATAR_URL_LENGTH)
-            throw new ControllerException(ControllerExceptionCodes.AVATAR_URL_TO_LONG);
-        if (user.getFirstName().length() > User.MAX_NAME_LENGTH)
-            throw new ControllerException(ControllerExceptionCodes.FIRST_NAME_TO_LONG);
-        if (user.getLastName().length() > User.MAX_NAME_LENGTH)
-            throw new ControllerException(ControllerExceptionCodes.LAST_NAME_TO_LONG);
         try {
             user.setPasswordHash(createPasswordHash(userCreateIncomingDto.getPassword()));
         } catch (PasswordStorage.CannotPerformOperationException e) {
-            throw new ControllerException(ControllerExceptionCodes.UNCORRECTED_PASSWORD);
+            throw new D2GBaseException(ControllerExceptionCodes.UNCORRECTED_PASSWORD);
         }
         user.setCreatedBy(user); //TODO: Realise getting creator from current session
         user.setCreatedOn(ZonedDateTime.now(ZoneOffset.UTC));
@@ -67,59 +54,47 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UsersListOutgoingDto findAll() {
-        UsersListOutgoingDto usersListOutgoingDto = getListUserFromRepository(userRepository.findAll());
-        usersListOutgoingDto.setService(new ServiceInformationDto());
-        return usersListOutgoingDto;
+    public UsersListPayload findAll() {
+        UsersListPayload payload = getListUserFromRepository(userRepository.findAll());
+        return payload;
     }
 
     @Override
-    public UserOutgoingDto findOne(UUID id) throws ControllerException {
-        if (!userRepository.exists(id)) throw new ControllerException(ControllerExceptionCodes.USER_NOT_EXIST);
+    public UserPayload findOne(UUID id) throws D2GBaseException {
+        if (!userRepository.exists(id)) throw new D2GBaseException(ControllerExceptionCodes.USER_NOT_EXIST);
         UserImpl user = userRepository.findOne(id);
-        UserDto userDto = modelMapper.map(user, UserDto.class);
-        UserOutgoingDto userOutgoingDto = new UserOutgoingDto();
-        userOutgoingDto.setPayload(new UserDtoPayload(userDto));
-        userOutgoingDto.setService(new ServiceInformationDto());
-        return userOutgoingDto;
+        UserPayload userPayload = modelMapper.map(user, UserPayload.class);
+        return userPayload;
     }
 
     @Override
-    public void delete(UUID id) throws ControllerException {
-        if (!userRepository.exists(id)) throw new ControllerException(ControllerExceptionCodes.USER_NOT_EXIST);
+    public void delete(UUID id) throws D2GBaseException {
+        if (!userRepository.exists(id)) throw new D2GBaseException(ControllerExceptionCodes.USER_NOT_EXIST);
         userRepository.delete(id);
     }
 
     @Override
-    public void updateUser(UUID id, UserUpdateIncomingDto userUpdateIncomingDto) throws ControllerException {
+    public void updateUser(UUID id, UserUpdateIncomingDto userUpdateIncomingDto) throws D2GBaseException {
 
-        if (!userRepository.exists(id)) throw new ControllerException(ControllerExceptionCodes.USER_NOT_EXIST);
+        if (!userRepository.exists(id)) throw new D2GBaseException(ControllerExceptionCodes.USER_NOT_EXIST);
         UserImpl user = userRepository.findOne(id);
         if (userUpdateIncomingDto.getFirstName() != null) {
-            if (userUpdateIncomingDto.getFirstName().length() > User.MAX_NAME_LENGTH)
-                throw new ControllerException(ControllerExceptionCodes.FIRST_NAME_TO_LONG);
             user.setFirstName(userUpdateIncomingDto.getFirstName());
         }
         if (userUpdateIncomingDto.getLastName() != null) {
-            if (userUpdateIncomingDto.getLastName().length() > User.MAX_NAME_LENGTH)
-                throw new ControllerException(ControllerExceptionCodes.LAST_NAME_TO_LONG);
             user.setLastName(userUpdateIncomingDto.getLastName());
         }
         if (userUpdateIncomingDto.getAvatarUrl() != null) {
-            if (userUpdateIncomingDto.getAvatarUrl().length() > User.AVATAR_URL_LENGTH)
-                throw new ControllerException(ControllerExceptionCodes.AVATAR_URL_TO_LONG);
             user.setAvatarUrl(userUpdateIncomingDto.getAvatarUrl());
         }
         if (userUpdateIncomingDto.getEmail() != null) {
-            if (userUpdateIncomingDto.getEmail().length() > User.MAX_EMAIL_LENGTH)
-                throw new ControllerException(ControllerExceptionCodes.EMAIL_TO_LONG);
             user.setEmail(userUpdateIncomingDto.getEmail());
         }
         if (userUpdateIncomingDto.getPassword() != null)
             try {
                 user.setPasswordHash(createPasswordHash(userUpdateIncomingDto.getPassword()));
             } catch (PasswordStorage.CannotPerformOperationException e) {
-                throw new ControllerException(ControllerExceptionCodes.UNCORRECTED_PASSWORD);
+                throw new D2GBaseException(ControllerExceptionCodes.UNCORRECTED_PASSWORD);
             }
         user.setUpdatedOn(ZonedDateTime.now(ZoneOffset.UTC));
         user.setUpdatedBy(user); //TODO: Realise getting updater from current session
@@ -127,29 +102,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateStatus(UUID id, UserUpdateStatusIncomingDto incomingDto) throws ControllerException {
-        if (!userRepository.exists(id)) throw new ControllerException(ControllerExceptionCodes.USER_NOT_EXIST);
+    public void updateStatus(UUID id, UserUpdateStatusIncomingDto incomingDto) throws D2GBaseException {
+        if (!userRepository.exists(id)) throw new D2GBaseException(ControllerExceptionCodes.USER_NOT_EXIST);
         UserImpl user =
                 userRepository.findOne(id);
         try {
             UserStatus status = UserStatus.valueOf(incomingDto.getStatus());
             user.setStatus(status);
         } catch (IllegalArgumentException e) {
-            throw new ControllerException(ControllerExceptionCodes.WRONG_STATUS);
+            throw new D2GBaseException(ControllerExceptionCodes.WRONG_STATUS);
         }
         userRepository.save(user);
     }
 
     //This method only for UserServiceImpl. It can not be used anywhere else.
-    private UsersListOutgoingDto getListUserFromRepository(Iterable<UserImpl> userIterable) {
+    private UsersListPayload getListUserFromRepository(Iterable<UserImpl> userIterable) {
         List<UserImpl> users = new ArrayList<>();
         userIterable.forEach(users::add);
-        List<UserDto> outgoingDtos = new ArrayList<>();
-        users.forEach(user -> outgoingDtos.add(modelMapper.map(user, UserDto.class)));
-        UsersListOutgoingDto usersListOutgoingDto = new UsersListOutgoingDto();
-        usersListOutgoingDto.setPayload(new UserListDtoPayload(outgoingDtos));
-        usersListOutgoingDto.setService(new ServiceInformationDto());
-        return usersListOutgoingDto;
+        List<UserPayload> outgoingDtos = new ArrayList<>();
+        users.forEach(user -> outgoingDtos.add(modelMapper.map(user, UserPayload.class)));
+        UsersListPayload listPayload = new UsersListPayload();
+        listPayload.setUsersList(outgoingDtos);
+        return listPayload;
     }
 
 

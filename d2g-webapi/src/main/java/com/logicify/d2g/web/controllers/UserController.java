@@ -1,13 +1,12 @@
 package com.logicify.d2g.web.controllers;
 
 import com.logicify.d2g.dtos.domain.dtos.OutgoingDto;
-import com.logicify.d2g.dtos.domain.dtos.ServiceInformationDto;
-import com.logicify.d2g.dtos.domain.exceptions.ControllerException;
-import com.logicify.d2g.dtos.userdto.incomingdto.UserCreateIncomingDto;
-import com.logicify.d2g.dtos.userdto.incomingdto.UserUpdateIncomingDto;
-import com.logicify.d2g.dtos.userdto.incomingdto.UserUpdateStatusIncomingDto;
-import com.logicify.d2g.dtos.servicedto.ErrorOutgoingDto;
-import com.logicify.d2g.dtos.servicedto.SuccessOutgoingDto;
+import com.logicify.d2g.dtos.domain.dtos.ServiceInformation;
+import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserCreateIncomingDto;
+import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateIncomingDto;
+import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateStatusIncomingDto;
+import com.logicify.d2g.dtos.domain.outgoingdtos.ResponseDto;
+import com.logicify.d2g.models.exceptions.D2GBaseException;
 import com.logicify.d2g.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,31 +27,37 @@ public class UserController {
     private OutgoingDto createUser(@RequestBody UserCreateIncomingDto userCreateIncomingDto) {
         try {
             userService.createUser(userCreateIncomingDto);
-            SuccessOutgoingDto successOutgoingDto = new SuccessOutgoingDto();
-            successOutgoingDto.setService(new ServiceInformationDto());
-            return successOutgoingDto;
-        } catch (ControllerException e) {
-            ErrorOutgoingDto errorOutgoingDto = new ErrorOutgoingDto();
-            errorOutgoingDto.setService(new ServiceInformationDto(e));
-            return errorOutgoingDto;
+            ResponseDto response = new ResponseDto();
+            response.setService(new ServiceInformation());
+            return response;
+        } catch (D2GBaseException e) {
+            ResponseDto response = new ResponseDto();
+            response.setService(new ServiceInformation(e));
+            return response;
         }
     }
 
     @RequestMapping(path = "/user", method = RequestMethod.GET)
     @ResponseBody
     private OutgoingDto findAllUsers() {
-        return userService.findAll();
+        ResponseDto response = new ResponseDto();
+        response.setService(new ServiceInformation());
+        response.setPayload(userService.findAll());
+        return response;
     }
 
     @RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
     @ResponseBody
     private OutgoingDto FindUserById(@PathVariable("id") UUID id) {
         try {
-            return userService.findOne(id);
-        } catch (ControllerException e) {
-            ErrorOutgoingDto errorOutgoingDto = new ErrorOutgoingDto();
-            errorOutgoingDto.setService(new ServiceInformationDto(e));
-            return errorOutgoingDto;
+            ResponseDto response = new ResponseDto();
+            response.setService(new ServiceInformation());
+            response.setPayload(userService.findOne(id));
+            return response;
+        } catch (D2GBaseException e) {
+            ResponseDto response = new ResponseDto();
+            response.setService(new ServiceInformation(e));
+            return response;
         }
     }
 
@@ -61,14 +66,14 @@ public class UserController {
     private OutgoingDto deleteUser(@PathVariable("id") UUID id) {
         try {
             userService.delete(id);
-        } catch (ControllerException e) {
-            ErrorOutgoingDto errorOutgoingDto = new ErrorOutgoingDto();
-            errorOutgoingDto.setService(new ServiceInformationDto(e));
-            return errorOutgoingDto;
+            ResponseDto response = new ResponseDto();
+            response.setService(new ServiceInformation());
+            return response;
+        } catch (D2GBaseException e) {
+            ResponseDto response = new ResponseDto();
+            response.setService(new ServiceInformation(e));
+            return response;
         }
-        SuccessOutgoingDto successOutgoingDto = new SuccessOutgoingDto();
-        successOutgoingDto.setService(new ServiceInformationDto());
-        return successOutgoingDto;
     }
 
     @RequestMapping(path = "/user/{id}", method = RequestMethod.PUT)
@@ -77,14 +82,14 @@ public class UserController {
                                    @RequestBody UserUpdateIncomingDto userUpdateIncomingDto) {
         try {
             userService.updateUser(id, userUpdateIncomingDto);
-        } catch (ControllerException e) {
-            ErrorOutgoingDto errorOutgoingDto = new ErrorOutgoingDto();
-            errorOutgoingDto.setService(new ServiceInformationDto(e));
-            return errorOutgoingDto;
+            ResponseDto response = new ResponseDto();
+            response.setService(new ServiceInformation());
+            return response;
+        } catch (D2GBaseException e) {
+            ResponseDto response = new ResponseDto();
+            response.setService(new ServiceInformation(e));
+            return response;
         }
-        SuccessOutgoingDto successOutgoingDto = new SuccessOutgoingDto();
-        successOutgoingDto.setService(new ServiceInformationDto());
-        return successOutgoingDto;
     }
 
     @RequestMapping(path = "/user/{id}/status", method = RequestMethod.PUT)
@@ -92,15 +97,15 @@ public class UserController {
     private OutgoingDto UpdateUsetStatus(@PathVariable("id") UUID id,
                                          @RequestBody UserUpdateStatusIncomingDto userUpdateStatusIncomingDto) {
         try {
-            userService.updateStatus(id,userUpdateStatusIncomingDto);
-        } catch (ControllerException e) {
-            ErrorOutgoingDto outgoingDto = new ErrorOutgoingDto();
-            outgoingDto.setService(new ServiceInformationDto(e));
-            return outgoingDto;
+            userService.updateStatus(id, userUpdateStatusIncomingDto);
+            ResponseDto response = new ResponseDto();
+            response.setService(new ServiceInformation());
+            return response;
+        } catch (D2GBaseException e) {
+            ResponseDto response = new ResponseDto();
+            response.setService(new ServiceInformation(e));
+            return response;
         }
-        SuccessOutgoingDto outgoingDto = new SuccessOutgoingDto();
-        outgoingDto.setService(new ServiceInformationDto());
-        return outgoingDto;
     }
 
 

@@ -1,14 +1,14 @@
-package com.logicify.d2g.dtos.domain.exceptions;
+package com.logicify.d2g.models.exceptions;
 
 /**
  * Created by jadencorr on 03.03.17.
  */
-public class ControllerException extends Exception {
+public class D2GBaseException extends Exception {
 
     private int errorCode;
     private String errorMessage;
 
-    public ControllerException(ControllerExceptionCodes code){
+    public D2GBaseException(ControllerExceptionCodes code){
         this.errorCode = code.getId();
         this.errorMessage = code.getMessage();
     }

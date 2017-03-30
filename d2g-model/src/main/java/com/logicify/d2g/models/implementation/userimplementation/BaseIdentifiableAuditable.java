@@ -1,7 +1,7 @@
-package com.logicify.d2g.models;
+package com.logicify.d2g.models.implementation.userimplementation;
 
-import com.logicify.d2g.domain.Auditable;
-import com.logicify.d2g.domain.User;
+import com.logicify.d2g.models.interfaces.usermodel.Auditable;
+import com.logicify.d2g.models.interfaces.usermodel.User;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;

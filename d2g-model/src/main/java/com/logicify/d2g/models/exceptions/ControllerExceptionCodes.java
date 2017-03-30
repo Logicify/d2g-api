@@ -1,4 +1,4 @@
-package com.logicify.d2g.dtos.domain.exceptions;
+package com.logicify.d2g.models.exceptions;
 
 /**
  * Created by jadencorr on 05.03.17.

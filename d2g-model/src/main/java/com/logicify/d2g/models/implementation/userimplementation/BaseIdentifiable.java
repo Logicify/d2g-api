@@ -1,6 +1,6 @@
-package com.logicify.d2g.models;
+package com.logicify.d2g.models.implementation.userimplementation;
 
-import com.logicify.d2g.domain.Identifiable;
+import com.logicify.d2g.models.interfaces.usermodel.Identifiable;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

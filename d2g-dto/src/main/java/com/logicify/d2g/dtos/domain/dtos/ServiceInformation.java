@@ -1,7 +1,7 @@
 package com.logicify.d2g.dtos.domain.dtos;
 
 import com.logicify.d2g.models.exceptions.D2GBaseException;
-import com.logicify.d2g.models.exceptions.ControllerExceptionCodes;
+import com.logicify.d2g.models.exceptions.D2GBaseExceptionCodes;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -21,8 +21,8 @@ public class ServiceInformation {
     private String nodeId;
 
     public ServiceInformation(){
-        this.errorCode= ControllerExceptionCodes.ALL_CORRECT.getId();
-        this.errorMessage=ControllerExceptionCodes.ALL_CORRECT.getMessage();
+        this.errorCode= D2GBaseExceptionCodes.ALL_CORRECT.getId();
+        this.errorMessage= D2GBaseExceptionCodes.ALL_CORRECT.getMessage();
         try {
             this.nodeId= String.valueOf(InetAddress.getLocalHost());
         } catch (UnknownHostException e) {
@@ -34,6 +34,17 @@ public class ServiceInformation {
     public ServiceInformation(D2GBaseException e){
         this.errorCode=e.getErrorCode();
         this.errorMessage=e.getErrorMessage();
+        try {
+            this.nodeId= String.valueOf(InetAddress.getLocalHost());
+        } catch (UnknownHostException error) {
+            this.nodeId="Can not resolve server address";
+        }
+        this.timestamp=new Date().getTime()/1000;
+    }
+
+    public ServiceInformation(Exception e){
+        this.errorCode=D2GBaseExceptionCodes.SOMETHING_WENT_WRONG.getId();
+        this.errorMessage=D2GBaseExceptionCodes.SOMETHING_WENT_WRONG.getMessage();
         try {
             this.nodeId= String.valueOf(InetAddress.getLocalHost());
         } catch (UnknownHostException error) {

@@ -8,9 +8,14 @@ public class D2GBaseException extends Exception {
     private int errorCode;
     private String errorMessage;
 
-    public D2GBaseException(ControllerExceptionCodes code){
+    public D2GBaseException(D2GBaseExceptionCodes code){
         this.errorCode = code.getId();
         this.errorMessage = code.getMessage();
+    }
+
+    public D2GBaseException(D2GBaseExceptionCodes errorCode, String errorMessage) {
+        this.errorCode=errorCode.getId();
+        this.errorMessage=errorMessage;
     }
 
     public int getErrorCode() {

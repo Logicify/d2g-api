@@ -8,6 +8,7 @@ import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateStat
 import com.logicify.d2g.dtos.domain.outgoingdtos.ResponseDto;
 import com.logicify.d2g.models.exceptions.D2GBaseException;
 import com.logicify.d2g.services.UserService;
+import com.logicify.d2g.utils.DtoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,11 +27,16 @@ public class UserController {
     @ResponseBody
     private OutgoingDto createUser(@RequestBody UserCreateIncomingDto userCreateIncomingDto) {
         try {
+            DtoValidator.validate(userCreateIncomingDto);
             userService.createUser(userCreateIncomingDto);
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation());
             return response;
         } catch (D2GBaseException e) {
+            ResponseDto response = new ResponseDto();
+            response.setService(new ServiceInformation(e));
+            return response;
+        } catch (Exception e) {
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation(e));
             return response;
@@ -40,10 +46,16 @@ public class UserController {
     @RequestMapping(path = "/user", method = RequestMethod.GET)
     @ResponseBody
     private OutgoingDto findAllUsers() {
-        ResponseDto response = new ResponseDto();
-        response.setService(new ServiceInformation());
-        response.setPayload(userService.findAll());
-        return response;
+        try {
+            ResponseDto response = new ResponseDto();
+            response.setService(new ServiceInformation());
+            response.setPayload(userService.findAll());
+            return response;
+        } catch (Exception e) {
+            ResponseDto response = new ResponseDto();
+            response.setService(new ServiceInformation(e));
+            return response;
+        }
     }
 
     @RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
@@ -55,6 +67,10 @@ public class UserController {
             response.setPayload(userService.findOne(id));
             return response;
         } catch (D2GBaseException e) {
+            ResponseDto response = new ResponseDto();
+            response.setService(new ServiceInformation(e));
+            return response;
+        } catch (Exception e) {
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation(e));
             return response;
@@ -73,6 +89,10 @@ public class UserController {
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation(e));
             return response;
+        } catch (Exception e) {
+            ResponseDto response = new ResponseDto();
+            response.setService(new ServiceInformation(e));
+            return response;
         }
     }
 
@@ -81,11 +101,16 @@ public class UserController {
     private OutgoingDto updateUser(@PathVariable("id") UUID id,
                                    @RequestBody UserUpdateIncomingDto userUpdateIncomingDto) {
         try {
+            DtoValidator.validate(userUpdateIncomingDto);
             userService.updateUser(id, userUpdateIncomingDto);
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation());
             return response;
         } catch (D2GBaseException e) {
+            ResponseDto response = new ResponseDto();
+            response.setService(new ServiceInformation(e));
+            return response;
+        } catch (Exception e) {
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation(e));
             return response;
@@ -97,6 +122,7 @@ public class UserController {
     private OutgoingDto UpdateUsetStatus(@PathVariable("id") UUID id,
                                          @RequestBody UserUpdateStatusIncomingDto userUpdateStatusIncomingDto) {
         try {
+            DtoValidator.validate(userUpdateStatusIncomingDto);
             userService.updateStatus(id, userUpdateStatusIncomingDto);
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation());
@@ -105,10 +131,12 @@ public class UserController {
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation(e));
             return response;
+        } catch (Exception e) {
+            ResponseDto response = new ResponseDto();
+            response.setService(new ServiceInformation(e));
+            return response;
         }
     }
-
-
 }
 
 

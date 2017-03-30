@@ -5,8 +5,8 @@ import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateInco
 import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateStatusIncomingDto;
 import com.logicify.d2g.dtos.domain.outgoingdtos.userpayload.UserPayload;
 import com.logicify.d2g.dtos.domain.outgoingdtos.userpayload.UsersListPayload;
-import com.logicify.d2g.models.exceptions.ControllerExceptionCodes;
 import com.logicify.d2g.models.exceptions.D2GBaseException;
+import com.logicify.d2g.models.exceptions.D2GBaseExceptionCodes;
 import com.logicify.d2g.models.implementation.userimplementation.UserImpl;
 import com.logicify.d2g.models.interfaces.usermodel.UserStatus;
 import com.logicify.d2g.repositories.UserRepository;
@@ -14,7 +14,6 @@ import com.logicify.d2g.utils.PasswordStorage;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class UserServiceImpl implements UserService {
         try {
             user.setPasswordHash(createPasswordHash(userCreateIncomingDto.getPassword()));
         } catch (PasswordStorage.CannotPerformOperationException e) {
-            throw new D2GBaseException(ControllerExceptionCodes.UNCORRECTED_PASSWORD);
+            throw new D2GBaseException(D2GBaseExceptionCodes.UNCORRECTED_PASSWORD);
         }
         user.setCreatedBy(user); //TODO: Realise getting creator from current session
         user.setCreatedOn(ZonedDateTime.now(ZoneOffset.UTC));
@@ -61,7 +60,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserPayload findOne(UUID id) throws D2GBaseException {
-        if (!userRepository.exists(id)) throw new D2GBaseException(ControllerExceptionCodes.USER_NOT_EXIST);
+        if (!userRepository.exists(id)) throw new D2GBaseException(D2GBaseExceptionCodes.USER_NOT_EXIST);
         UserImpl user = userRepository.findOne(id);
         UserPayload userPayload = modelMapper.map(user, UserPayload.class);
         return userPayload;
@@ -69,14 +68,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(UUID id) throws D2GBaseException {
-        if (!userRepository.exists(id)) throw new D2GBaseException(ControllerExceptionCodes.USER_NOT_EXIST);
+        if (!userRepository.exists(id)) throw new D2GBaseException(D2GBaseExceptionCodes.USER_NOT_EXIST);
         userRepository.delete(id);
     }
 
     @Override
     public void updateUser(UUID id, UserUpdateIncomingDto userUpdateIncomingDto) throws D2GBaseException {
 
-        if (!userRepository.exists(id)) throw new D2GBaseException(ControllerExceptionCodes.USER_NOT_EXIST);
+        if (!userRepository.exists(id)) throw new D2GBaseException(D2GBaseExceptionCodes.USER_NOT_EXIST);
         UserImpl user = userRepository.findOne(id);
         if (userUpdateIncomingDto.getFirstName() != null) {
             user.setFirstName(userUpdateIncomingDto.getFirstName());
@@ -94,7 +93,7 @@ public class UserServiceImpl implements UserService {
             try {
                 user.setPasswordHash(createPasswordHash(userUpdateIncomingDto.getPassword()));
             } catch (PasswordStorage.CannotPerformOperationException e) {
-                throw new D2GBaseException(ControllerExceptionCodes.UNCORRECTED_PASSWORD);
+                throw new D2GBaseException(D2GBaseExceptionCodes.UNCORRECTED_PASSWORD);
             }
         user.setUpdatedOn(ZonedDateTime.now(ZoneOffset.UTC));
         user.setUpdatedBy(user); //TODO: Realise getting updater from current session
@@ -103,14 +102,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateStatus(UUID id, UserUpdateStatusIncomingDto incomingDto) throws D2GBaseException {
-        if (!userRepository.exists(id)) throw new D2GBaseException(ControllerExceptionCodes.USER_NOT_EXIST);
+        if (!userRepository.exists(id)) throw new D2GBaseException(D2GBaseExceptionCodes.USER_NOT_EXIST);
         UserImpl user =
                 userRepository.findOne(id);
         try {
             UserStatus status = UserStatus.valueOf(incomingDto.getStatus());
             user.setStatus(status);
         } catch (IllegalArgumentException e) {
-            throw new D2GBaseException(ControllerExceptionCodes.WRONG_STATUS);
+            throw new D2GBaseException(D2GBaseExceptionCodes.WRONG_STATUS);
         }
         userRepository.save(user);
     }

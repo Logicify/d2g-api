@@ -80,7 +80,7 @@ public class UserImpl extends BaseIdentifiableAuditable implements User {
         this.status = status;
     }
 
-    @Column(name = "avatar_url", length = AVATAR_URL_LENGTH, nullable = false)
+    @Column(name = "avatar_url", length = AVATAR_URL_LENGTH)
     public String getAvatarUrl() {
         return avatarUrl;
     }

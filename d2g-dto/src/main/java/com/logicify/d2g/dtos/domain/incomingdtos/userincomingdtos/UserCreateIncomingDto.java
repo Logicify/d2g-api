@@ -1,21 +1,32 @@
-package com.logicify.d2g.dtos.incomingdtos;
+package com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos;
 
-import com.logicify.d2g.dtos.DtosDomains.IncomingDto;
+import com.logicify.d2g.dtos.domain.dtos.IncomingDto;
+import com.logicify.d2g.models.interfaces.usermodel.User;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * @author knorr
  */
 public class UserCreateIncomingDto implements IncomingDto {
 
+    @NotNull(message = "First name is empty")
+    @Size(max = User.MAX_NAME_LENGTH, message = "First name is too long")
+    @Valid
     private String firstName;
 
+    @NotNull(message = "Last name is empty")
+    @Size(max = User.MAX_NAME_LENGTH, message = "First name is too long")
     private String lastName;
 
+    @NotNull(message = "Email is empty")
+    @Size(max = User.MAX_EMAIL_LENGTH, message = "Email is too long")
     private String email;
 
+    @NotNull(message = "Password is empty")
     private String password;
-
-    private String avatarUrl;
 
     public String getFirstName() {
         return firstName;
@@ -49,11 +60,4 @@ public class UserCreateIncomingDto implements IncomingDto {
         this.password = password;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
 }

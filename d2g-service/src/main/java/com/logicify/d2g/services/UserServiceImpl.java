@@ -1,18 +1,19 @@
 package com.logicify.d2g.services;
 
-import com.logicify.d2g.domain.UserStatus;
-import com.logicify.d2g.dtos.incomingdtos.UserCreateIncomingDto;
-import com.logicify.d2g.dtos.incomingdtos.UserUpdateIncomingDto;
-import com.logicify.d2g.dtos.incomingdtos.UserUpdateStatusIncomingDto;
-import com.logicify.d2g.dtos.outgoingdtos.UserOutgoingDto;
-import com.logicify.d2g.dtos.outgoingdtos.UsersListOutgoingDto;
-import com.logicify.d2g.models.UserImpl;
+import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserCreateIncomingDto;
+import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateIncomingDto;
+import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateStatusIncomingDto;
+import com.logicify.d2g.dtos.domain.outgoingdtos.userpayload.UserPayload;
+import com.logicify.d2g.dtos.domain.outgoingdtos.userpayload.UsersListPayload;
+import com.logicify.d2g.models.exceptions.D2GBaseException;
+import com.logicify.d2g.models.exceptions.D2GBaseExceptionCodes;
+import com.logicify.d2g.models.implementation.userimplementation.UserImpl;
+import com.logicify.d2g.models.interfaces.usermodel.UserStatus;
 import com.logicify.d2g.repositories.UserRepository;
 import com.logicify.d2g.utils.PasswordStorage;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -38,9 +39,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(UserCreateIncomingDto userCreateIncomingDto)
-            throws PasswordStorage.CannotPerformOperationException {
+            throws D2GBaseException {
         UserImpl user = modelMapper.map(userCreateIncomingDto, UserImpl.class);
-        user.setPasswordHash(createPasswordHash(userCreateIncomingDto.getPassword()));
+        try {
+            user.setPasswordHash(createPasswordHash(userCreateIncomingDto.getPassword()));
+        } catch (PasswordStorage.CannotPerformOperationException e) {
+            throw new D2GBaseException(D2GBaseExceptionCodes.UNCORRECTED_PASSWORD);
+        }
         user.setCreatedBy(user); //TODO: Realise getting creator from current session
         user.setCreatedOn(ZonedDateTime.now(ZoneOffset.UTC));
         user.setStatus(UserStatus.NEW);
@@ -48,58 +53,76 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UsersListOutgoingDto findAll() {
-        return getListUserFromRepository(userRepository.findAll());
+    public UsersListPayload findAll() {
+        UsersListPayload payload = getListUserFromRepository(userRepository.findAll());
+        return payload;
     }
 
     @Override
-    public UserOutgoingDto findOne(UUID id) {
-        //if (!userRepository.exists(id)) throw new Exception(); TODO:Throwing exception if user not exist
+    public UserPayload findOne(UUID id) throws D2GBaseException {
+        if (!userRepository.exists(id)) throw new D2GBaseException(D2GBaseExceptionCodes.USER_NOT_EXIST);
         UserImpl user = userRepository.findOne(id);
-        return modelMapper.map(user, UserOutgoingDto.class);
+        UserPayload userPayload = modelMapper.map(user, UserPayload.class);
+        return userPayload;
     }
 
     @Override
-    public void delete(UUID id) {
-        userRepository.delete(id); //TODO: Throwing exception if user not exist
+    public void delete(UUID id) throws D2GBaseException {
+        if (!userRepository.exists(id)) throw new D2GBaseException(D2GBaseExceptionCodes.USER_NOT_EXIST);
+        userRepository.delete(id);
     }
 
     @Override
-    public void updateUser(UUID id, UserUpdateIncomingDto userUpdateIncomingDto)
-            throws PasswordStorage.CannotPerformOperationException {
+    public void updateUser(UUID id, UserUpdateIncomingDto userUpdateIncomingDto) throws D2GBaseException {
+
+        if (!userRepository.exists(id)) throw new D2GBaseException(D2GBaseExceptionCodes.USER_NOT_EXIST);
         UserImpl user = userRepository.findOne(id);
-        if (userUpdateIncomingDto.getFirstName() != null)
+        if (userUpdateIncomingDto.getFirstName() != null) {
             user.setFirstName(userUpdateIncomingDto.getFirstName());
-        if (userUpdateIncomingDto.getLastName() != null)
+        }
+        if (userUpdateIncomingDto.getLastName() != null) {
             user.setLastName(userUpdateIncomingDto.getLastName());
-        if (userUpdateIncomingDto.getAvatarUrl() != null)
+        }
+        if (userUpdateIncomingDto.getAvatarUrl() != null) {
             user.setAvatarUrl(userUpdateIncomingDto.getAvatarUrl());
-        if (userUpdateIncomingDto.getEmail() != null)
+        }
+        if (userUpdateIncomingDto.getEmail() != null) {
             user.setEmail(userUpdateIncomingDto.getEmail());
+        }
         if (userUpdateIncomingDto.getPassword() != null)
-            user.setPasswordHash(createPasswordHash(userUpdateIncomingDto.getPassword()));
+            try {
+                user.setPasswordHash(createPasswordHash(userUpdateIncomingDto.getPassword()));
+            } catch (PasswordStorage.CannotPerformOperationException e) {
+                throw new D2GBaseException(D2GBaseExceptionCodes.UNCORRECTED_PASSWORD);
+            }
         user.setUpdatedOn(ZonedDateTime.now(ZoneOffset.UTC));
         user.setUpdatedBy(user); //TODO: Realise getting updater from current session
         userRepository.save(user);
     }
 
     @Override
-    public void updateStatus(UUID id, UserUpdateStatusIncomingDto userUpdateStatusIncomingDto) {
-        UserImpl user = userRepository.findOne(id);
-        UserStatus status = UserStatus.valueOf(userUpdateStatusIncomingDto.getStatus());
-        user.setStatus(status);
+    public void updateStatus(UUID id, UserUpdateStatusIncomingDto incomingDto) throws D2GBaseException {
+        if (!userRepository.exists(id)) throw new D2GBaseException(D2GBaseExceptionCodes.USER_NOT_EXIST);
+        UserImpl user =
+                userRepository.findOne(id);
+        try {
+            UserStatus status = UserStatus.valueOf(incomingDto.getStatus());
+            user.setStatus(status);
+        } catch (IllegalArgumentException e) {
+            throw new D2GBaseException(D2GBaseExceptionCodes.WRONG_STATUS);
+        }
         userRepository.save(user);
     }
 
     //This method only for UserServiceImpl. It can not be used anywhere else.
-    private UsersListOutgoingDto getListUserFromRepository(Iterable<UserImpl> userIterable) {
+    private UsersListPayload getListUserFromRepository(Iterable<UserImpl> userIterable) {
         List<UserImpl> users = new ArrayList<>();
         userIterable.forEach(users::add);
-        List<UserOutgoingDto> outgoingDtos = new ArrayList<>();
-        users.forEach(user -> outgoingDtos.add(modelMapper.map(user, UserOutgoingDto.class)));
-        UsersListOutgoingDto usersListOutgoingDto = new UsersListOutgoingDto();
-        usersListOutgoingDto.setUserOutgoingDtoList(outgoingDtos);
-        return usersListOutgoingDto;
+        List<UserPayload> outgoingDtos = new ArrayList<>();
+        users.forEach(user -> outgoingDtos.add(modelMapper.map(user, UserPayload.class)));
+        UsersListPayload listPayload = new UsersListPayload();
+        listPayload.setUsersList(outgoingDtos);
+        return listPayload;
     }
 
 

@@ -1,21 +1,28 @@
-package com.logicify.d2g.dtos.incomingdtos;
+package com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos;
 
-import com.logicify.d2g.dtos.DtosDomains.IncomingDto;
+import com.logicify.d2g.dtos.domain.dtos.IncomingDto;
+import com.logicify.d2g.models.interfaces.usermodel.User;
+
+import javax.validation.constraints.Size;
 
 /**
  * Created by coi on 24.02.2017.
  */
 public class UserUpdateIncomingDto implements IncomingDto {
 
-    String firstName;
+    @Size(max = User.MAX_NAME_LENGTH, message = "First name is too long")
+    private String firstName;
 
-    String lastName;
+    @Size(max = User.MAX_NAME_LENGTH, message = "Last name is too long")
+    private String lastName;
 
-    String password;
+    private String password;
 
-    String avatarUrl;
+    @Size(max = User.AVATAR_URL_LENGTH, message = "Avatar Url is too long")
+    private String avatarUrl;
 
-    String email;
+    @Size(max = User.MAX_EMAIL_LENGTH, message = "Email is too long")
+    private String email;
 
     public String getFirstName() {
         return firstName;

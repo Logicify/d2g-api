@@ -41,6 +41,11 @@
         <hibernate-core.version>5.2.6.Final</hibernate-core.version>
         <modelmapper-spring.version>0.7.7</modelmapper-spring.version>
         <modelmapper-spring-boot-starter.version>1.1.0</modelmapper-spring-boot-starter.version>
+        <postgresql.version>9.4.1212.jre7</postgresql.version>
+        <liquibase-core.version>3.5.3</liquibase-core.version>
+        <validation-api.version>1.1.0.Final</validation-api.version>
+        <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
+        <liquibase-maven-plugin.version>3.0.7</liquibase-maven-plugin.version>
     </properties>
 
 
@@ -79,7 +84,7 @@
             <dependency>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
-                <version>3.5.3</version>
+                <version>${liquibase-core.version}</version>
             </dependency>
 
             <!-- Import dependency management from Spring Boot -->
@@ -107,27 +112,29 @@
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>9.4.1212.jre7</version>
+                <version>${postgresql.version}</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${validation-api.version}</version>
+            </dependency>
+
 
 
         </dependencies>
     </dependencyManagement>
 
     <build>
-        <!-- <resources>
-             <resource>
-                 <directory>${basedir}\d2g-repository\src\main\resources\d2g_database</directory>
-                 <filtering>true</filtering>
-             </resource>
-         </resources>-->
 
         <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.6.1</version>
+                    <version>${maven-compiler-plugin.version}</version>
                     <configuration>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
@@ -151,7 +158,7 @@
 
                     <groupId>org.liquibase</groupId>
                     <artifactId>liquibase-maven-plugin</artifactId>
-                    <version>3.0.7</version>
+                    <version>${liquibase-maven-plugin.version}</version>
                     <configuration>
                         <changeLogFile>src/main/resources/d2g_database/db.changelog-master.xml</changeLogFile>
                         <driver>org.postgresql.Driver</driver>
@@ -172,7 +179,7 @@
                         <dependency>
                             <groupId>org.postgresql</groupId>
                             <artifactId>postgresql</artifactId>
-                            <version>9.4.1212.jre7</version>
+                            <version>${postgresql.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>

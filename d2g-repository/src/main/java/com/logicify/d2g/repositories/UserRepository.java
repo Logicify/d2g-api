@@ -1,6 +1,6 @@
 package com.logicify.d2g.repositories;
 
-import com.logicify.d2g.models.UserImpl;
+import com.logicify.d2g.models.implementation.userimplementation.UserImpl;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;

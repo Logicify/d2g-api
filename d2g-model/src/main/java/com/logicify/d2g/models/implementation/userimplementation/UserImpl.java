@@ -1,7 +1,7 @@
-package com.logicify.d2g.models;
+package com.logicify.d2g.models.implementation.userimplementation;
 
-import com.logicify.d2g.domain.User;
-import com.logicify.d2g.domain.UserStatus;
+import com.logicify.d2g.models.interfaces.usermodel.User;
+import com.logicify.d2g.models.interfaces.usermodel.UserStatus;
 
 import javax.persistence.*;
 
@@ -80,7 +80,7 @@ public class UserImpl extends BaseIdentifiableAuditable implements User {
         this.status = status;
     }
 
-    @Column(name = "avatar_url", length = AVATAR_URL_LENGTH, nullable = false)
+    @Column(name = "avatar_url", length = AVATAR_URL_LENGTH)
     public String getAvatarUrl() {
         return avatarUrl;
     }

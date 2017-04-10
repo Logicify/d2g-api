@@ -1,23 +1,23 @@
-package com.logicify.d2g.dtos.outgoingdtos;
+package com.logicify.d2g.dtos.domain.outgoingdtos.userpayload;
 
-import com.logicify.d2g.dtos.DtosDomains.OutgoingDto;
+import com.logicify.d2g.dtos.domain.dtos.Payload;
 
 import java.util.UUID;
 
 /**
  * Created by jadencorr on 23.02.17.
  */
-public class UserOutgoingDto implements OutgoingDto {
+public class UserPayload implements Payload {
 
-    protected UUID id;
+    private UUID id;
 
-    protected String firstName;
+    private String firstName;
 
-    protected String lastName;
+    private String lastName;
 
-    protected String email;
+    private String email;
 
-    protected String avatarUrl;
+    private String avatarUrl;
 
     public UUID getId() {
         return id;
@@ -58,4 +58,5 @@ public class UserOutgoingDto implements OutgoingDto {
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
+
 }

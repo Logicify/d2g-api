@@ -20,8 +20,7 @@ public class DtoValidator {
 
     public static void validate(IncomingDto incomingDto) throws D2GBaseException {
         Validator validator = vf.getValidator();
-        Set<ConstraintViolation<IncomingDto>> constraintViolations = validator
-                .validate(incomingDto);
+        Set<ConstraintViolation<IncomingDto>> constraintViolations = validator.validate(incomingDto);
         if (!constraintViolations.isEmpty()) {
             Set<String> violationMessages = new HashSet<>();
             for (ConstraintViolation<IncomingDto> constraintViolation : constraintViolations) {

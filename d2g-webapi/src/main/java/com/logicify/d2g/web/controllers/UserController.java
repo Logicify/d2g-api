@@ -18,6 +18,7 @@ import java.util.UUID;
  * @author knorr
  */
 @RestController
+@CrossOrigin
 public class UserController {
 
     @Autowired

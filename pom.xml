@@ -46,6 +46,7 @@
         <validation-api.version>1.1.0.Final</validation-api.version>
         <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
         <liquibase-maven-plugin.version>3.0.7</liquibase-maven-plugin.version>
+        <el-version>2.2.4</el-version>
     </properties>
 
 
@@ -120,6 +121,18 @@
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>
                 <version>${validation-api.version}</version>
+            </dependency>
+
+            <!-- EL Expression Factory -->
+            <dependency>
+                <groupId>javax.el</groupId>
+                <artifactId>javax.el-api</artifactId>
+                <version>${el-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.web</groupId>
+                <artifactId>javax.el</artifactId>
+                <version>${el-version}</version>
             </dependency>
 
 

@@ -47,6 +47,9 @@
         <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
         <liquibase-maven-plugin.version>3.0.7</liquibase-maven-plugin.version>
         <el-version>2.2.4</el-version>
+        <spring-boot-starter-security.version>1.5.2.RELEASE</spring-boot-starter-security.version>
+        <spring-boot-starter-web.version>1.5.2.RELEASE</spring-boot-starter-web.version>
+        <spring-security-core.version>4.2.2.RELEASE</spring-security-core.version>
     </properties>
 
 
@@ -133,6 +136,24 @@
                 <groupId>org.glassfish.web</groupId>
                 <artifactId>javax.el</artifactId>
                 <version>${el-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring-boot-starter-security.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot-starter-web.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-core</artifactId>
+                <version>${spring-security-core.version}</version>
             </dependency>
 
 

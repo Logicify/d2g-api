@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="1" author="d2g-api">
+        <createTable tableName="_users">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name"  type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="text">
+                <constraints nullable="false" />
+            </column>
+            <column name="email" type="text">
+                <constraints nullable="false" />
+            </column>
+            <column name="password_hash" type="text">
+                <constraints nullable="false" />
+            </column>
+            <column name="avatar_url" type="text">
+                <constraints nullable="true" />
+            </column>
+            <column name="status" type="text">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_date" type="timestamp with time zone">
+                <constraints nullable="false" />
+            </column>
+            <column name="updated_date" type="timestamp with time zone">
+                <constraints nullable="true" />
+            </column>
+            <column name="created_by" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_by" type="uuid">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

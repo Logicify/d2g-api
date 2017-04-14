@@ -4,8 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -17,7 +16,8 @@ import java.security.Principal;
 @EnableWebSecurity
 public class SecurityController {
 
-    @RequestMapping("/user")
+    @RequestMapping(path = "/user/login", method = RequestMethod.GET) // TODO: change this method, my change only for deploying
+    @ResponseBody
     public Principal user(Principal user) {
         return user;
     }

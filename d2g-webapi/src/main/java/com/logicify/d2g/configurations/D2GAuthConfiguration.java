@@ -1,9 +1,8 @@
-package com.logicify.d2g.web.controllers;
+package com.logicify.d2g.configurations;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 /**
  * Created by Serhei on 13.04.2017.

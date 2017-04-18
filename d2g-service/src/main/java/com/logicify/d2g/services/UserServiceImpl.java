@@ -8,11 +8,13 @@ import com.logicify.d2g.dtos.domain.outgoingdtos.userpayload.UsersListPayload;
 import com.logicify.d2g.models.exceptions.D2GBaseException;
 import com.logicify.d2g.models.exceptions.D2GBaseExceptionCodes;
 import com.logicify.d2g.models.implementation.userimplementation.UserImpl;
+import com.logicify.d2g.models.interfaces.usermodel.User;
 import com.logicify.d2g.models.interfaces.usermodel.UserStatus;
 import com.logicify.d2g.repositories.UserRepository;
 import com.logicify.d2g.utils.PasswordStorage;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -112,6 +114,11 @@ public class UserServiceImpl implements UserService {
             throw new D2GBaseException(D2GBaseExceptionCodes.WRONG_STATUS);
         }
         userRepository.save(user);
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     //This method only for UserServiceImpl. It can not be used anywhere else.

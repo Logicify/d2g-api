@@ -21,7 +21,7 @@ public abstract class BaseIdentifiableAuditable extends BaseIdentifiable impleme
     private ZonedDateTime updatedOn;
 
     @ManyToOne(targetEntity = UserImpl.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by", updatable = false, nullable = false)
+    @JoinColumn(name = "created_by", updatable = false)
     @Override
     public User getCreatedBy() {
         return createdBy;

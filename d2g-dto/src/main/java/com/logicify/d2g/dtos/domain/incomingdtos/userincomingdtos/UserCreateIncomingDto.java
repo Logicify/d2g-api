@@ -14,7 +14,6 @@ public class UserCreateIncomingDto implements IncomingDto {
 
     @NotNull(message = "First name is empty")
     @Size(max = User.MAX_NAME_LENGTH, message = "First name is too long")
-    @Valid
     private String firstName;
 
     @NotNull(message = "Last name is empty")

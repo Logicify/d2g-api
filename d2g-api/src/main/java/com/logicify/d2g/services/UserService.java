@@ -6,6 +6,7 @@ import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateStat
 import com.logicify.d2g.dtos.domain.outgoingdtos.userpayload.UserPayload;
 import com.logicify.d2g.dtos.domain.outgoingdtos.userpayload.UsersListPayload;
 import com.logicify.d2g.models.exceptions.D2GBaseException;
+import com.logicify.d2g.models.interfaces.usermodel.User;
 import com.logicify.d2g.utils.PasswordStorage;
 
 import java.util.UUID;
@@ -28,4 +29,6 @@ public interface UserService {
     void updateUser(UUID id, UserUpdateIncomingDto userUpdateIncomingDto) throws D2GBaseException;
 
     void updateStatus(UUID id, UserUpdateStatusIncomingDto userUpdateStatusIncomingDto) throws D2GBaseException;
-    }
+
+    User findUserByEmail(String email);
+;    }

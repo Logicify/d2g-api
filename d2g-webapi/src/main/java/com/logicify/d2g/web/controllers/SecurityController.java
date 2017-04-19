@@ -5,7 +5,6 @@ import com.logicify.d2g.dtos.domain.dtos.ServiceInformation;
 import com.logicify.d2g.dtos.domain.incomingdtos.securitysincomingdtos.UserLoginIncomingDto;
 import com.logicify.d2g.dtos.domain.outgoingdtos.ResponseDto;
 import com.logicify.d2g.models.exceptions.D2GBaseException;
-import com.logicify.d2g.services.UserDetailsServiceImpl;
 import com.logicify.d2g.utils.DtoValidator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 
 /**
  * Created by jadencorr on 06.03.17.

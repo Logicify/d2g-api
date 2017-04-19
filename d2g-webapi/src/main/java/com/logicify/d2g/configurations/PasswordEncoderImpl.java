@@ -1,13 +1,13 @@
-package com.logicify.d2g.services;
+package com.logicify.d2g.configurations;
 
-import com.logicify.d2g.models.exceptions.D2GBaseException;
-import com.logicify.d2g.models.exceptions.D2GBaseExceptionCodes;
 import com.logicify.d2g.utils.PasswordStorage;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by olegchigirin on 19.04.17.
  */
+@Service
 public class PasswordEncoderImpl implements PasswordEncoder {
     @Override
     public String encode(CharSequence charSequence) {

@@ -1,8 +1,7 @@
-package com.logicify.d2g.services;
+package com.logicify.d2g.configurations;
 
-import com.logicify.d2g.models.implementation.userimplementation.UserImpl;
 import com.logicify.d2g.models.interfaces.usermodel.User;
-import com.logicify.d2g.repositories.UserRepository;
+import com.logicify.d2g.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

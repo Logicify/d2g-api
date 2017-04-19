@@ -36,7 +36,7 @@
         <java.version>1.8</java.version>
         <dbunit.version>2.2</dbunit.version>
         <testng.version>6.10</testng.version>
-        <spring-boot.version>1.5.1.RELEASE</spring-boot.version>
+        <spring-boot.version>1.5.2.RELEASE</spring-boot.version>
         <modelmapper.version>0.7.7</modelmapper.version>
         <hibernate-core.version>5.2.6.Final</hibernate-core.version>
         <modelmapper-spring.version>0.7.7</modelmapper-spring.version>
@@ -49,7 +49,7 @@
         <el-version>2.2.4</el-version>
         <spring-boot-starter-security.version>1.5.2.RELEASE</spring-boot-starter-security.version>
         <spring-boot-starter-web.version>1.5.2.RELEASE</spring-boot-starter-web.version>
-        <spring-security-core.version>4.2.2.RELEASE</spring-security-core.version>
+        <aspectj.version>1.8.10</aspectj.version>
     </properties>
 
 
@@ -151,13 +151,10 @@
             </dependency>
 
             <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-core</artifactId>
-                <version>${spring-security-core.version}</version>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
             </dependency>
-
-
-
         </dependencies>
     </dependencyManagement>
 

@@ -10,6 +10,7 @@ import com.logicify.d2g.models.exceptions.D2GBaseException;
 import com.logicify.d2g.services.UserService;
 import com.logicify.d2g.utils.DtoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -44,6 +45,7 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("true")
     @RequestMapping(path = "/user", method = RequestMethod.GET)
     @ResponseBody
     private OutgoingDto findAllUsers() {

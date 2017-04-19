@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.UUID;
 
 /**
@@ -28,10 +29,10 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/user", method = RequestMethod.POST)
     @ResponseBody
-    public OutgoingDto createUser(@RequestBody UserCreateIncomingDto userCreateIncomingDto) {
+    public OutgoingDto createUser(@RequestBody UserCreateIncomingDto userCreateIncomingDto, Principal principal) {
         try {
             DtoValidator.validate(userCreateIncomingDto);
-            userService.createUser(userCreateIncomingDto);
+            userService.createUser(userCreateIncomingDto, principal);
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation());
             return response;
@@ -106,10 +107,11 @@ public class UserController {
     @RequestMapping(path = "/user/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public OutgoingDto updateUser(@PathVariable("id") UUID id,
-                                   @RequestBody UserUpdateIncomingDto userUpdateIncomingDto) {
+                                   @RequestBody UserUpdateIncomingDto userUpdateIncomingDto,
+                                  Principal principal) {
         try {
             DtoValidator.validate(userUpdateIncomingDto);
-            userService.updateUser(id, userUpdateIncomingDto);
+            userService.updateUser(id, userUpdateIncomingDto, principal);
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation());
             return response;

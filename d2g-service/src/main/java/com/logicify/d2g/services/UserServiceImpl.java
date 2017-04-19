@@ -122,6 +122,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
+    @Override
+    public UserPayload findCurrentUser(String principal) {
+        UserImpl user = userRepository.findByEmail(principal);
+        return modelMapper.map(user, UserPayload.class);
+    }
+
     //This method only for UserServiceImpl. It can not be used anywhere else.
     private UsersListPayload getListUserFromRepository(Iterable<UserImpl> userIterable) {
         List<UserImpl> users = new ArrayList<>();

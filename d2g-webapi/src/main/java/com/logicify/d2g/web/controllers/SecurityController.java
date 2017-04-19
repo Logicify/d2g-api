@@ -30,9 +30,6 @@ public class SecurityController {
     private UserService userService;
 
     @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
     private AuthenticationManager authenticationManager;
 
     @RequestMapping(path = "/user/login", method = RequestMethod.POST)
@@ -45,7 +42,7 @@ public class SecurityController {
             SecurityContextHolder.getContext().setAuthentication(auth);
             ResponseDto responseDto = new ResponseDto();
             responseDto.setService(new ServiceInformation());
-            responseDto.setPayload(modelMapper.map(userService,UserPayload.class));
+            responseDto.setPayload(userService.findCurrentUser(dto.getEmail()));
             return responseDto;
         } catch (D2GBaseException e) {
             ResponseDto responseDto = new ResponseDto();
@@ -71,7 +68,7 @@ public class SecurityController {
         String login = principal.getName();
         ResponseDto responseDto = new ResponseDto();
         responseDto.setService(new ServiceInformation());
-        responseDto.setPayload(modelMapper.map(userService.findUserByEmail(login),UserPayload.class));
+        responseDto.setPayload(userService.findCurrentUser(principal.getName()));
         return responseDto;
     }
 }

@@ -33,4 +33,6 @@ public interface UserService {
 
     User findUserByEmail(String email);
 
-;    }
+    UserPayload findCurrentUser(String principal);
+
+}

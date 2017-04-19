@@ -21,7 +21,8 @@ public class PasswordEncoderImpl implements PasswordEncoder {
     @Override
     public boolean matches(CharSequence charSequence, String s) {
         try {
-            return PasswordStorage.verifyPassword(charSequence.toString(), s);
+            boolean isCorrect = PasswordStorage.verifyPassword(charSequence.toString(), s);
+            return isCorrect;
         } catch (PasswordStorage.CannotPerformOperationException |
                 PasswordStorage.InvalidHashException e) {
             return false;

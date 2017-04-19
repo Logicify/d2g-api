@@ -45,10 +45,10 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("true")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/user", method = RequestMethod.GET)
     @ResponseBody
-    private OutgoingDto findAllUsers() {
+    public OutgoingDto findAllUsers() {
         try {
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation());
@@ -61,9 +61,10 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
     @ResponseBody
-    private OutgoingDto FindUserById(@PathVariable("id") UUID id) {
+    public OutgoingDto FindUserById(@PathVariable("id") UUID id) {
         try {
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation());
@@ -80,9 +81,10 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/user/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    private OutgoingDto deleteUser(@PathVariable("id") UUID id) {
+    public OutgoingDto deleteUser(@PathVariable("id") UUID id) {
         try {
             userService.delete(id);
             ResponseDto response = new ResponseDto();
@@ -99,9 +101,10 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/user/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    private OutgoingDto updateUser(@PathVariable("id") UUID id,
+    public OutgoingDto updateUser(@PathVariable("id") UUID id,
                                    @RequestBody UserUpdateIncomingDto userUpdateIncomingDto) {
         try {
             DtoValidator.validate(userUpdateIncomingDto);
@@ -120,9 +123,10 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/user/{id}/status", method = RequestMethod.PUT)
     @ResponseBody
-    private OutgoingDto UpdateUsetStatus(@PathVariable("id") UUID id,
+    public OutgoingDto UpdateUsetStatus(@PathVariable("id") UUID id,
                                          @RequestBody UserUpdateStatusIncomingDto userUpdateStatusIncomingDto) {
         try {
             DtoValidator.validate(userUpdateStatusIncomingDto);

@@ -15,6 +15,8 @@ import com.logicify.d2g.utils.PasswordStorage;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -39,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUser(UserCreateIncomingDto userCreateIncomingDto)
+    public void createUser(UserCreateIncomingDto userCreateIncomingDto, Principal principal)
             throws D2GBaseException {
         UserImpl user = modelMapper.map(userCreateIncomingDto, UserImpl.class);
         try {
@@ -47,7 +49,7 @@ public class UserServiceImpl implements UserService {
         } catch (PasswordStorage.CannotPerformOperationException e) {
             throw new D2GBaseException(D2GBaseExceptionCodes.UNCORRECTED_PASSWORD);
         }
-        user.setCreatedBy(user); //TODO: Realise getting creator from current session
+        user.setCreatedBy(userRepository.findByEmail(principal.getName()));
         user.setCreatedOn(ZonedDateTime.now(ZoneOffset.UTC));
         user.setStatus(UserStatus.NEW);
         userRepository.save(user);
@@ -74,7 +76,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(UUID id, UserUpdateIncomingDto userUpdateIncomingDto) throws D2GBaseException {
+    public void updateUser(UUID id, UserUpdateIncomingDto userUpdateIncomingDto, Principal principal) throws D2GBaseException {
 
         if (!userRepository.exists(id)) throw new D2GBaseException(D2GBaseExceptionCodes.USER_NOT_EXIST);
         UserImpl user = userRepository.findOne(id);
@@ -97,7 +99,7 @@ public class UserServiceImpl implements UserService {
                 throw new D2GBaseException(D2GBaseExceptionCodes.UNCORRECTED_PASSWORD);
             }
         user.setUpdatedOn(ZonedDateTime.now(ZoneOffset.UTC));
-        user.setUpdatedBy(user); //TODO: Realise getting updater from current session
+        user.setUpdatedBy(userRepository.findByEmail(principal.getName()));
         userRepository.save(user);
     }
 

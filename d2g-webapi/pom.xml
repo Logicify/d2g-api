@@ -14,6 +14,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+
     <dependencies>
 
         <!-- WEB facade with Jetty instead of Tomcat -->

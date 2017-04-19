@@ -4,8 +4,9 @@ import com.logicify.d2g.dtos.domain.dtos.OutgoingDto;
 import com.logicify.d2g.dtos.domain.dtos.ServiceInformation;
 import com.logicify.d2g.dtos.domain.incomingdtos.securitysincomingdtos.UserLoginIncomingDto;
 import com.logicify.d2g.dtos.domain.outgoingdtos.ResponseDto;
+import com.logicify.d2g.dtos.domain.outgoingdtos.userpayload.UserPayload;
 import com.logicify.d2g.models.exceptions.D2GBaseException;
-import com.logicify.d2g.models.exceptions.D2GBaseExceptionCodes;
+import com.logicify.d2g.services.UserService;
 import com.logicify.d2g.utils.DtoValidator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 /**
  * Created by jadencorr on 06.03.17.
@@ -23,6 +25,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class SecurityController {
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -40,6 +45,7 @@ public class SecurityController {
             SecurityContextHolder.getContext().setAuthentication(auth);
             ResponseDto responseDto = new ResponseDto();
             responseDto.setService(new ServiceInformation());
+            responseDto.setPayload(modelMapper.map(userService,UserPayload.class));
             return responseDto;
         } catch (D2GBaseException e) {
             ResponseDto responseDto = new ResponseDto();
@@ -61,7 +67,11 @@ public class SecurityController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/user/session", method = RequestMethod.GET)
     @ResponseBody
-    private OutgoingDto UserRestoreSession() {
-        return null;
+    public OutgoingDto UserRestoreSession(Principal principal) {
+        String login = principal.getName();
+        ResponseDto responseDto = new ResponseDto();
+        responseDto.setService(new ServiceInformation());
+        responseDto.setPayload(modelMapper.map(userService.findUserByEmail(login),UserPayload.class));
+        return responseDto;
     }
 }

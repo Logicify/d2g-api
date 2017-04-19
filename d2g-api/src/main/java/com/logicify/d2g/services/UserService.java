@@ -9,6 +9,7 @@ import com.logicify.d2g.models.exceptions.D2GBaseException;
 import com.logicify.d2g.models.interfaces.usermodel.User;
 import com.logicify.d2g.utils.PasswordStorage;
 
+import java.security.Principal;
 import java.util.UUID;
 
 /**
@@ -18,7 +19,7 @@ public interface UserService {
 
     String createPasswordHash(String password) throws PasswordStorage.CannotPerformOperationException;
 
-    void createUser(UserCreateIncomingDto userCreateIncomingDto) throws D2GBaseException;
+    void createUser(UserCreateIncomingDto userCreateIncomingDto, Principal principal) throws D2GBaseException;
 
     UsersListPayload findAll();
 
@@ -26,9 +27,10 @@ public interface UserService {
 
     void delete(UUID id) throws D2GBaseException;
 
-    void updateUser(UUID id, UserUpdateIncomingDto userUpdateIncomingDto) throws D2GBaseException;
+    void updateUser(UUID id, UserUpdateIncomingDto userUpdateIncomingDto, Principal principal) throws D2GBaseException;
 
     void updateStatus(UUID id, UserUpdateStatusIncomingDto userUpdateStatusIncomingDto) throws D2GBaseException;
 
     User findUserByEmail(String email);
+
 ;    }

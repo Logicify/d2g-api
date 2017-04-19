@@ -25,9 +25,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/user", method = RequestMethod.POST)
     @ResponseBody
-    private OutgoingDto createUser(@RequestBody UserCreateIncomingDto userCreateIncomingDto) {
+    public OutgoingDto createUser(@RequestBody UserCreateIncomingDto userCreateIncomingDto) {
         try {
             DtoValidator.validate(userCreateIncomingDto);
             userService.createUser(userCreateIncomingDto);

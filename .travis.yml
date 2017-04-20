@@ -6,10 +6,10 @@ before_install:
   - docker build --build-arg DB_URL=$DATABASE_URL --build-arg DB_USERNAME=$DATABASE_USERNAME --build-arg DB_PASSWORD=$DATABASE_PASSWORD -t d2g_api_repository .
 after_success:
   - if [ "$TRAVIS_BRANCH" == "develop" ]; then
-  docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" -e none https://919834907758.dkr.ecr.us-west-2.amazonaws.com;
-  docker tag d2g_api_repository:latest 919834907758.dkr.ecr.us-west-2.amazonaws.com/d2g_api_repository:latest;
-  docker push 919834907758.dkr.ecr.us-west-2.amazonaws.com/d2g_api_repository:latest;
-  fi
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" -e none https://919834907758.dkr.ecr.us-west-2.amazonaws.com;
+  - docker tag d2g_api_repository:latest 919834907758.dkr.ecr.us-west-2.amazonaws.com/d2g_api_repository:latest;
+  - docker push 919834907758.dkr.ecr.us-west-2.amazonaws.com/d2g_api_repository:latest;
+  - fi
 
 
 

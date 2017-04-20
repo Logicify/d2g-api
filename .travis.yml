@@ -1,6 +1,5 @@
 sudo: required
-dist: precise
-group: legacy
+dist: trusty
 servises:
   - docker
 before_install:

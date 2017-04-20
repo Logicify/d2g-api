@@ -1,5 +1,6 @@
-sudo:
-  - required
+sudo: required
+dist: precise
+group: legacy
 servises:
   - docker
 before_install:

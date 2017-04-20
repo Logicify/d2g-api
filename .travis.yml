@@ -2,7 +2,7 @@ sudo: required
 dist: trusty
 servises:
   - docker
-before_install:
+script:
   - docker build --build-arg DB_URL=$DATABASE_URL --build-arg DB_USERNAME=$DATABASE_USERNAME --build-arg DB_PASSWORD=$DATABASE_PASSWORD -t d2g_api_repository .
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" -e none https://919834907758.dkr.ecr.us-west-2.amazonaws.com

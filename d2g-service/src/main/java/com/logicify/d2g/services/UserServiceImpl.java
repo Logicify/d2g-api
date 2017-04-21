@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
         } catch (PasswordStorage.CannotPerformOperationException e) {
             throw new D2GBaseException(D2GBaseExceptionCodes.UNCORRECTED_PASSWORD);
         }
-        user.setCreatedBy(userRepository.findByEmail(principalName));
+        if (principalName != null) user.setCreatedBy(userRepository.findByEmail(principalName));
         user.setCreatedOn(ZonedDateTime.now(ZoneOffset.UTC));
         user.setStatus(UserStatus.NEW);
         userRepository.save(user);
@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
                 throw new D2GBaseException(D2GBaseExceptionCodes.UNCORRECTED_PASSWORD);
             }
         user.setUpdatedOn(ZonedDateTime.now(ZoneOffset.UTC));
-        user.setUpdatedBy(userRepository.findByEmail(principalName));
+        if (principalName != null) user.setUpdatedBy(userRepository.findByEmail(principalName));
         userRepository.save(user);
     }
 

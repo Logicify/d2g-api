@@ -32,7 +32,7 @@ public class UserController {
     public OutgoingDto createUser(@RequestBody UserCreateIncomingDto userCreateIncomingDto, Principal principal) {
         try {
             DtoValidator.validate(userCreateIncomingDto);
-            userService.createUser(userCreateIncomingDto, principal);
+            userService.createUser(userCreateIncomingDto, principal.getName());
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation());
             return response;
@@ -111,7 +111,7 @@ public class UserController {
                                   Principal principal) {
         try {
             DtoValidator.validate(userUpdateIncomingDto);
-            userService.updateUser(id, userUpdateIncomingDto, principal);
+            userService.updateUser(id, userUpdateIncomingDto, principal.getName());
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation());
             return response;

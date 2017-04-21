@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUser(UserCreateIncomingDto userCreateIncomingDto, Principal principal)
+    public void createUser(UserCreateIncomingDto userCreateIncomingDto, String principalName)
             throws D2GBaseException {
         UserImpl user = modelMapper.map(userCreateIncomingDto, UserImpl.class);
         try {
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
         } catch (PasswordStorage.CannotPerformOperationException e) {
             throw new D2GBaseException(D2GBaseExceptionCodes.UNCORRECTED_PASSWORD);
         }
-        user.setCreatedBy(userRepository.findByEmail(principal.getName()));
+        user.setCreatedBy(userRepository.findByEmail(principalName));
         user.setCreatedOn(ZonedDateTime.now(ZoneOffset.UTC));
         user.setStatus(UserStatus.NEW);
         userRepository.save(user);
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(UUID id, UserUpdateIncomingDto userUpdateIncomingDto, Principal principal) throws D2GBaseException {
+    public void updateUser(UUID id, UserUpdateIncomingDto userUpdateIncomingDto, String principalName) throws D2GBaseException {
 
         if (!userRepository.exists(id)) throw new D2GBaseException(D2GBaseExceptionCodes.USER_NOT_EXIST);
         UserImpl user = userRepository.findOne(id);
@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
                 throw new D2GBaseException(D2GBaseExceptionCodes.UNCORRECTED_PASSWORD);
             }
         user.setUpdatedOn(ZonedDateTime.now(ZoneOffset.UTC));
-        user.setUpdatedBy(userRepository.findByEmail(principal.getName()));
+        user.setUpdatedBy(userRepository.findByEmail(principalName));
         userRepository.save(user);
     }
 

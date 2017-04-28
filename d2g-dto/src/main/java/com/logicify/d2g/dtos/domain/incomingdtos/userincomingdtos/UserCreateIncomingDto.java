@@ -1,9 +1,8 @@
 package com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos;
 
 import com.logicify.d2g.dtos.domain.dtos.IncomingDto;
-import com.logicify.d2g.models.interfaces.usermodel.User;
+import com.logicify.d2g.interfaces.User;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 

@@ -1,8 +1,8 @@
 package com.logicify.d2g.utils;
 
 import com.logicify.d2g.dtos.domain.dtos.IncomingDto;
-import com.logicify.d2g.models.exceptions.D2GBaseException;
-import com.logicify.d2g.models.exceptions.D2GBaseExceptionCodes;
+import com.logicify.d2g.exceptions.D2GBaseException;
+import com.logicify.d2g.exceptions.D2GBaseExceptionCodes;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

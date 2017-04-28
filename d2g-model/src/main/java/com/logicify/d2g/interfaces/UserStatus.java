@@ -1,4 +1,4 @@
-package com.logicify.d2g.models.interfaces.usermodel;
+package com.logicify.d2g.interfaces;
 
 /**
  * @author knorr

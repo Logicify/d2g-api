@@ -1,7 +1,7 @@
-package com.logicify.d2g.models.implementation.userimplementation;
+package com.logicify.d2g.models.implementations;
 
-import com.logicify.d2g.models.interfaces.usermodel.User;
-import com.logicify.d2g.models.interfaces.usermodel.UserStatus;
+import com.logicify.d2g.interfaces.User;
+import com.logicify.d2g.interfaces.UserStatus;
 
 import javax.persistence.*;
 
@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "_users", schema = "public")
-public class UserImpl extends BaseIdentifiableAuditable implements User {
+public class UserImpl extends BaseIdentifiable implements User {
 
     private String firstName;
 
@@ -46,7 +46,7 @@ public class UserImpl extends BaseIdentifiableAuditable implements User {
         this.lastName = lastName;
     }
 
-    @Column(name = "email", length = MAX_EMAIL_LENGTH, nullable = false)
+    @Column(name = "email", length = MAX_EMAIL_LENGTH, nullable = false, unique = true)
     @Override
     public String getEmail() {
         return email;

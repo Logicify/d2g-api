@@ -1,4 +1,4 @@
-package com.logicify.d2g.models.exceptions;
+package com.logicify.d2g.exceptions;
 
 /**
  * Created by jadencorr on 03.03.17.

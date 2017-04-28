@@ -5,11 +5,10 @@ import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateInco
 import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateStatusIncomingDto;
 import com.logicify.d2g.dtos.domain.outgoingdtos.userpayload.UserPayload;
 import com.logicify.d2g.dtos.domain.outgoingdtos.userpayload.UsersListPayload;
-import com.logicify.d2g.models.exceptions.D2GBaseException;
-import com.logicify.d2g.models.interfaces.usermodel.User;
+import com.logicify.d2g.exceptions.D2GBaseException;
+import com.logicify.d2g.interfaces.User;
 import com.logicify.d2g.utils.PasswordStorage;
 
-import java.security.Principal;
 import java.util.UUID;
 
 /**
@@ -19,7 +18,7 @@ public interface UserService {
 
     String createPasswordHash(String password) throws PasswordStorage.CannotPerformOperationException;
 
-    void createUser(UserCreateIncomingDto userCreateIncomingDto, String principalName) throws D2GBaseException;
+    void createUser(UserCreateIncomingDto userCreateIncomingDto) throws D2GBaseException;
 
     UsersListPayload findAll();
 
@@ -33,6 +32,6 @@ public interface UserService {
 
     User findUserByEmail(String email);
 
-    UserPayload findCurrentUser(String principal);
+    UserPayload findUserDTO(String principal);
 
 }

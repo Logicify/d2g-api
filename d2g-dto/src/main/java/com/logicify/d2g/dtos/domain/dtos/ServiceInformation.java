@@ -1,7 +1,7 @@
 package com.logicify.d2g.dtos.domain.dtos;
 
-import com.logicify.d2g.models.exceptions.D2GBaseException;
-import com.logicify.d2g.models.exceptions.D2GBaseExceptionCodes;
+import com.logicify.d2g.exceptions.D2GBaseException;
+import com.logicify.d2g.exceptions.D2GBaseExceptionCodes;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

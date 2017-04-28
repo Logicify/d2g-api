@@ -1,6 +1,6 @@
 package com.logicify.d2g.repositories;
 
-import com.logicify.d2g.models.implementation.userimplementation.UserImpl;
+import com.logicify.d2g.models.implementations.UserImpl;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;
@@ -11,4 +11,5 @@ import java.util.UUID;
 public interface UserRepository extends CrudRepository<UserImpl, UUID> {
 
     UserImpl findByEmail(String email);
+
 }

@@ -5,20 +5,17 @@ import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateInco
 import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateStatusIncomingDto;
 import com.logicify.d2g.dtos.domain.outgoingdtos.userpayload.UserPayload;
 import com.logicify.d2g.dtos.domain.outgoingdtos.userpayload.UsersListPayload;
-import com.logicify.d2g.models.exceptions.D2GBaseException;
-import com.logicify.d2g.models.exceptions.D2GBaseExceptionCodes;
-import com.logicify.d2g.models.implementation.userimplementation.UserImpl;
-import com.logicify.d2g.models.interfaces.usermodel.User;
-import com.logicify.d2g.models.interfaces.usermodel.UserStatus;
+import com.logicify.d2g.exceptions.D2GBaseException;
+import com.logicify.d2g.exceptions.D2GBaseExceptionCodes;
+import com.logicify.d2g.models.implementations.UserImpl;
+import com.logicify.d2g.interfaces.User;
+import com.logicify.d2g.interfaces.UserStatus;
 import com.logicify.d2g.repositories.UserRepository;
 import com.logicify.d2g.utils.PasswordStorage;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -41,18 +38,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUser(UserCreateIncomingDto userCreateIncomingDto, String principalName)
+    public void createUser(UserCreateIncomingDto dto)
             throws D2GBaseException {
-        UserImpl user = modelMapper.map(userCreateIncomingDto, UserImpl.class);
+        UserImpl user = modelMapper.map(dto, UserImpl.class);
         try {
-            user.setPasswordHash(createPasswordHash(userCreateIncomingDto.getPassword()));
+            user.setPasswordHash(createPasswordHash(dto.getPassword()));
         } catch (PasswordStorage.CannotPerformOperationException e) {
             throw new D2GBaseException(D2GBaseExceptionCodes.UNCORRECTED_PASSWORD);
         }
-        if (principalName != null) user.setCreatedBy(userRepository.findByEmail(principalName));
-        user.setCreatedOn(ZonedDateTime.now(ZoneOffset.UTC));
         user.setStatus(UserStatus.NEW);
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        }
+        catch (Exception e){
+            throw new D2GBaseException(D2GBaseExceptionCodes.USER_ALREADY_EXIST);
+        }
     }
 
     @Override
@@ -98,8 +98,6 @@ public class UserServiceImpl implements UserService {
             } catch (PasswordStorage.CannotPerformOperationException e) {
                 throw new D2GBaseException(D2GBaseExceptionCodes.UNCORRECTED_PASSWORD);
             }
-        user.setUpdatedOn(ZonedDateTime.now(ZoneOffset.UTC));
-        if (principalName != null) user.setUpdatedBy(userRepository.findByEmail(principalName));
         userRepository.save(user);
     }
 
@@ -123,7 +121,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserPayload findCurrentUser(String principal) {
+    public UserPayload findUserDTO (String principal) {
         UserImpl user = userRepository.findByEmail(principal);
         return modelMapper.map(user, UserPayload.class);
     }

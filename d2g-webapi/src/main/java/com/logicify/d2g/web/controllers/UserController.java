@@ -6,7 +6,7 @@ import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserCreateInco
 import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateIncomingDto;
 import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateStatusIncomingDto;
 import com.logicify.d2g.dtos.domain.outgoingdtos.ResponseDto;
-import com.logicify.d2g.models.exceptions.D2GBaseException;
+import com.logicify.d2g.exceptions.D2GBaseException;
 import com.logicify.d2g.services.UserService;
 import com.logicify.d2g.utils.DtoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +26,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //@PreAuthorize("isAuthenticated()") TODO: registration
     @RequestMapping(path = "/user", method = RequestMethod.POST)
     @ResponseBody
-    public OutgoingDto createUser(@RequestBody UserCreateIncomingDto userCreateIncomingDto, Principal principal) {
+    public OutgoingDto createUser (@RequestBody UserCreateIncomingDto userCreateIncomingDto) {
         try {
             DtoValidator.validate(userCreateIncomingDto);
-            String name;
-            if (principal == null) name = null; else name = principal.getName();
-            userService.createUser(userCreateIncomingDto, name);
+            userService.createUser(userCreateIncomingDto);
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation());
             return response;
@@ -68,7 +65,7 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public OutgoingDto FindUserById(@PathVariable("id") UUID id) {
+    public OutgoingDto findUserById (@PathVariable("id") UUID id) {
         try {
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation());
@@ -88,7 +85,7 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/user/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public OutgoingDto deleteUser(@PathVariable("id") UUID id) {
+    public OutgoingDto deleteUser (@PathVariable("id") UUID id) {
         try {
             userService.delete(id);
             ResponseDto response = new ResponseDto();
@@ -108,7 +105,7 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/user/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public OutgoingDto updateUser(@PathVariable("id") UUID id,
+    public OutgoingDto updateUser (@PathVariable("id") UUID id,
                                    @RequestBody UserUpdateIncomingDto userUpdateIncomingDto,
                                   Principal principal) {
         try {
@@ -133,8 +130,8 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/user/{id}/status", method = RequestMethod.PUT)
     @ResponseBody
-    public OutgoingDto UpdateUsetStatus(@PathVariable("id") UUID id,
-                                         @RequestBody UserUpdateStatusIncomingDto userUpdateStatusIncomingDto) {
+    public OutgoingDto updateUsetStatus (@PathVariable("id") UUID id,
+                                        @RequestBody UserUpdateStatusIncomingDto userUpdateStatusIncomingDto) {
         try {
             DtoValidator.validate(userUpdateStatusIncomingDto);
             userService.updateStatus(id, userUpdateStatusIncomingDto);

@@ -4,4 +4,3 @@
 # for run create new jar application configuration and run d2g-api/d2g-webapi/target/d2g-webapi-1.0-SNAPSHOT.jar file
 # if package not work on liquibase configuration make sure in correct liquibase changelogs. If they are correct drop LOCAL databases;
 #
-

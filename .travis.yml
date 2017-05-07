@@ -1,5 +1,9 @@
 sudo: required
 dist: trusty
+braches:
+  only:
+    -master
+    -develop-CI
 servises:
   - docker
 script:

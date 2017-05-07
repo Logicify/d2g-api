@@ -8,7 +8,3 @@ after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" -e none https://919834907758.dkr.ecr.us-west-2.amazonaws.com
   - docker tag d2g_api_repository:latest 919834907758.dkr.ecr.us-west-2.amazonaws.com/d2g_api_repository:latest
   - docker push 919834907758.dkr.ecr.us-west-2.amazonaws.com/d2g_api_repository:latest
-
-
-
-

@@ -1,7 +1,7 @@
-package com.logicify.d2g.models.implementation.userimplementation;
+package com.logicify.d2g.models.implementations;
 
-import com.logicify.d2g.models.interfaces.usermodel.Auditable;
-import com.logicify.d2g.models.interfaces.usermodel.User;
+import com.logicify.d2g.interfaces.Auditable;
+import com.logicify.d2g.interfaces.User;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -21,7 +21,7 @@ public abstract class BaseIdentifiableAuditable extends BaseIdentifiable impleme
     private ZonedDateTime updatedOn;
 
     @ManyToOne(targetEntity = UserImpl.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by", updatable = false, nullable = false)
+    @JoinColumn(name = "created_by", updatable = false)
     @Override
     public User getCreatedBy() {
         return createdBy;

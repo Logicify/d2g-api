@@ -1,10 +1,10 @@
-language: java
-jdk:
-  - oraclejdk8
-cache:
-  directories:
-    - $HOME/.m2
-before_script:
-    - cd d2g-api && mvn clean package
+sudo: required
+dist: trusty
+servises:
+  - docker
 script:
-    - cd d2g-api/d2g-webapi/target && mvn install
+  - docker build --build-arg DB_URL=$DATABASE_URL --build-arg DB_USERNAME=$DATABASE_USERNAME --build-arg DB_PASSWORD=$DATABASE_PASSWORD -t d2g_api_repository .
+after_success:
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" -e none https://919834907758.dkr.ecr.us-west-2.amazonaws.com
+  - docker tag d2g_api_repository:latest 919834907758.dkr.ecr.us-west-2.amazonaws.com/d2g_api_repository:latest
+  - docker push 919834907758.dkr.ecr.us-west-2.amazonaws.com/d2g_api_repository:latest

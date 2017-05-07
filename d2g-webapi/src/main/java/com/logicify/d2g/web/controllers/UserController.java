@@ -6,18 +6,21 @@ import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserCreateInco
 import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateIncomingDto;
 import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateStatusIncomingDto;
 import com.logicify.d2g.dtos.domain.outgoingdtos.ResponseDto;
-import com.logicify.d2g.models.exceptions.D2GBaseException;
+import com.logicify.d2g.exceptions.D2GBaseException;
 import com.logicify.d2g.services.UserService;
 import com.logicify.d2g.utils.DtoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.UUID;
 
 /**
  * @author knorr
  */
 @RestController
+@CrossOrigin
 public class UserController {
 
     @Autowired
@@ -25,7 +28,7 @@ public class UserController {
 
     @RequestMapping(path = "/user", method = RequestMethod.POST)
     @ResponseBody
-    private OutgoingDto createUser(@RequestBody UserCreateIncomingDto userCreateIncomingDto) {
+    public OutgoingDto createUser (@RequestBody UserCreateIncomingDto userCreateIncomingDto) {
         try {
             DtoValidator.validate(userCreateIncomingDto);
             userService.createUser(userCreateIncomingDto);
@@ -43,9 +46,10 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/user", method = RequestMethod.GET)
     @ResponseBody
-    private OutgoingDto findAllUsers() {
+    public OutgoingDto findAllUsers() {
         try {
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation());
@@ -58,9 +62,10 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
     @ResponseBody
-    private OutgoingDto FindUserById(@PathVariable("id") UUID id) {
+    public OutgoingDto findUserById (@PathVariable("id") UUID id) {
         try {
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation());
@@ -77,9 +82,10 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/user/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    private OutgoingDto deleteUser(@PathVariable("id") UUID id) {
+    public OutgoingDto deleteUser (@PathVariable("id") UUID id) {
         try {
             userService.delete(id);
             ResponseDto response = new ResponseDto();
@@ -96,13 +102,17 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/user/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    private OutgoingDto updateUser(@PathVariable("id") UUID id,
-                                   @RequestBody UserUpdateIncomingDto userUpdateIncomingDto) {
+    public OutgoingDto updateUser (@PathVariable("id") UUID id,
+                                   @RequestBody UserUpdateIncomingDto userUpdateIncomingDto,
+                                  Principal principal) {
         try {
             DtoValidator.validate(userUpdateIncomingDto);
-            userService.updateUser(id, userUpdateIncomingDto);
+            String name;
+            if (principal == null) name = null; else name = principal.getName();
+            userService.updateUser(id, userUpdateIncomingDto, name);
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation());
             return response;
@@ -117,10 +127,11 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/user/{id}/status", method = RequestMethod.PUT)
     @ResponseBody
-    private OutgoingDto UpdateUsetStatus(@PathVariable("id") UUID id,
-                                         @RequestBody UserUpdateStatusIncomingDto userUpdateStatusIncomingDto) {
+    public OutgoingDto updateUsetStatus (@PathVariable("id") UUID id,
+                                        @RequestBody UserUpdateStatusIncomingDto userUpdateStatusIncomingDto) {
         try {
             DtoValidator.validate(userUpdateStatusIncomingDto);
             userService.updateStatus(id, userUpdateStatusIncomingDto);

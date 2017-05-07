@@ -1,11 +1,11 @@
-package com.logicify.d2g.models.interfaces.usermodel;
+package com.logicify.d2g.interfaces;
 
 import java.time.ZonedDateTime;
 
 /**
  * @author knorr
  */
-public interface Auditable extends Identifiable {
+public interface Auditable {
 
     User getCreatedBy();
 

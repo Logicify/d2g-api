@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="1" author="Chigirin.Oleg">
+        <dropNotNullConstraint tableName="_users" columnName="created_by"/>
+        <sql>
+            INSERT INTO _users(
+            id,
+            version,
+            created_on,
+            updated_on,
+            avatar_url,
+            email,
+            first_name,
+            last_name,
+            password_hash,
+            status,
+            created_by,
+            updated_by) VALUES(
+            'cf504575-fdd1-46ac-b87d-ca194a47fc24',
+            0,
+            '2017-04-19 00:45:30.108+03',
+            NULL,
+            NULL,
+            'admin@d2g.com',
+            'Default',
+            'Administrator',
+            'sha1:64000:18:FAHhNMrGWUPhnvqWt+rS7MeXFE/t3Hh3:5PeX0ZnPXIwFVXBYncC9rxhj',
+            'ACTIVATED',
+            NULL,
+            NULL);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

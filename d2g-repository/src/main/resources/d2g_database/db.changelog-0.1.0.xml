@@ -11,29 +11,30 @@
             <column name="id" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="first_name"  type="text">
+            <column name="version" type="bigint"/>
+            <column name="first_name" type="text">
                 <constraints nullable="false"/>
             </column>
             <column name="last_name" type="text">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="email" type="text">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="password_hash" type="text">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="avatar_url" type="text">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="status" type="text">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
-            <column name="created_date" type="timestamp with time zone">
-                <constraints nullable="false" />
+            <column name="created_on" type="timestamp with time zone">
+                <constraints nullable="false"/>
             </column>
-            <column name="updated_date" type="timestamp with time zone">
-                <constraints nullable="true" />
+            <column name="updated_on" type="timestamp with time zone">
+                <constraints nullable="true"/>
             </column>
             <column name="created_by" type="uuid">
                 <constraints nullable="false"/>
@@ -42,6 +43,14 @@
                 <constraints nullable="true"/>
             </column>
         </createTable>
-        </changeSet>
+        <addForeignKeyConstraint baseTableName="_users" baseColumnNames="created_by"
+                                 constraintName="user_created_by_to_user_fk"
+                                 referencedTableName="_users"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="_users" baseColumnNames="updated_by"
+                                 constraintName="user_updated_by_to_user_fk"
+                                 referencedTableName="_users"
+                                 referencedColumnNames="id"/>
+    </changeSet>
 
 </databaseChangeLog>

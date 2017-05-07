@@ -1,8 +1,8 @@
 package com.logicify.d2g.utils;
 
 import com.logicify.d2g.dtos.domain.dtos.IncomingDto;
-import com.logicify.d2g.models.exceptions.D2GBaseException;
-import com.logicify.d2g.models.exceptions.D2GBaseExceptionCodes;
+import com.logicify.d2g.exceptions.D2GBaseException;
+import com.logicify.d2g.exceptions.D2GBaseExceptionCodes;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -20,8 +20,7 @@ public class DtoValidator {
 
     public static void validate(IncomingDto incomingDto) throws D2GBaseException {
         Validator validator = vf.getValidator();
-        Set<ConstraintViolation<IncomingDto>> constraintViolations = validator
-                .validate(incomingDto);
+        Set<ConstraintViolation<IncomingDto>> constraintViolations = validator.validate(incomingDto);
         if (!constraintViolations.isEmpty()) {
             Set<String> violationMessages = new HashSet<>();
             for (ConstraintViolation<IncomingDto> constraintViolation : constraintViolations) {

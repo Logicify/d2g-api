@@ -1,4 +1,4 @@
-package com.logicify.d2g.models.exceptions;
+package com.logicify.d2g.exceptions;
 
 /**
  * Created by jadencorr on 05.03.17.
@@ -10,7 +10,8 @@ public enum D2GBaseExceptionCodes {
     UNCORRECTED_PASSWORD(2, "This password not allowed"),
     USER_NOT_EXIST(3, "User not exist"),
     WRONG_DATA(4,""),
-    WRONG_STATUS(5, "Wrong user status");
+    WRONG_STATUS(5, "Wrong user status"),
+    USER_ALREADY_EXIST(6, "User with this email already exist");
 
 
 

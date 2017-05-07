@@ -1,9 +1,9 @@
-package com.logicify.d2g.models.interfaces.usermodel;
+package com.logicify.d2g.interfaces;
 
 /**
  * @author knorr
  */
-public interface User extends Auditable {
+public interface User extends Identifiable {
 
     int MAX_NAME_LENGTH = 128;
 

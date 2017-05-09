@@ -7,6 +7,7 @@ import com.logicify.d2g.dtos.domain.outgoingdtos.userpayload.UserPayload;
 import com.logicify.d2g.dtos.domain.outgoingdtos.userpayload.UsersListPayload;
 import com.logicify.d2g.exceptions.D2GBaseException;
 import com.logicify.d2g.exceptions.D2GBaseExceptionCodes;
+import com.logicify.d2g.interfaces.Role;
 import com.logicify.d2g.models.implementations.UserImpl;
 import com.logicify.d2g.interfaces.User;
 import com.logicify.d2g.interfaces.UserStatus;
@@ -16,6 +17,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -46,6 +49,8 @@ public class UserServiceImpl implements UserService {
         } catch (PasswordStorage.CannotPerformOperationException e) {
             throw new D2GBaseException(D2GBaseExceptionCodes.UNCORRECTED_PASSWORD);
         }
+        user.setRole(Role.USER);
+        user.setCreatedDate(ZonedDateTime.now(ZoneOffset.UTC));
         user.setStatus(UserStatus.NEW);
         try {
             userRepository.save(user);
@@ -98,6 +103,7 @@ public class UserServiceImpl implements UserService {
             } catch (PasswordStorage.CannotPerformOperationException e) {
                 throw new D2GBaseException(D2GBaseExceptionCodes.UNCORRECTED_PASSWORD);
             }
+        user.setVersion(user.getVersion()+1);
         userRepository.save(user);
     }
 
@@ -112,6 +118,7 @@ public class UserServiceImpl implements UserService {
         } catch (IllegalArgumentException e) {
             throw new D2GBaseException(D2GBaseExceptionCodes.WRONG_STATUS);
         }
+        user.setVersion(user.getVersion()+1);
         userRepository.save(user);
     }
 

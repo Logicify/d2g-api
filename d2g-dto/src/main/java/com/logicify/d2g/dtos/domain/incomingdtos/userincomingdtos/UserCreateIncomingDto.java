@@ -4,6 +4,7 @@ import com.logicify.d2g.dtos.domain.dtos.IncomingDto;
 import com.logicify.d2g.interfaces.User;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -20,6 +21,7 @@ public class UserCreateIncomingDto implements IncomingDto {
     private String lastName;
 
     @NotNull(message = "Email is empty")
+    @Pattern(regexp=".+@.+\\..+", message="Please provide a valid email address")
     @Size(max = User.MAX_EMAIL_LENGTH, message = "Email is too long")
     private String email;
 

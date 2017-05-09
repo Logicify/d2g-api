@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="1" author="Chigirin.Oleg">
+    <changeSet id="2" author="Chigirin.Oleg">
         <dropNotNullConstraint tableName="_users" columnName="created_by"/>
         <sql>
             INSERT INTO _users(

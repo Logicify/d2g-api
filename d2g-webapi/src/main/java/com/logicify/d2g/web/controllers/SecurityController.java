@@ -40,7 +40,6 @@ public class SecurityController {
             SecurityContextHolder.getContext().setAuthentication(auth);
             ResponseDto responseDto = new ResponseDto();
             responseDto.setService(new ServiceInformation());
-            //TODO: refactor method's name
             responseDto.setPayload(userService.findUserDTO(dto.getEmail()));
             return responseDto;
         } catch (D2GBaseException e) {

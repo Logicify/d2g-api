@@ -5,7 +5,7 @@ import java.time.ZonedDateTime;
 /**
  * @author knorr
  */
-public interface Auditable {
+public interface Auditable extends Identifiable {
 
     User getCreatedBy();
 

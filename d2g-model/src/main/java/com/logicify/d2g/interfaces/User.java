@@ -1,5 +1,7 @@
 package com.logicify.d2g.interfaces;
 
+import java.time.ZonedDateTime;
+
 /**
  * @author knorr
  */
@@ -34,4 +36,12 @@ public interface User extends Identifiable {
     UserStatus getStatus();
 
     void setStatus(UserStatus status);
+
+    Role getRole();
+
+    void setRole(Role role);
+
+    ZonedDateTime getCreatedDate();
+
+    void setCreatedDate(ZonedDateTime createdDate);
 }

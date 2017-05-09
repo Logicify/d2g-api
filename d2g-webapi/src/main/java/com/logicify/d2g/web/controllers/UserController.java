@@ -46,10 +46,10 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "/user", method = RequestMethod.GET)
     @ResponseBody
-    public OutgoingDto findAllUsers() {
+    public OutgoingDto getAllUsers() {
         try {
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation());
@@ -62,10 +62,10 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public OutgoingDto findUserById (@PathVariable("id") UUID id) {
+    public OutgoingDto getUserById(@PathVariable("id") UUID id) {
         try {
             ResponseDto response = new ResponseDto();
             response.setService(new ServiceInformation());
@@ -82,7 +82,7 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "/user/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public OutgoingDto deleteUser (@PathVariable("id") UUID id) {
@@ -102,7 +102,7 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "/user/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public OutgoingDto updateUser (@PathVariable("id") UUID id,
@@ -127,7 +127,7 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "/user/{id}/status", method = RequestMethod.PUT)
     @ResponseBody
     public OutgoingDto updateUsetStatus (@PathVariable("id") UUID id,

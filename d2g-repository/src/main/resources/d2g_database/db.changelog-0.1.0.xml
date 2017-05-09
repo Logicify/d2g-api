@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="1" author="d2g-api">
+    <changeSet id="1" author="Oleg Chigirin">
         <createTable tableName="_users">
             <column name="id" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>

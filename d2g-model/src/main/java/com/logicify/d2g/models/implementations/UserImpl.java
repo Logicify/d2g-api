@@ -1,9 +1,11 @@
 package com.logicify.d2g.models.implementations;
 
+import com.logicify.d2g.interfaces.Role;
 import com.logicify.d2g.interfaces.User;
 import com.logicify.d2g.interfaces.UserStatus;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 
 /**
  * @author knorr
@@ -23,6 +25,10 @@ public class UserImpl extends BaseIdentifiable implements User {
     private UserStatus status;
 
     private String avatarUrl;
+
+    private Role role;
+
+    private ZonedDateTime createdDate;
 
     @Column(name = "first_name", length = MAX_NAME_LENGTH, nullable = false)
     @Override
@@ -78,6 +84,29 @@ public class UserImpl extends BaseIdentifiable implements User {
     @Override
     public void setStatus(UserStatus status) {
         this.status = status;
+    }
+
+    @Column(name ="role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Override
+    public Role getRole() {
+        return this.role;
+    }
+
+    @Override
+    public void setRole(Role role) {
+        this.role=role;
+    }
+
+    @Column(name = "created_date", updatable = false, nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Override
+    public ZonedDateTime getCreatedDate() {
+        return this.createdDate;
+    }
+
+    @Override
+    public void setCreatedDate(ZonedDateTime createdDate) {
+        this.createdDate=createdDate;
     }
 
     @Column(name = "avatar_url", length = AVATAR_URL_LENGTH)

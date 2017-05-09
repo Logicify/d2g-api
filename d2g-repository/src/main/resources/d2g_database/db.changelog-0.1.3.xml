@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="4" author="Oleg Chigirin">
+        <addColumn tableName="_users" schemaName="public">
+            <column name="role" type="text"/>
+            <column name="created_date" type="timestamp with time zone" value="2017-04-19 00:45:30.108+03"/>
+        </addColumn>
+        <update tableName="_users" schemaName="public">
+            <column name="role" type="text" value="ADMIN"/>
+            <where>email='admin@d2g.com'</where>
+        </update>
+        <addNotNullConstraint tableName="_users" columnName="role"/>
+        <addNotNullConstraint tableName="_users" columnName="created_date"/>
+        <createTable tableName="_stores" schemaName="public">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="location" type="text"/>
+            <column name="created_on" type="timestamp with time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_on" type="timestamp with time zone">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_by" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_by" type="uuid">
+                <constraints nullable="true"/>
+            </column>
+            <column name="version" type="bigint"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

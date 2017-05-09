@@ -11,7 +11,8 @@ public enum D2GBaseExceptionCodes {
     USER_NOT_EXIST(3, "User not exist"),
     WRONG_DATA(4,""),
     WRONG_STATUS(5, "Wrong user status"),
-    USER_ALREADY_EXIST(6, "User with this email already exist");
+    USER_ALREADY_EXIST(6, "User with this email already exist"),
+    STORE_NOT_EXIST(7, "Store with this id not exist");
 
 
 

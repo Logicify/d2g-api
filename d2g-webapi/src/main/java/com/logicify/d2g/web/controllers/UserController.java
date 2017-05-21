@@ -1,11 +1,11 @@
 package com.logicify.d2g.web.controllers;
 
 import com.logicify.d2g.dtos.domain.dtos.OutgoingDto;
-import com.logicify.d2g.dtos.domain.dtos.ServiceInformation;
 import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserCreateIncomingDto;
 import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateIncomingDto;
+import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdatePasswordIncomingDto;
 import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateStatusIncomingDto;
-import com.logicify.d2g.dtos.domain.outgoingdtos.ResponseDto;
+import com.logicify.d2g.dtos.domain.dtos.ResponseDtoBuilder;
 import com.logicify.d2g.exceptions.D2GBaseException;
 import com.logicify.d2g.services.UserService;
 import com.logicify.d2g.utils.DtoValidator;
@@ -28,21 +28,15 @@ public class UserController {
 
     @RequestMapping(path = "/user", method = RequestMethod.POST)
     @ResponseBody
-    public OutgoingDto createUser (@RequestBody UserCreateIncomingDto userCreateIncomingDto) {
+    public OutgoingDto createUser(@RequestBody UserCreateIncomingDto userCreateIncomingDto) {
         try {
             DtoValidator.validate(userCreateIncomingDto);
             userService.createUser(userCreateIncomingDto);
-            ResponseDto response = new ResponseDto();
-            response.setService(new ServiceInformation());
-            return response;
-        } catch (D2GBaseException e) {
-            ResponseDto response = new ResponseDto();
-            response.setService(new ServiceInformation(e));
-            return response;
+            return ResponseDtoBuilder.getResponseDto();
+        } catch (D2GBaseException d2g) {
+            return ResponseDtoBuilder.getResponseDto(d2g);
         } catch (Exception e) {
-            ResponseDto response = new ResponseDto();
-            response.setService(new ServiceInformation(e));
-            return response;
+            return ResponseDtoBuilder.getResponseDto(e);
         }
     }
 
@@ -51,14 +45,9 @@ public class UserController {
     @ResponseBody
     public OutgoingDto getAllUsers() {
         try {
-            ResponseDto response = new ResponseDto();
-            response.setService(new ServiceInformation());
-            response.setPayload(userService.findAll());
-            return response;
+            return ResponseDtoBuilder.getResponseDto(userService.findAll());
         } catch (Exception e) {
-            ResponseDto response = new ResponseDto();
-            response.setService(new ServiceInformation(e));
-            return response;
+            return ResponseDtoBuilder.getResponseDto(e);
         }
     }
 
@@ -67,85 +56,92 @@ public class UserController {
     @ResponseBody
     public OutgoingDto getUserById(@PathVariable("id") UUID id) {
         try {
-            ResponseDto response = new ResponseDto();
-            response.setService(new ServiceInformation());
-            response.setPayload(userService.findOne(id));
-            return response;
-        } catch (D2GBaseException e) {
-            ResponseDto response = new ResponseDto();
-            response.setService(new ServiceInformation(e));
-            return response;
+            return ResponseDtoBuilder.getResponseDto(userService.findOne(id));
+        } catch (D2GBaseException d2g) {
+            return ResponseDtoBuilder.getResponseDto(d2g);
         } catch (Exception e) {
-            ResponseDto response = new ResponseDto();
-            response.setService(new ServiceInformation(e));
-            return response;
+            return ResponseDtoBuilder.getResponseDto(e);
         }
     }
+
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "/user/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public OutgoingDto deleteUser (@PathVariable("id") UUID id) {
+    public OutgoingDto deleteUser(@PathVariable("id") UUID id) {
         try {
             userService.delete(id);
-            ResponseDto response = new ResponseDto();
-            response.setService(new ServiceInformation());
-            return response;
-        } catch (D2GBaseException e) {
-            ResponseDto response = new ResponseDto();
-            response.setService(new ServiceInformation(e));
-            return response;
+            return ResponseDtoBuilder.getResponseDto();
+        } catch (D2GBaseException d2g) {
+            return ResponseDtoBuilder.getResponseDto(d2g);
         } catch (Exception e) {
-            ResponseDto response = new ResponseDto();
-            response.setService(new ServiceInformation(e));
-            return response;
+            return ResponseDtoBuilder.getResponseDto(e);
         }
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "/user/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public OutgoingDto updateUser (@PathVariable("id") UUID id,
-                                   @RequestBody UserUpdateIncomingDto userUpdateIncomingDto,
+    public OutgoingDto updateUser(@PathVariable("id") UUID id,
+                                  @RequestBody UserUpdateIncomingDto userUpdateIncomingDto,
                                   Principal principal) {
         try {
             DtoValidator.validate(userUpdateIncomingDto);
-            String name;
-            if (principal == null) name = null; else name = principal.getName();
-            userService.updateUser(id, userUpdateIncomingDto, name);
-            ResponseDto response = new ResponseDto();
-            response.setService(new ServiceInformation());
-            return response;
-        } catch (D2GBaseException e) {
-            ResponseDto response = new ResponseDto();
-            response.setService(new ServiceInformation(e));
-            return response;
+            userService.updateUser(id, userUpdateIncomingDto, principal.getName());
+            return ResponseDtoBuilder.getResponseDto();
+        } catch (D2GBaseException d2g) {
+            return ResponseDtoBuilder.getResponseDto(d2g);
         } catch (Exception e) {
-            ResponseDto response = new ResponseDto();
-            response.setService(new ServiceInformation(e));
-            return response;
+            return ResponseDtoBuilder.getResponseDto(e);
         }
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "/user/{id}/status", method = RequestMethod.PUT)
     @ResponseBody
-    public OutgoingDto updateUsetStatus (@PathVariable("id") UUID id,
+    public OutgoingDto updateUsetStatus(@PathVariable("id") UUID id,
                                         @RequestBody UserUpdateStatusIncomingDto userUpdateStatusIncomingDto) {
         try {
             DtoValidator.validate(userUpdateStatusIncomingDto);
             userService.updateStatus(id, userUpdateStatusIncomingDto);
-            ResponseDto response = new ResponseDto();
-            response.setService(new ServiceInformation());
-            return response;
-        } catch (D2GBaseException e) {
-            ResponseDto response = new ResponseDto();
-            response.setService(new ServiceInformation(e));
-            return response;
+            return ResponseDtoBuilder.getResponseDto();
+        } catch (D2GBaseException d2g) {
+            return ResponseDtoBuilder.getResponseDto(d2g);
         } catch (Exception e) {
-            ResponseDto response = new ResponseDto();
-            response.setService(new ServiceInformation(e));
-            return response;
+            return ResponseDtoBuilder.getResponseDto(e);
+        }
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(path = "/user/current", method = RequestMethod.PUT)
+    @ResponseBody
+    public OutgoingDto updateCurrentUser(@RequestBody UserUpdateIncomingDto incomingDto,
+                                         Principal principal) {
+        try {
+            userService.updateCurrentUser(incomingDto, principal.getName());
+            return ResponseDtoBuilder.getResponseDto();
+        }
+        catch (D2GBaseException d2g){
+            return ResponseDtoBuilder.getResponseDto(d2g);
+        }catch (Exception e){
+            return ResponseDtoBuilder.getResponseDto(e);
+        }
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(path = "/user/password", method = RequestMethod.PUT)
+    @ResponseBody
+    public OutgoingDto updateCurrentUserPassword(@RequestBody UserUpdatePasswordIncomingDto incomingDto,
+                                                 Principal principal){
+        try {
+            DtoValidator.validate(incomingDto);
+            userService.updateCurrentUserPassword(incomingDto,principal.getName());
+            return ResponseDtoBuilder.getResponseDto();
+        } catch (D2GBaseException d2g) {
+            return ResponseDtoBuilder.getResponseDto(d2g);
+        }
+        catch (Exception e){
+            return ResponseDtoBuilder.getResponseDto(e);
         }
     }
 }

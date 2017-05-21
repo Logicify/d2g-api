@@ -7,9 +7,9 @@ import com.logicify.d2g.dtos.domain.dtos.IncomingDto;
  */
 public class StoreCreateIncomingDto implements IncomingDto {
 
-    String name;
+    private String name;
 
-    String location;
+    private String location;
 
     public String getName() {
         return name;

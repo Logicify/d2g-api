@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="6" author="Oleg Chigirin">
+        <renameColumn tableName="_currency" oldColumnName="currency" newColumnName="name"/>
+        <createIndex tableName="_category" indexName="CATEGORY_NAME_INDEX">
+            <column name="name"/>
+        </createIndex>
+        <createIndex tableName="_currency" indexName="CURRENCY_NAME_INDEX">
+            <column name="name"/>
+        </createIndex>
+        <createIndex tableName="_items" indexName="ITEMS_NAME_INDEX">
+            <column name="name"/>
+        </createIndex>
+        <createIndex tableName="_stores" indexName="STORES_NAME_INDEX">
+            <column name="name"/>
+        </createIndex>
+        <createIndex tableName="_purchased_items" indexName="PURCHASED_ITEMS_OWNER_INDEX">
+            <column name="owner"/>
+        </createIndex>
+        <createIndex tableName="_purchased_items" indexName="PURCHASED_ITEMS_OWNER_AND_ITEM_INDEX">
+            <column name="owner"/>
+            <column name="item"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

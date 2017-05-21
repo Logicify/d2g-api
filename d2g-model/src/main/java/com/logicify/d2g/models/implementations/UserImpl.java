@@ -1,5 +1,6 @@
 package com.logicify.d2g.models.implementations;
 
+import com.logicify.d2g.interfaces.Currency;
 import com.logicify.d2g.interfaces.Role;
 import com.logicify.d2g.interfaces.User;
 import com.logicify.d2g.interfaces.UserStatus;
@@ -29,6 +30,8 @@ public class UserImpl extends BaseIdentifiable implements User {
     private Role role;
 
     private ZonedDateTime createdDate;
+
+    private Currency currency;
 
     @Column(name = "first_name", length = MAX_NAME_LENGTH, nullable = false)
     @Override
@@ -117,5 +120,17 @@ public class UserImpl extends BaseIdentifiable implements User {
     @Override
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    @JoinColumn(name = "currency")
+    @ManyToOne(targetEntity = CurrencyImpl.class,fetch = FetchType.LAZY)
+    @Override
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    @Override
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 }

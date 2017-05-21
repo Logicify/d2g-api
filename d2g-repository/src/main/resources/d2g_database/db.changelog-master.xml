@@ -10,4 +10,6 @@
     <include file="src/main/resources/d2g_database/db.changelog-0.1.1.xml"/>
     <include file="src/main/resources/d2g_database/db.changelog-0.1.2.xml"/>
     <include file="src/main/resources/d2g_database/db.changelog-0.1.3.xml"/>
+    <include file="src/main/resources/d2g_database/db.changelog-0.1.4.xml"/>
+    <include file="src/main/resources/d2g_database/db.changelog-0.1.5.xml"/>
 </databaseChangeLog>

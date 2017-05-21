@@ -2,6 +2,7 @@ package com.logicify.d2g.services;
 
 import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserCreateIncomingDto;
 import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateIncomingDto;
+import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdatePasswordIncomingDto;
 import com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos.UserUpdateStatusIncomingDto;
 import com.logicify.d2g.dtos.domain.outgoingdtos.userpayload.UserPayload;
 import com.logicify.d2g.dtos.domain.outgoingdtos.userpayload.UsersListPayload;
@@ -32,6 +33,9 @@ public interface UserService {
 
     User findUserByEmail(String email);
 
-    UserPayload findUserDTO(String principal);
+    UserPayload findUserDTO(String principal) throws D2GBaseException;
 
+    void updateCurrentUser(UserUpdateIncomingDto incomingDto, String name) throws D2GBaseException;
+
+    void updateCurrentUserPassword(UserUpdatePasswordIncomingDto incomingDto, String email) throws D2GBaseException;
 }

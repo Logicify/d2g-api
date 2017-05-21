@@ -1,9 +1,8 @@
 package com.logicify.d2g.web.controllers;
 
 import com.logicify.d2g.dtos.domain.dtos.OutgoingDto;
-import com.logicify.d2g.dtos.domain.dtos.ServiceInformation;
+import com.logicify.d2g.dtos.domain.dtos.ResponseDtoBuilder;
 import com.logicify.d2g.dtos.domain.incomingdtos.securitysincomingdtos.UserLoginIncomingDto;
-import com.logicify.d2g.dtos.domain.outgoingdtos.ResponseDto;
 import com.logicify.d2g.exceptions.D2GBaseException;
 import com.logicify.d2g.services.UserService;
 import com.logicify.d2g.utils.DtoValidator;
@@ -38,14 +37,9 @@ public class SecurityController {
             Authentication authentication = new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword());
             Authentication auth = authenticationManager.authenticate(authentication);
             SecurityContextHolder.getContext().setAuthentication(auth);
-            ResponseDto responseDto = new ResponseDto();
-            responseDto.setService(new ServiceInformation());
-            responseDto.setPayload(userService.findUserDTO(dto.getEmail()));
-            return responseDto;
-        } catch (D2GBaseException e) {
-            ResponseDto responseDto = new ResponseDto();
-            responseDto.setService(new ServiceInformation(e));
-            return responseDto;
+            return ResponseDtoBuilder.getResponseDto(userService.findUserDTO(dto.getEmail()));
+        } catch (D2GBaseException d2g) {
+            return ResponseDtoBuilder.getResponseDto(d2g);
         }
     }
 
@@ -53,20 +47,28 @@ public class SecurityController {
     @RequestMapping(path = "/user/logout", method = RequestMethod.GET)
     @ResponseBody
     public OutgoingDto userLogout() {
-        SecurityContextHolder.clearContext();
-        ResponseDto responseDto = new ResponseDto();
-        responseDto.setService(new ServiceInformation());
-        return responseDto;
+        try {
+            SecurityContextHolder.clearContext();
+            return ResponseDtoBuilder.getResponseDto();
+        }
+        catch (Exception e){
+            return ResponseDtoBuilder.getResponseDto(e);
+        }
     }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/user/session", method = RequestMethod.GET)
     @ResponseBody
     public OutgoingDto userRestoreSession(Principal principal) {
-        String login = principal.getName();
-        ResponseDto responseDto = new ResponseDto();
-        responseDto.setService(new ServiceInformation());
-        responseDto.setPayload(userService.findUserDTO(principal.getName()));
-        return responseDto;
+        try {
+            String login = principal.getName();
+            return ResponseDtoBuilder.getResponseDto(userService.findUserDTO(principal.getName()));
+        }
+        catch (D2GBaseException d2g){
+            return ResponseDtoBuilder.getResponseDto(d2g);
+        }
+        catch (Exception e){
+            return ResponseDtoBuilder.getResponseDto(e);
+        }
     }
 }

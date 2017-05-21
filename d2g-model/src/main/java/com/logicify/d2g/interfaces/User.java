@@ -44,4 +44,8 @@ public interface User extends Identifiable {
     ZonedDateTime getCreatedDate();
 
     void setCreatedDate(ZonedDateTime createdDate);
+
+    Currency getCurrency();
+
+    void setCurrency(Currency currency);
 }

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="5" author="Oleg Chigirin">
+
+        <createTable tableName="_currency" schemaName="public">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="version" type="bigint"/>
+            <column name="currency" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_on" type="timestamp with time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_on" type="timestamp with time zone">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_by" type="uuid">
+                <constraints nullable="false" foreignKeyName="fk_currency_created_by_to_user"
+                             referencedTableName="_users" referencedColumnNames="id"/>
+            </column>
+            <column name="updated_by" type="uuid">
+                <constraints nullable="true" foreignKeyName="fk_currency_updated_by_to_user"
+                             referencedTableName="_users" referencedColumnNames="id"/>
+            </column>
+        </createTable>
+
+        <addColumn tableName="_users">
+            <column name="currency" type="uuid"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseTableName="_users" baseColumnNames="currency"
+                                 constraintName="fk_user_currency_to_currency_id"
+                                 referencedTableName="_currency"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="_stores" baseColumnNames="created_by"
+                                 constraintName="fk_stores_created_by_to_user"
+                                 referencedTableName="_users"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="_stores" baseColumnNames="updated_by"
+                                 constraintName="fk_stores_updated_by_to_user"
+                                 referencedTableName="_users"
+                                 referencedColumnNames="id"/>
+
+        <createTable tableName="_category" schemaName="public">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="version" type="bigint"/>
+            <column name="name" type="text">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="created_on" type="timestamp with time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_on" type="timestamp with time zone">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_by" type="uuid">
+                <constraints nullable="false" foreignKeyName="fk_category_created_by_to_user"
+                             referencedTableName="_users" referencedColumnNames="id"/>
+            </column>
+            <column name="updated_by" type="uuid">
+                <constraints nullable="true" foreignKeyName="fk_category_updated_by_to_user"
+                             referencedTableName="_users" referencedColumnNames="id"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="_items" schemaName="public">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="version" type="bigint"/>
+            <column name="name" type="text">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="category" type="uuid">
+                <constraints nullable="false" foreignKeyName="fk_item_category_to_category"
+                             referencedTableName="_category" referencedColumnNames="id"/>
+            </column>
+            <column name="created_on" type="timestamp with time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_on" type="timestamp with time zone">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_by" type="uuid">
+                <constraints nullable="false" foreignKeyName="fk_item_created_by_to_user"
+                             referencedTableName="_users" referencedColumnNames="id"/>
+            </column>
+            <column name="updated_by" type="uuid">
+                <constraints nullable="true" foreignKeyName="fk_item_updated_by_to_user"
+                             referencedTableName="_users" referencedColumnNames="id"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="_purchased_items" schemaName="public">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="version" type="bigint"/>
+            <column name="item" type="uuid">
+                <constraints nullable="false" foreignKeyName="fk_purchased_item_item_to_items"
+                             referencedTableName="_items" referencedColumnNames="id"/>
+            </column>
+            <column name="store" type="uuid">
+                <constraints nullable="true" foreignKeyName="fk_purchased_item_store_to_stores"
+                             referencedTableName="_stores" referencedColumnNames="id"/>
+            </column>
+            <column name="price" type="decimal(20,4)"/>
+            <column name="amount" type="decimal(20,4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency" type="uuid">
+                <constraints nullable="false" foreignKeyName="fk_purchased_item_currency_to_currency"
+                             referencedTableName="_currency" referencedColumnNames="id"/>
+            </column>
+            <column name="date_of_purchase" type="timestamp with time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="owner" type="uuid">
+                <constraints nullable="false" foreignKeyName="fk_purchased_item_owner_to_user"
+                             referencedTableName="_users" referencedColumnNames="id"/>
+            </column>
+            <column name="created_on" type="timestamp with time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_on" type="timestamp with time zone">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_by" type="uuid">
+                <constraints nullable="false" foreignKeyName="fk_item_created_by_to_user"
+                             referencedTableName="_users" referencedColumnNames="id"/>
+            </column>
+            <column name="updated_by" type="uuid">
+                <constraints nullable="true" foreignKeyName="fk_item_updated_by_to_user"
+                             referencedTableName="_users" referencedColumnNames="id"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

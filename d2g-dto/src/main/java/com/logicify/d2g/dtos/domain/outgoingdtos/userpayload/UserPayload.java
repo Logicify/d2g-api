@@ -19,6 +19,8 @@ public class UserPayload implements Payload {
 
     private String avatarUrl;
 
+    private String status;
+
     public UUID getId() {
         return id;
     }
@@ -59,4 +61,11 @@ public class UserPayload implements Payload {
         this.avatarUrl = avatarUrl;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

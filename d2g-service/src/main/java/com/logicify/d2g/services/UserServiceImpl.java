@@ -95,12 +95,6 @@ public class UserServiceImpl implements UserService {
         if (userUpdateIncomingDto.getEmail() != null) {
             user.setEmail(userUpdateIncomingDto.getEmail());
         }
-        if (userUpdateIncomingDto.getPassword() != null)
-            try {
-                user.setPasswordHash(createPasswordHash(userUpdateIncomingDto.getPassword()));
-            } catch (PasswordStorage.CannotPerformOperationException e) {
-                throw new D2GBaseException(D2GBaseExceptionCodes.UNCORRECTED_PASSWORD);
-            }
         user.setVersion(user.getVersion() + 1);
         userRepository.save(user);
     }
@@ -149,12 +143,6 @@ public class UserServiceImpl implements UserService {
         if (incomingDto.getEmail() != null) {
             user.setEmail(incomingDto.getEmail());
         }
-        if (incomingDto.getPassword() != null)
-            try {
-                user.setPasswordHash(createPasswordHash(incomingDto.getPassword()));
-            } catch (PasswordStorage.CannotPerformOperationException e) {
-                throw new D2GBaseException(D2GBaseExceptionCodes.UNCORRECTED_PASSWORD);
-            }
         user.setVersion(user.getVersion()+1);
         userRepository.save(user);
 

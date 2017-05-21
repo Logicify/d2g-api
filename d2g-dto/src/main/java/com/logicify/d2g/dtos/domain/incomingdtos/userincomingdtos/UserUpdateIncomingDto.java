@@ -16,8 +16,6 @@ public class UserUpdateIncomingDto implements IncomingDto {
     @Size(max = User.MAX_NAME_LENGTH, message = "Last name is too long")
     private String lastName;
 
-    private String password;
-
     @Size(max = User.AVATAR_URL_LENGTH, message = "Avatar Url is too long")
     private String avatarUrl;
 
@@ -38,14 +36,6 @@ public class UserUpdateIncomingDto implements IncomingDto {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getAvatarUrl() {

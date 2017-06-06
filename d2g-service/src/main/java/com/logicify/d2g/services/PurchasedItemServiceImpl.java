@@ -50,7 +50,7 @@ public class PurchasedItemServiceImpl implements PurchasedItemService {
     @Autowired
     private ModelMapper modelMapper;
 
-    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @Override
     @Transactional

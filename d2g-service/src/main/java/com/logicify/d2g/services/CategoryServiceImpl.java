@@ -50,7 +50,7 @@ public class CategoryServiceImpl implements CategoryService {
         List<CategoryPayload> categoryPayloads = new ArrayList<>();
         categories.forEach(category -> categoryPayloads.add(modelMapper.map(category,CategoryPayload.class)));
         CategoriesListPayload response = new CategoriesListPayload();
-        response.setCategoryList(categoryPayloads);
+        response.setCategories(categoryPayloads);
         return response;
     }
 
@@ -75,7 +75,7 @@ public class CategoryServiceImpl implements CategoryService {
         List<CategoryPayload> payloads = new ArrayList<>();
         categories.forEach(categoryConsumer -> payloads.add(modelMapper.map(categoryConsumer,CategoryPayload.class)));
         CategoriesListPayload response = new CategoriesListPayload();
-        response.setCategoryList(payloads);
+        response.setCategories(payloads);
         return response;
     }
 

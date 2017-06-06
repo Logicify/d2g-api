@@ -128,7 +128,7 @@ public class PurchasedItemController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(path = "/purchased/current/find-by-item", method = RequestMethod.GET)
+    @RequestMapping(path = "/purchased/current/by-item", method = RequestMethod.GET)
     @ResponseBody
     public OutgoingDto findCurrentUserPurchasedItemByItem(@RequestParam(name = "item") UUID item,Principal principal){
         try {
@@ -142,7 +142,7 @@ public class PurchasedItemController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(path = "/purchased/current/last-month", method = RequestMethod.GET)
+    @RequestMapping(path = "/purchased/current/by-last-month", method = RequestMethod.GET)
     @ResponseBody
     public OutgoingDto findCurrentUserPurchasedItemsForLastMonth(Principal principal){
         try {
@@ -170,7 +170,7 @@ public class PurchasedItemController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(path = "/purchased/current/expenses/last-month", method = RequestMethod.GET)
+    @RequestMapping(path = "/purchased/current/expenses/by-last-month", method = RequestMethod.GET)
     @ResponseBody
     public OutgoingDto findCurrentUserExpensesForLastMonth(Principal principal){
         try {

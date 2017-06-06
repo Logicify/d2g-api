@@ -50,7 +50,7 @@ public class ItemController {
         }
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/item/{id}", method = RequestMethod.GET)
     @ResponseBody
     public OutgoingDto getItemById(@PathVariable("id") UUID id) {

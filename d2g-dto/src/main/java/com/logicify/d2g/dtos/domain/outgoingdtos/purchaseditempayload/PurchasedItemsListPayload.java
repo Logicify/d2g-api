@@ -9,13 +9,13 @@ import java.util.List;
  */
 public class PurchasedItemsListPayload implements Payload {
 
-    private List<PurchasedItemPayload> purchasedItem;
+    private List<PurchasedItemPayload> purchasedItems;
 
     public List<PurchasedItemPayload> getPurchasedItem() {
-        return purchasedItem;
+        return purchasedItems;
     }
 
     public void setPurchasedItem(List<PurchasedItemPayload> purchasedItem) {
-        this.purchasedItem = purchasedItem;
+        this.purchasedItems = purchasedItem;
     }
 }

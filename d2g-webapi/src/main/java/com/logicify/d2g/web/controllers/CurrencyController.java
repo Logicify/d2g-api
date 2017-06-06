@@ -39,7 +39,7 @@ public class CurrencyController {
         }
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/currency", method = RequestMethod.GET)
     @ResponseBody
     public OutgoingDto getAllCurrency() {
@@ -50,7 +50,7 @@ public class CurrencyController {
         }
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/currency/{id}", method = RequestMethod.GET)
     @ResponseBody
     public OutgoingDto getCurrencyById(@PathVariable("id") UUID id) {

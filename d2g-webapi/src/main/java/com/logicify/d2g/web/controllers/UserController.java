@@ -129,7 +129,7 @@ public class UserController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(path = "/user/password", method = RequestMethod.PUT)
+    @RequestMapping(path = "/user/current/password", method = RequestMethod.PUT)
     @ResponseBody
     public OutgoingDto updateCurrentUserPassword(@RequestBody UserUpdatePasswordIncomingDto incomingDto,
                                                  Principal principal){

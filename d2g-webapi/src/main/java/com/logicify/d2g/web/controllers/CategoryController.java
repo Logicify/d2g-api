@@ -39,7 +39,7 @@ public class CategoryController {
         }
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/category", method = RequestMethod.GET)
     @ResponseBody
     public OutgoingDto getAllCategories() {
@@ -50,7 +50,7 @@ public class CategoryController {
         }
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/category/{id}", method = RequestMethod.GET)
     @ResponseBody
     public OutgoingDto getCategoryById(@PathVariable("id") UUID id) {

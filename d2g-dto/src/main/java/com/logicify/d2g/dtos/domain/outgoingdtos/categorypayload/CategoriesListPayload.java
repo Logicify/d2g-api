@@ -9,14 +9,14 @@ import java.util.List;
  */
 public class CategoriesListPayload implements Payload {
 
-    private List<CategoryPayload> categoryList;
+    private List<CategoryPayload> categories;
 
-    public List<CategoryPayload> getCategoryList() {
-        return categoryList;
+    public List<CategoryPayload> getCategories() {
+        return categories;
     }
 
-    public void setCategoryList(List<CategoryPayload> categoryList) {
-        this.categoryList = categoryList;
+    public void setCategories(List<CategoryPayload> categories) {
+        this.categories = categories;
     }
 
 

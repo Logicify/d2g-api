@@ -20,9 +20,10 @@ public class PurchasedItemUpdateIncomingDto implements IncomingDto {
     @Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}+$", message = "WRONG_UUID_FORMAT")
     private UUID store;
 
-    @Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}+$", message = "WRONG_UUID_FORMAT")
+    @Pattern(regexp = "^[0-9]{0,20}+\\.+[0-9]{0,4}", message = "INVALID_AMOUNT")
     private BigDecimal amount;
 
+    @Pattern(regexp = "^[0-9]{0,20}+\\.+[0-9]{0,4}", message = "INVALID_PRICE")
     private BigDecimal price;
 
     @Pattern(regexp = "^(((0[1-9]|[12]\\d|3[01])/(0[13578]|1[02])/((19|[2-9]\\d)\\d{2}))|((0[1-9]|[12]\\d|30)/(0[13456789]|1[012])/((19|[2-9]\\d)\\d{2}))|((0[1-9]|1\\d|2[0-8])/02/((19|[2-9]\\d)\\d{2}))|(29/02/((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$",

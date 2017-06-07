@@ -26,7 +26,7 @@ public class PurchasedItemController {
     private PurchasedItemService purchasedItemService;
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(path = "/purchased/", method = RequestMethod.POST)
+        @RequestMapping(path = "/purchased", method = RequestMethod.POST)
     @ResponseBody
     public OutgoingDto createPurchasedItem(@RequestBody PurchasedItemCreateIncomingDto incomingDto, Principal principal) {
         try {

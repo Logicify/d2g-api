@@ -23,12 +23,12 @@ public class UserCreateIncomingDto implements IncomingDto {
     private String lastName;
 
     @NotNull(message = "EMAIL_IS_NULL")
-    @Pattern(regexp="[\\w_]+[\\w_-]*(\\.[\\w_-]+)*@[\\w_]+[\\w_-]*(\\.[\\w_-]+)+$", message= "INVALID_EMAIL")
+    @Pattern(regexp="^[-!#$%&'*+/0-9=?A-Z^_a-z{|}~](\\.?[-!#$%&'*+/0-9=?A-Z^_a-z{|}~])*@[a-zA-Z](-?[a-zA-Z0-9])*(\\.[a-zA-Z](-?[a-zA-Z0-9])*)+$", message= "INVALID_EMAIL")
     @Size(max = User.EMAIL_MAX_LENGTH, message = "INVALID_EMAIL")
     private String email;
 
     @NotNull(message = "PASSWORD_IS_NULL")
-    @Pattern.List(value = {@Pattern(regexp = "^[\\w-=\\[\\]\\\\;,./~!@#$%^&*()_+{}|:<>?]+$", message = "UNCORRECTED_PASSWORD"),
+    @Pattern.List(value = {@Pattern(regexp = "^[\\w\\p{Punct}]+$", message = "UNCORRECTED_PASSWORD"),
             @Pattern(regexp = "^.*[A-Z].*$", message = "UNSECURED_PASSWORD"),
             @Pattern(regexp = "^.*[0-9].*$", message = "UNSECURED_PASSWORD")})
     @Size(max = User.PASSWORD_MAX_LENGTH, min = User.PASSWORD_MIN_LENGTH, message = "UNCORRECTED_PASSWORD")

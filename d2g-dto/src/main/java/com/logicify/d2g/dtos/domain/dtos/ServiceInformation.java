@@ -1,7 +1,7 @@
 package com.logicify.d2g.dtos.domain.dtos;
 
 import com.logicify.d2g.exceptions.D2GBaseException;
-import com.logicify.d2g.exceptions.NewD2GBaseExceptionCodes;
+import com.logicify.d2g.exceptions.D2GBaseExceptionCodes;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -21,8 +21,8 @@ public class ServiceInformation {
     private String nodeId;
 
     public ServiceInformation(){
-        this.errorCode= NewD2GBaseExceptionCodes.ALL_CORRECT.getId();
-        this.errorMessage= NewD2GBaseExceptionCodes.ALL_CORRECT.getErrorMessage();
+        this.errorCode= D2GBaseExceptionCodes.ALL_CORRECT.getId();
+        this.errorMessage= D2GBaseExceptionCodes.ALL_CORRECT.getErrorMessage();
         try {
             this.nodeId= String.valueOf(InetAddress.getLocalHost());
         } catch (UnknownHostException e) {
@@ -43,8 +43,8 @@ public class ServiceInformation {
     }
 
     public ServiceInformation(Exception e){
-        this.errorCode=NewD2GBaseExceptionCodes.SOMETHING_WENT_WRONG.getId();
-        this.errorMessage=NewD2GBaseExceptionCodes.SOMETHING_WENT_WRONG.getErrorMessage();
+        this.errorCode= D2GBaseExceptionCodes.SOMETHING_WENT_WRONG.getId();
+        this.errorMessage= D2GBaseExceptionCodes.SOMETHING_WENT_WRONG.getErrorMessage();
         try {
             this.nodeId= String.valueOf(InetAddress.getLocalHost());
         } catch (UnknownHostException error) {

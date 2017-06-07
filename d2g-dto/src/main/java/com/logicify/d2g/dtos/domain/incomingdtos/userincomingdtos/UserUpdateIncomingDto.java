@@ -1,10 +1,14 @@
 package com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos;
 
 import com.logicify.d2g.dtos.domain.dtos.IncomingDto;
+import com.logicify.d2g.exceptions.D2GBaseExceptionCodes;
 import com.logicify.d2g.interfaces.User;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import static com.logicify.d2g.exceptions.D2GBaseExceptionCodes.FORMAT_IS_NOT_SUPPORTED;
+import static com.logicify.d2g.exceptions.D2GBaseExceptionCodes.SELECT_IMAGE;
 
 /**
  * Created by coi on 24.02.2017.
@@ -20,6 +24,7 @@ public class UserUpdateIncomingDto implements IncomingDto {
     private String lastName;
 
     @Size(max = User.AVATAR_URL_LENGTH, message = "AVATAR_URL_TO_LONG")
+    @Pattern(regexp = "^.+(\\.jpg|\\.jpeg|\\.png|\\.gif)+$", message = "FORMAT_IS_NOT_SUPPORTED")
     private String avatarUrl;
 
     @Pattern(regexp="[\\w_]+[\\w_-]*(\\.[\\w_-]+)*@[\\w_]+[\\w_-]*(\\.[\\w_-]+)+$", message= "INVALID_EMAIL")

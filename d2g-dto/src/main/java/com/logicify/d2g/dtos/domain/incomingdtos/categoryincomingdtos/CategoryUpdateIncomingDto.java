@@ -9,7 +9,7 @@ import javax.validation.constraints.Pattern;
  */
 public class CategoryUpdateIncomingDto implements IncomingDto {
 
-    @Pattern(regexp = "^[\\w\\s-=\\[\\]\\\\;,./~!@#$%^&*()_+{}|:<>?]*$", message = "CATEGORY_NAME_IS_INVALID")
+    @Pattern(regexp = "^[\\w\\s\\p{Punct}']*$", message = "CATEGORY_NAME_IS_INVALID")
     private String name;
 
     public String getName() {

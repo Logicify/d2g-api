@@ -5,7 +5,7 @@ import com.logicify.d2g.dtos.domain.incomingdtos.categoryincomingdtos.CategoryUp
 import com.logicify.d2g.dtos.domain.outgoingdtos.categorypayload.CategoriesListPayload;
 import com.logicify.d2g.dtos.domain.outgoingdtos.categorypayload.CategoryPayload;
 import com.logicify.d2g.exceptions.D2GBaseException;
-import com.logicify.d2g.exceptions.NewD2GBaseExceptionCodes;
+import com.logicify.d2g.exceptions.D2GBaseExceptionCodes;
 import com.logicify.d2g.interfaces.User;
 import com.logicify.d2g.models.implementations.CategoryImpl;
 import com.logicify.d2g.repositories.CategoryRepository;
@@ -59,13 +59,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryPayload getCategoryDtoById(UUID id) throws D2GBaseException {
         if (!categoryRepository.exists(id)) throw
-                new D2GBaseException(NewD2GBaseExceptionCodes.CATEGORY_NOT_EXIST);
+                new D2GBaseException(D2GBaseExceptionCodes.CATEGORY_NOT_EXIST);
         return modelMapper.map(categoryRepository.findOne(id),CategoryPayload.class);
     }
 
     @Override
     public CategoryImpl getCategoryById(UUID id) throws D2GBaseException {
-        if (!categoryRepository.exists(id)) throw new D2GBaseException(NewD2GBaseExceptionCodes.CATEGORY_NOT_EXIST);
+        if (!categoryRepository.exists(id)) throw new D2GBaseException(D2GBaseExceptionCodes.CATEGORY_NOT_EXIST);
         return categoryRepository.findOne(id);
     }
 
@@ -73,7 +73,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoriesListPayload getCategoriesByName(String name) throws D2GBaseException {
         List<CategoryImpl> categories = categoryRepository.findByNameContaining(name);
         if (categories.isEmpty()) throw
-                new D2GBaseException(NewD2GBaseExceptionCodes.CATEGORY_NAME_NOT_EXIST);
+                new D2GBaseException(D2GBaseExceptionCodes.CATEGORY_NAME_NOT_EXIST);
         List<CategoryPayload> payloads = new ArrayList<>();
         categories.forEach(categoryConsumer -> payloads.add(modelMapper.map(categoryConsumer,CategoryPayload.class)));
         CategoriesListPayload response = new CategoriesListPayload();
@@ -85,7 +85,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public void updateCategoryById(CategoryUpdateIncomingDto incomingDto, UUID id, String email) throws D2GBaseException {
         if (!categoryRepository.exists(id)) throw
-                new D2GBaseException(NewD2GBaseExceptionCodes.CATEGORY_NOT_EXIST);
+                new D2GBaseException(D2GBaseExceptionCodes.CATEGORY_NOT_EXIST);
         User user = userService.findUserByEmail(email);
         CategoryImpl category = categoryRepository.findOne(id);
         if (incomingDto.getName()!=null) category.setName(incomingDto.getName());
@@ -98,7 +98,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategoryById(UUID id) throws D2GBaseException {
         if (!categoryRepository.exists(id)) throw
-                new D2GBaseException(NewD2GBaseExceptionCodes.CATEGORY_NOT_EXIST);
+                new D2GBaseException(D2GBaseExceptionCodes.CATEGORY_NOT_EXIST);
         categoryRepository.delete(id);
     }
 }

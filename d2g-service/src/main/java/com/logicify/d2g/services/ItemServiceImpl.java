@@ -5,7 +5,7 @@ import com.logicify.d2g.dtos.domain.incomingdtos.itemincomingdtos.ItemUpdateInco
 import com.logicify.d2g.dtos.domain.outgoingdtos.itempayload.ItemPayload;
 import com.logicify.d2g.dtos.domain.outgoingdtos.itempayload.ItemsListPayload;
 import com.logicify.d2g.exceptions.D2GBaseException;
-import com.logicify.d2g.exceptions.NewD2GBaseExceptionCodes;
+import com.logicify.d2g.exceptions.D2GBaseExceptionCodes;
 import com.logicify.d2g.interfaces.Category;
 import com.logicify.d2g.interfaces.Item;
 import com.logicify.d2g.interfaces.User;
@@ -44,7 +44,7 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public void createItem(ItemCreateIncomingDto incomingDto, String email) throws D2GBaseException {
         User user = userService.findUserByEmail(email);
-        if (user == null) throw new D2GBaseException(NewD2GBaseExceptionCodes.USER_NOT_EXIST);
+        if (user == null) throw new D2GBaseException(D2GBaseExceptionCodes.USER_NOT_EXIST);
         ItemImpl item = modelMapper.map(incomingDto,ItemImpl.class);
         Category category = categoryService.getCategoryById(incomingDto.getCategory());
         item.setCategory(category);
@@ -70,7 +70,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemPayload getItemDtoById(UUID id) throws D2GBaseException {
-        if (!itemRepository.exists(id)) throw new D2GBaseException(NewD2GBaseExceptionCodes.ITEM_NOT_EXIST);
+        if (!itemRepository.exists(id)) throw new D2GBaseException(D2GBaseExceptionCodes.ITEM_NOT_EXIST);
         ItemImpl item = itemRepository.findOne(id);
         ItemPayload payload = modelMapper.map(item,ItemPayload.class);
         payload.setCategory(item.getCategory().getId());
@@ -81,7 +81,7 @@ public class ItemServiceImpl implements ItemService {
     public ItemsListPayload getItemsByName(String name) throws D2GBaseException {
         List<ItemImpl> items = itemRepository.findByNameContaining(name);
         if (items.isEmpty())
-            throw new D2GBaseException(NewD2GBaseExceptionCodes.ITEM_NAME_NOT_EXIST);
+            throw new D2GBaseException(D2GBaseExceptionCodes.ITEM_NAME_NOT_EXIST);
         List<ItemPayload> itemPayloads = new ArrayList<>();
         items.forEach(item -> itemPayloads.add(modelMapper.map(item,ItemPayload.class)));
         ItemsListPayload response = new ItemsListPayload();
@@ -93,9 +93,9 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public void updateItemById(ItemUpdateIncomingDto incomingDto, UUID id, String email) throws D2GBaseException {
         User user = userService.findUserByEmail(email);
-        if (user == null) throw new D2GBaseException(NewD2GBaseExceptionCodes.USER_NOT_EXIST);
+        if (user == null) throw new D2GBaseException(D2GBaseExceptionCodes.USER_NOT_EXIST);
         if (!itemRepository.exists(id))
-            throw new D2GBaseException(NewD2GBaseExceptionCodes.ITEM_NOT_EXIST);
+            throw new D2GBaseException(D2GBaseExceptionCodes.ITEM_NOT_EXIST);
         ItemImpl item = itemRepository.findOne(id);
         if (incomingDto.getName() != null) item.setName(incomingDto.getName());
         if (incomingDto.getCategory() != null) {
@@ -109,13 +109,13 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void deleteItemById(UUID id) throws D2GBaseException {
-        if (!itemRepository.exists(id)) throw new D2GBaseException(NewD2GBaseExceptionCodes.ITEM_NOT_EXIST);
+        if (!itemRepository.exists(id)) throw new D2GBaseException(D2GBaseExceptionCodes.ITEM_NOT_EXIST);
         itemRepository.delete(id);
     }
 
     @Override
     public Item getItemById(UUID id) throws D2GBaseException {
-        if (!itemRepository.exists(id)) throw new D2GBaseException(NewD2GBaseExceptionCodes.ITEM_NOT_EXIST);
+        if (!itemRepository.exists(id)) throw new D2GBaseException(D2GBaseExceptionCodes.ITEM_NOT_EXIST);
         return itemRepository.findOne(id);
     }
 

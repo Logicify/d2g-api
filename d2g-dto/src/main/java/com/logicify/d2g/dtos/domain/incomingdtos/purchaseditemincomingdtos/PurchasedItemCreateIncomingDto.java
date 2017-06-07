@@ -1,14 +1,15 @@
 package com.logicify.d2g.dtos.domain.incomingdtos.purchaseditemincomingdtos;
 
 import com.logicify.d2g.dtos.domain.dtos.IncomingDto;
-import com.logicify.d2g.exceptions.NewD2GBaseExceptionCodes;
+import com.logicify.d2g.exceptions.D2GBaseExceptionCodes;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import static com.logicify.d2g.exceptions.NewD2GBaseExceptionCodes.*;
+import static com.logicify.d2g.exceptions.D2GBaseExceptionCodes.INVALID_AMOUNT;
+import static com.logicify.d2g.exceptions.D2GBaseExceptionCodes.INVALID_PRICE;
 
 /**
  * Created by twilight on 17.05.17.
@@ -28,9 +29,11 @@ public class PurchasedItemCreateIncomingDto implements IncomingDto {
     private UUID store;
 
     @NotNull(message = "AMOUNT_IS_NULL")
+    @Pattern(regexp = "^[0-9]{0,20}+\\.+[0-9]{0,4}", message = "INVALID_AMOUNT")
     private BigDecimal amount;
 
     @NotNull(message = "PRICE_IS_NULL")
+    @Pattern(regexp = "^[0-9]{0,20}+\\.+[0-9]{0,4}", message = "INVALID_PRICE")
     private BigDecimal price;
 
     @NotNull(message = "DATE_OF_PURCHASE_IS_NULL")

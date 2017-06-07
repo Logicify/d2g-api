@@ -11,7 +11,7 @@ import javax.validation.constraints.Pattern;
 public class CurrencyCreateIncomingDto implements IncomingDto {
 
     @NotNull(message = "CURRENCY_NAME_IS_NULL")
-    @Pattern(regexp = "^[\\p{L}]*$", message = "CURRENCY_NAME_IS_INVALID")
+    @Pattern(regexp = "^[\\p{L}{3}]*$", message = "CURRENCY_NAME_IS_INVALID")
     private String name;
 
     public String getName() {

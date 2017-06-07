@@ -11,7 +11,7 @@ import javax.validation.constraints.Pattern;
 public class CategoryCreateIncomingDto implements IncomingDto {
 
     @NotNull(message = "CATEGORY_NAME_IS_NULL")
-    @Pattern(regexp = "^[\\w\\s-=\\[\\]\\\\;,./~!@#$%^&*()_+{}|:<>?]*$", message = "CATEGORY_NAME_IS_INVALID")
+    @Pattern(regexp = "^[\\w\\s\\p{Punct}']*$", message = "CATEGORY_NAME_IS_INVALID")
     private String name;
 
     public String getName() {

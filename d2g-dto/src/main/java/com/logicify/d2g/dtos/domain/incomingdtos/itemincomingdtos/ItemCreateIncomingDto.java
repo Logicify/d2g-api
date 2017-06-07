@@ -15,7 +15,7 @@ import java.util.UUID;
 public class ItemCreateIncomingDto implements IncomingDto {
 
     @NotNull(message = "ITEM_NAME_IS_NULL")
-    @Pattern(regexp = "^[\\w\\s-=\\[\\]\\\\';,./~!@#$%^&*()_+{}|:<>?]*$", message = "ITEM_NAME_IS_INVALID")
+    @Pattern(regexp = "^[\\w\\s\\p{Punct}']*$", message = "ITEM_NAME_IS_INVALID")
     @Size(min = Item.ITEM_NAME_MIN_LENGTH, max = Item.ITEM_NAME_MAX_LENGTH, message = "ITEM_NAME_IS_INVALID")
     private String name;
 

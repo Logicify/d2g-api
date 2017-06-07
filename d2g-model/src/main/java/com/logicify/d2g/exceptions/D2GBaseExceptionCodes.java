@@ -3,7 +3,7 @@ package com.logicify.d2g.exceptions;
 /**
  * Created by twilight on 06.06.17.
  */
-public enum NewD2GBaseExceptionCodes {
+public enum D2GBaseExceptionCodes {
 
     ALL_CORRECT(0, null),
     NO_INTERNET_CONNECTION(1, "No internet connection"),
@@ -72,15 +72,14 @@ public enum NewD2GBaseExceptionCodes {
     WRONG_UUID_FORMAT(66, "There is no uuid"),
     AMOUNT_IS_NULL(67, "Amount is required"),
     STORE_IS_NULL(68, "Store is required"),
-    STORE_WITH_THIS_NAME_NOT_EXIST(69, "Store with this name not exist"),
-    CURRENCY_WITH_THIS_NAME_NOT_EXIST(70, "Currency with this name not exist"),
-    USER_WHIT_THIS_ID_NOT_EXIST(71, "User with this id not exist");
+    STORE_WITH_THIS_NAME_NOT_EXIST(69, "Store with this name not exist"),//TODO:Check for the same error message
+    CURRENCY_WITH_THIS_NAME_NOT_EXIST(70, "Currency with this name not exist");
 
     private final int id;
 
     private final String errorMessage;
 
-    NewD2GBaseExceptionCodes(int id, String errorMessage) {
+    D2GBaseExceptionCodes(int id, String errorMessage) {
         this.id = id;
         this.errorMessage = errorMessage;
     }

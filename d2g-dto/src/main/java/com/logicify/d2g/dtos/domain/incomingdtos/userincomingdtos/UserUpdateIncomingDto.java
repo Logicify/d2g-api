@@ -3,6 +3,7 @@ package com.logicify.d2g.dtos.domain.incomingdtos.userincomingdtos;
 import com.logicify.d2g.dtos.domain.dtos.IncomingDto;
 import com.logicify.d2g.interfaces.User;
 
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -10,16 +11,19 @@ import javax.validation.constraints.Size;
  */
 public class UserUpdateIncomingDto implements IncomingDto {
 
-    @Size(max = User.MAX_NAME_LENGTH, message = "First name is too long")
+    @Size(max = User.FIRST_NAME_MAX_LENGTH,min = User.FIRST_NAME_MIN_LENGTH,message = "WRONG_FIRST_NAME")
+    @Pattern(regexp = "^[A-Za-z]+([A-Za-z\\s'-]*[A-Za-z]+)?$", message = "WRONG_FIRST_NAME")
     private String firstName;
 
-    @Size(max = User.MAX_NAME_LENGTH, message = "Last name is too long")
+    @Size(max = User.LAST_NAME_MAX_LENGTH, min = User.LAST_NAME_MIN_LENGTH, message = "WRONG_LAST_NAME")
+    @Pattern(regexp = "^[A-z]+([A-z\\s'-]*[A-z]+)?$", message = "WRONG_LAST_NAME")
     private String lastName;
 
-    @Size(max = User.AVATAR_URL_LENGTH, message = "Avatar Url is too long")
+    @Size(max = User.AVATAR_URL_LENGTH, message = "AVATAR_URL_TO_LONG")
     private String avatarUrl;
 
-    @Size(max = User.MAX_EMAIL_LENGTH, message = "Email is too long")
+    @Pattern(regexp="[\\w_]+[\\w_-]*(\\.[\\w_-]+)*@[\\w_]+[\\w_-]*(\\.[\\w_-]+)+$", message= "INVALID_EMAIL")
+    @Size(max = User.EMAIL_MAX_LENGTH, message = "INVALID_EMAIL")
     private String email;
 
     public String getFirstName() {

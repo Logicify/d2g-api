@@ -33,7 +33,7 @@ public class UserImpl extends BaseIdentifiable implements User {
 
     private Currency currency;
 
-    @Column(name = "first_name", length = MAX_NAME_LENGTH, nullable = false)
+    @Column(name = "first_name", length = FIRST_NAME_MAX_LENGTH, nullable = false)
     @Override
     public String getFirstName() {
         return firstName;
@@ -44,7 +44,7 @@ public class UserImpl extends BaseIdentifiable implements User {
         this.firstName = firstName;
     }
 
-    @Column(name = "last_name", length = MAX_NAME_LENGTH, nullable = false)
+    @Column(name = "last_name", length = LAST_NAME_MAX_LENGTH, nullable = false)
     @Override
     public String getLastName() {
         return lastName;
@@ -55,7 +55,7 @@ public class UserImpl extends BaseIdentifiable implements User {
         this.lastName = lastName;
     }
 
-    @Column(name = "email", length = MAX_EMAIL_LENGTH, nullable = false, unique = true)
+    @Column(name = "email", length = EMAIL_MAX_LENGTH, nullable = false, unique = true)
     @Override
     public String getEmail() {
         return email;

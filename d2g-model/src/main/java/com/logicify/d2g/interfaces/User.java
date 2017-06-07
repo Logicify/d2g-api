@@ -7,9 +7,19 @@ import java.time.ZonedDateTime;
  */
 public interface User extends Identifiable {
 
-    int MAX_NAME_LENGTH = 128;
+    int EMAIL_MAX_LENGTH = 255;
 
-    int MAX_EMAIL_LENGTH = 512;
+    int PASSWORD_MIN_LENGTH = 8;
+
+    int PASSWORD_MAX_LENGTH = 20;
+
+    int FIRST_NAME_MIN_LENGTH = 2;
+
+    int FIRST_NAME_MAX_LENGTH = 50;
+
+    int LAST_NAME_MIN_LENGTH = 2;
+
+    int LAST_NAME_MAX_LENGTH = 50;
 
     int AVATAR_URL_LENGTH = 1000;
 

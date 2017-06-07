@@ -12,20 +12,26 @@ import javax.validation.constraints.Size;
  */
 public class UserCreateIncomingDto implements IncomingDto {
 
-    @NotNull(message = "First name is empty")
-    @Size(max = User.MAX_NAME_LENGTH, message = "First name is too long")
+    @NotNull(message = "FIRST_NAME_IS_NULL")
+    @Size(max = User.FIRST_NAME_MAX_LENGTH,min = User.FIRST_NAME_MIN_LENGTH,message = "WRONG_FIRST_NAME")
+    @Pattern(regexp = "^[A-Za-z]+([A-Za-z\\s'-]*[A-Za-z]+)?$", message = "WRONG_FIRST_NAME")
     private String firstName;
 
-    @NotNull(message = "Last name is empty")
-    @Size(max = User.MAX_NAME_LENGTH, message = "First name is too long")
+    @NotNull(message = "LAST_NAME_IS_NULL")
+    @Size(max = User.LAST_NAME_MAX_LENGTH, min = User.LAST_NAME_MIN_LENGTH, message = "WRONG_LAST_NAME")
+    @Pattern(regexp = "^[A-z]+([A-z\\s'-]*[A-z]+)?$", message = "WRONG_LAST_NAME")
     private String lastName;
 
-    @NotNull(message = "Email is empty")
-    @Pattern(regexp=".+@.+\\..+", message="Please provide a valid email address")
-    @Size(max = User.MAX_EMAIL_LENGTH, message = "Email is too long")
+    @NotNull(message = "EMAIL_IS_NULL")
+    @Pattern(regexp="[\\w_]+[\\w_-]*(\\.[\\w_-]+)*@[\\w_]+[\\w_-]*(\\.[\\w_-]+)+$", message= "INVALID_EMAIL")
+    @Size(max = User.EMAIL_MAX_LENGTH, message = "INVALID_EMAIL")
     private String email;
 
-    @NotNull(message = "Password is empty")
+    @NotNull(message = "PASSWORD_IS_NULL")
+    @Pattern.List(value = {@Pattern(regexp = "^[\\w\\p{Punct}]+$", message = "UNCORRECTED_PASSWORD"),
+            @Pattern(regexp = "^.*[A-Z].*$", message = "UNSECURED_PASSWORD"),
+            @Pattern(regexp = "^.*[0-9].*$", message = "UNSECURED_PASSWORD")})
+    @Size(max = User.PASSWORD_MAX_LENGTH, min = User.PASSWORD_MIN_LENGTH, message = "UNCORRECTED_PASSWORD")
     private String password;
 
     public String getFirstName() {

@@ -13,9 +13,9 @@ public class D2GBaseException extends Exception {
         this.errorMessage = code.getMessage();
     }
 
-    public D2GBaseException(D2GBaseExceptionCodes errorCode, String errorMessage) {
+    public D2GBaseException(NewD2GBaseExceptionCodes errorCode) {
         this.errorCode=errorCode.getId();
-        this.errorMessage=errorMessage;
+        this.errorMessage=errorCode.getErrorMessage();
     }
 
     public int getErrorCode() {

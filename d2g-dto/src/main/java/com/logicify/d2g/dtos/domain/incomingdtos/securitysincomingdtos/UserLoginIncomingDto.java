@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 public class UserLoginIncomingDto implements IncomingDto {
 
     @NotNull(message = "Email is empty")
-    @Size(max = User.MAX_EMAIL_LENGTH,message = "Email is too long")
+    @Size(max = User.EMAIL_MAX_LENGTH,message = "Email is too long")
     private String email;
 
     @NotNull(message = "Password is empty")

@@ -26,7 +26,6 @@ public enum D2GBaseExceptionCodes {
     PURCHASED_ITEM_WITH_THIS_ID_NOT_EXIST(16, "Purchased item with this id not exist in database"),
     NOT_CURRENT_USER_ITEM(17, "Not current user item");
 
-
     private final int id;
     private final String message;
 

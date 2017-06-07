@@ -3,6 +3,7 @@ package com.logicify.d2g.utils;
 import com.logicify.d2g.dtos.domain.dtos.IncomingDto;
 import com.logicify.d2g.exceptions.D2GBaseException;
 import com.logicify.d2g.exceptions.D2GBaseExceptionCodes;
+import com.logicify.d2g.exceptions.NewD2GBaseExceptionCodes;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -22,13 +23,7 @@ public class DtoValidator {
         Validator validator = vf.getValidator();
         Set<ConstraintViolation<IncomingDto>> constraintViolations = validator.validate(incomingDto);
         if (!constraintViolations.isEmpty()) {
-            Set<String> violationMessages = new HashSet<>();
-            for (ConstraintViolation<IncomingDto> constraintViolation : constraintViolations) {
-                violationMessages.add(String.format(" %s: %s", constraintViolation.getPropertyPath(), constraintViolation.getMessage()));
-            }
-            StringBuilder stringBuilder = new StringBuilder();
-            violationMessages.forEach(violationMessage -> stringBuilder.append(violationMessage).append(";"));
-            throw new D2GBaseException(D2GBaseExceptionCodes.WRONG_DATA, String.format("Data is not valid:%s", stringBuilder.toString()));
+            throw new D2GBaseException(NewD2GBaseExceptionCodes.valueOf(constraintViolations.iterator().next().getMessage()));
         }
     }
 }

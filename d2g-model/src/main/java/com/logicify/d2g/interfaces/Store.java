@@ -7,6 +7,10 @@ import java.util.UUID;
  */
 public interface Store extends Auditable {
 
+    int STORE_NAME_MIN_LENGTH = 3;
+
+    int STORE_NAME_MAX_LENGTH = 32;
+
     String getName();
 
     void setName(String name);

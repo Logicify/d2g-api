@@ -1,7 +1,10 @@
 package com.logicify.d2g.dtos.domain.incomingdtos.itemincomingdtos;
 
 import com.logicify.d2g.dtos.domain.dtos.IncomingDto;
+import com.logicify.d2g.interfaces.Item;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.UUID;
 
 /**
@@ -9,8 +12,11 @@ import java.util.UUID;
  */
 public class ItemUpdateIncomingDto implements IncomingDto {
 
+    @Pattern(regexp = "^[\\w\\s-=\\[\\]\\\\';,./~!@#$%^&*()_+{}|:<>?]*$", message = "ITEM_NAME_IS_INVALID")
+    @Size(min = Item.ITEM_NAME_MIN_LENGTH, max = Item.ITEM_NAME_MAX_LENGTH, message = "ITEM_NAME_IS_INVALID")
     private String name;
 
+    @Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}+$", message = "WRONG_UUID_FORMAT")
     private UUID category;
 
     public String getName() {

@@ -28,7 +28,7 @@ public class UserCreateIncomingDto implements IncomingDto {
     private String email;
 
     @NotNull(message = "PASSWORD_IS_NULL")
-    @Pattern.List(value = {@Pattern(regexp = "^[\\w\\p{Punct}]+$", message = "UNCORRECTED_PASSWORD"),
+    @Pattern.List(value = {@Pattern(regexp = "^[\\w-=\\[\\]\\\\;,./~!@#$%^&*()_+{}|:<>?]+$", message = "UNCORRECTED_PASSWORD"),
             @Pattern(regexp = "^.*[A-Z].*$", message = "UNSECURED_PASSWORD"),
             @Pattern(regexp = "^.*[0-9].*$", message = "UNSECURED_PASSWORD")})
     @Size(max = User.PASSWORD_MAX_LENGTH, min = User.PASSWORD_MIN_LENGTH, message = "UNCORRECTED_PASSWORD")

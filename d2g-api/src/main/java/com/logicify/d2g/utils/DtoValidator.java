@@ -2,14 +2,12 @@ package com.logicify.d2g.utils;
 
 import com.logicify.d2g.dtos.domain.dtos.IncomingDto;
 import com.logicify.d2g.exceptions.D2GBaseException;
-import com.logicify.d2g.exceptions.D2GBaseExceptionCodes;
 import com.logicify.d2g.exceptions.NewD2GBaseExceptionCodes;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.util.HashSet;
 import java.util.Set;
 
 /**

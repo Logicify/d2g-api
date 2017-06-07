@@ -8,7 +8,7 @@ import com.logicify.d2g.dtos.domain.outgoingdtos.purchaseditempayload.PurchasedI
 import com.logicify.d2g.dtos.domain.outgoingdtos.purchaseditempayload.PurchasedItemsListPayload;
 import com.logicify.d2g.dtos.domain.outgoingdtos.storepayload.StorePayload;
 import com.logicify.d2g.exceptions.D2GBaseException;
-import com.logicify.d2g.exceptions.D2GBaseExceptionCodes;
+import com.logicify.d2g.exceptions.NewD2GBaseExceptionCodes;
 import com.logicify.d2g.interfaces.Item;
 import com.logicify.d2g.interfaces.PurchasedItem;
 import com.logicify.d2g.interfaces.User;
@@ -19,7 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +99,7 @@ public class PurchasedItemServiceImpl implements PurchasedItemService {
     @Override
     public PurchasedItemPayload getPurchasedItemDtoById(UUID id) throws D2GBaseException {
         if (!purchasedItemRepository.exists(id)) throw
-                new D2GBaseException(D2GBaseExceptionCodes.PURCHASED_ITEM_WITH_THIS_ID_NOT_EXIST);
+                new D2GBaseException(NewD2GBaseExceptionCodes.PURCHASED_ITEM_NOT_EXIST);
         PurchasedItemImpl purchasedItem = purchasedItemRepository.findOne(id);
         PurchasedItemPayload payload = modelMapper.map(purchasedItem, PurchasedItemPayload.class);
         payload.setItem(itemService.getItemDtoById(purchasedItem.getItem().getId()));
@@ -133,10 +136,10 @@ public class PurchasedItemServiceImpl implements PurchasedItemService {
                                         PurchasedItemUpdateIncomingDto incomingDto,
                                         String email) throws D2GBaseException {
         if (userService.findUserByEmail(email) == null)
-            throw new D2GBaseException(D2GBaseExceptionCodes.USER_NOT_EXIST);
+            throw new D2GBaseException(NewD2GBaseExceptionCodes.USER_NOT_EXIST);
         User user = userService.findUserByEmail(email);
         if (!purchasedItemRepository.exists(id))
-            throw new D2GBaseException(D2GBaseExceptionCodes.PURCHASED_ITEM_WITH_THIS_ID_NOT_EXIST);
+            throw new D2GBaseException(NewD2GBaseExceptionCodes.PURCHASED_ITEM_NOT_EXIST);
         PurchasedItemImpl purchasedItem = purchasedItemRepository.findOne(id);
         if (incomingDto.getAmount() != null)
             purchasedItem.setAmount(incomingDto.getAmount());
@@ -161,7 +164,7 @@ public class PurchasedItemServiceImpl implements PurchasedItemService {
     @Override
     public PurchasedItem getPurchasedItemById(UUID id) throws D2GBaseException {
         if (!purchasedItemRepository.exists(id))
-            throw new D2GBaseException(D2GBaseExceptionCodes.PURCHASED_ITEM_WITH_THIS_ID_NOT_EXIST);
+            throw new D2GBaseException(NewD2GBaseExceptionCodes.PURCHASED_ITEM_NOT_EXIST);
         return purchasedItemRepository.findOne(id);
     }
 
@@ -169,13 +172,13 @@ public class PurchasedItemServiceImpl implements PurchasedItemService {
     @Transactional
     public void updateCurrentUserPurchasedItemById(UUID id, PurchasedItemUpdateIncomingDto incomingDto, String email) throws D2GBaseException {
         if (userService.findUserByEmail(email) == null)
-            throw new D2GBaseException(D2GBaseExceptionCodes.USER_NOT_EXIST);
+            throw new D2GBaseException(NewD2GBaseExceptionCodes.USER_NOT_EXIST);
         User user = userService.findUserByEmail(email);
         if (!purchasedItemRepository.exists(id))
-            throw new D2GBaseException(D2GBaseExceptionCodes.PURCHASED_ITEM_WITH_THIS_ID_NOT_EXIST);
+            throw new D2GBaseException(NewD2GBaseExceptionCodes.PURCHASED_ITEM_NOT_EXIST);
         PurchasedItemImpl purchasedItem = purchasedItemRepository.findOne(id);
         if (!purchasedItem.getOwner().equals(user))
-            throw new D2GBaseException(D2GBaseExceptionCodes.NOT_CURRENT_USER_ITEM);
+            throw new D2GBaseException(NewD2GBaseExceptionCodes.NOT_CURRENT_USER_ITEM);
         if (incomingDto.getAmount() != null)
             purchasedItem.setAmount(incomingDto.getAmount());
         if (incomingDto.getCurrency() != null)
@@ -199,14 +202,14 @@ public class PurchasedItemServiceImpl implements PurchasedItemService {
     @Override
     public void deletePurchasedItemById(UUID id) throws D2GBaseException {
         if (!purchasedItemRepository.exists(id))
-            throw new D2GBaseException(D2GBaseExceptionCodes.PURCHASED_ITEM_WITH_THIS_ID_NOT_EXIST);
+            throw new D2GBaseException(NewD2GBaseExceptionCodes.PURCHASED_ITEM_NOT_EXIST);
         purchasedItemRepository.delete(id);
     }
 
     @Override
     public PurchasedItemsListPayload findAllPurchasedItemByItem(UUID item, String email) throws D2GBaseException {
         User user = userService.findUserByEmail(email);
-        if (user == null) throw new D2GBaseException(D2GBaseExceptionCodes.USER_NOT_EXIST);
+        if (user == null) throw new D2GBaseException(NewD2GBaseExceptionCodes.USER_NOT_EXIST);
         List<PurchasedItemImpl> purchasedItemList = purchasedItemRepository.findByOwnerAndItem(user, itemService.getItemById(item));
         List<PurchasedItemPayload> payloadsList = new ArrayList<>();
         for (PurchasedItemImpl purchasedItem : purchasedItemList) {
@@ -226,7 +229,7 @@ public class PurchasedItemServiceImpl implements PurchasedItemService {
     @Override
     public PurchasedItemsListPayload findCurrentUserPurchasedItemsForLastMonth(String email) throws D2GBaseException {
         User user = userService.findUserByEmail(email);
-        if (user==null) throw new D2GBaseException(D2GBaseExceptionCodes.USER_NOT_EXIST);
+        if (user==null) throw new D2GBaseException(NewD2GBaseExceptionCodes.USER_NOT_EXIST);
         ZonedDateTime monthAgo = ZonedDateTime.now(ZoneOffset.UTC).minusMonths(1);
         List<PurchasedItemImpl> purchasedItemList = purchasedItemRepository.findByOwnerAndDateOfPurchaseGreaterThan(user,monthAgo);
         List<PurchasedItemPayload> payloadsList = new ArrayList<>();
@@ -247,7 +250,7 @@ public class PurchasedItemServiceImpl implements PurchasedItemService {
     @Override
     public PurchasedItemsExpensesPayload getCurrentUserExpenses(String email) throws D2GBaseException {
         User owner = userService.findUserByEmail(email);
-        if (owner==null) throw new D2GBaseException(D2GBaseExceptionCodes.USER_NOT_EXIST);
+        if (owner==null) throw new D2GBaseException(NewD2GBaseExceptionCodes.USER_NOT_EXIST);
         PurchasedItemsExpensesPayload payload = new PurchasedItemsExpensesPayload();
         payload.setExpenses(purchasedItemRepository.getOwnerExpenses(owner));
         return payload;
@@ -256,7 +259,7 @@ public class PurchasedItemServiceImpl implements PurchasedItemService {
     @Override
     public PurchasedItemsExpensesPayload getCurrentUserExpensesForLastMonth(String email) throws D2GBaseException {
         User owner = userService.findUserByEmail(email);
-        if (owner==null) throw new D2GBaseException(D2GBaseExceptionCodes.USER_NOT_EXIST);
+        if (owner==null) throw new D2GBaseException(NewD2GBaseExceptionCodes.USER_NOT_EXIST);
         PurchasedItemsExpensesPayload payload = new PurchasedItemsExpensesPayload();
         ZonedDateTime date = ZonedDateTime.now(ZoneOffset.UTC).minusMonths(1);
         payload.setExpenses(purchasedItemRepository.getOwnerExpensesForLastMonth(owner,date));

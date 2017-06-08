@@ -10,8 +10,7 @@ before_install:
   # set up awscli packages
   - pip install --user awscli
   - mkdir ~/.aws/
-  - cd ~/.aws/
-  - echo -e "[default]\naws_access_key_id=$AWS_ACCESS_KEY_ID\naws_secret_access_key=$AWS_SECRET_ACCESS_KEY">config
+  - echo -e "[default]\naws_access_key_id=$AWS_ACCESS_KEY_ID\naws_secret_access_key=$AWS_SECRET_ACCESS_KEY">~/.aws/config
   - login=$(aws ecr get-login --no-include-email --region us-west-2)
   - $login
 script:

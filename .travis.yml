@@ -15,9 +15,7 @@ before_install:
   - $login
   - task_arns_str=$(aws ecs list-tasks --cluster $CLUSTER_NAME | grep -oE arn\:aws\:ecs\:[^\"]*)
   - task_arns=($task_arns_str)
-  - for arn in ${task_arns[@]}; do
-  - aws ecs stop-task --cluster $CLUSTER_NAME --task $arn
-  - done
+  - for arn in ${task_arns[@]}; do aws ecs stop-task --cluster $CLUSTER_NAME --task $arn; done
 script:
   - docker build --build-arg DB_URL=$DATABASE_URL --build-arg DB_USERNAME=$DATABASE_USERNAME --build-arg DB_PASSWORD=$DATABASE_PASSWORD -t d2g_api_repository .
 after_success:

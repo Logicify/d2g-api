@@ -6,6 +6,7 @@ braches:
     -develop-CI
 servises:
   - docker
+  - awscli
 script:
   - docker build --build-arg DB_URL=$DATABASE_URL --build-arg DB_USERNAME=$DATABASE_USERNAME --build-arg DB_PASSWORD=$DATABASE_PASSWORD -t d2g_api_repository .
 after_success:

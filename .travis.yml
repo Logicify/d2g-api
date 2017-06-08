@@ -10,9 +10,14 @@ before_install:
   # set up awscli packages
   - pip install --user awscli
   - mkdir ~/.aws/
-  - echo -e "[default]\naws_access_key_id=$AWS_ACCESS_KEY_ID\naws_secret_access_key=$AWS_SECRET_ACCESS_KEY">~/.aws/config
+  - echo -e "[default]\naws_access_key_id=$AWS_ACCESS_KEY_ID\naws_secret_access_key=$AWS_SECRET_ACCESS_KEY\nregion=$AWS_REGION">~/.aws/config
   - login=$(aws ecr get-login --no-include-email --region us-west-2)
   - $login
+  - task_arns_str=$(aws ecs list-tasks --cluster $CLUSTER_NAME | grep -oE arn\:aws\:ecs\:[^\"]*)
+  - task_arns=($task_arns_str)
+  - for arn in ${task_arns[@]}; do
+  - aws ecs stop-task --cluster $CLUSTER_NAME --task $arn
+  - done
 script:
   - docker build --build-arg DB_URL=$DATABASE_URL --build-arg DB_USERNAME=$DATABASE_USERNAME --build-arg DB_PASSWORD=$DATABASE_PASSWORD -t d2g_api_repository .
 after_success:

@@ -1,7 +1,6 @@
 FROM ubuntu
 RUN apt-get update
-RUN apt-get install -y openjdk-8-jdk maven python python-pip
-#RUN pip install --upgrade --user awscli
+RUN apt-get install -y openjdk-8-jdk maven
 ARG DB_URL
 ARG DB_USERNAME
 ARG DB_PASSWORD

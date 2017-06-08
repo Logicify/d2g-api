@@ -1,7 +1,7 @@
 FROM ubuntu
-#ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 RUN apt-get update
-RUN apt-get install -y openjdk-8-jdk maven
+RUN apt-get install -y openjdk-8-jdk maven python python-pip
+RUN pip install --upgrade --user awscli
 ARG DB_URL
 ARG DB_USERNAME
 ARG DB_PASSWORD
